@@ -1,0 +1,103 @@
+item.minerad:geigerCounter.name=Geiger Counter
+item.minerad:uraniumChunk.name=Uranium Chunk
+item.minerad:uraniumOreItem.name=Uranium Ore
+item.minerad:purifiedUranium.name=Purified Uranium
+item.minerad:purifiedNeptunium.name=Purified Neptunium
+item.minerad:plutonium.name=Plutonium
+item.minerad:unknownElement.name=???
+item.minerad:nuggetUranium.name=Uranium Nugget
+item.minerad:nuggetNeptunium.name=Neptunium Nugget
+item.minerad:nuggetPlutonium.name=Plutonium Nugget
+item.minerad:fusionCore.name=Fusion Core
+item.minerad:fissionCore.name=Fission Core
+item.minerad:coolantCore.name=Coolant Core
+item.minerad:emptyCore.name=Empty Core
+item.minerad:radResistantPlating.name=Radiation Resistant Plating
+item.minerad:uraniumDust.name=Uranium Dust
+item.minerad:acidSolution.name=Acid Solution
+item.minerad:yellowCake.name=Yellowcake
+item.minerad:diamondGrinder.name=Diamond Grinder
+item.minerad:nuclearPod.name=Nuclear Pod
+item.minerad:radioReceiver.name=Radio Receiver
+item.minerad:nukePackage.name=Nuke Package
+item.minerad:nuclearArsenalUpgrade.name=Nuclear Arsenal Upgrade
+item.minerad:nukeMarker.name=Nuclear Airstrike Marker
+item.minerad:radX.name=Rad-X
+item.minerad:radAway.name=RadAway
+
+item.minerad:radSuit0.name=Radiation Suit Helmet
+item.minerad:radSuit1.name=Radiation Suit Chest
+item.minerad:radSuit2.name=Radiation Suit Legs
+item.minerad:radSuit3.name=Radiation Suit Boots
+
+block.minerad:uraniumTraces.name=Uranium Traces
+block.minerad:uraniumLump.name=Uranium Lump
+block.minerad:uraniumOre.name=Uranium Ore
+block.minerad:fusionReactor.name=Fusion Reactor Casing
+block.minerad:fissionReactor.name=Fission Reactor Casing
+block.minerad:pureUranium.name=Pure Uranium Block
+block.minerad:pureNeptunium.name=Pure Neptunium Block
+block.minerad:blockPlutonium.name=Plutonium Block
+block.minerad:nuclearArsenal.name=Nuclear Arsenal
+block.minerad:groundZero.name=Ground Zero
+
+block.minerad:uraniumInfuser.name=Uranium Infuser
+
+container.minerad:uraniumInfuserTile=Uranium Infuser
+
+message.geigerCounter.info=Detecting %s RAD/s, Gaining %s RAD/s, %s RADS dose
+
+message.nukePackage.info=Added nuke to arsenal, %s in storage
+message.nukePackage.fail=Click a Nuclear Arsenal to add nukes!
+message.nukePackage.full=You have too many nukes in your arsenal [%s / %s]
+message.arsenal.info=Currently contains %s / %s nukes in storage
+message.arsenal.added=Nuclear arsenal activated, you can now store nukes
+message.arsenal.upgrade=Arsenal upgraded to store %s nukes
+message.nukeMarker.success=Nuclear bomb detonated at target position
+message.nukeMarker.nonukes=No nukes could be found in arsenal, airstrike aborted
+message.nukeMarker.nosky=Nuke marker could not be found, possibly obstructed
+message.nukeMarker.warning.nearby=WARNING! NUCLEAR AIRSTRIKE INCOMING NEAR YOUR LOCATION!
+
+message.radSickness.0.0=You feel nauseous and tired...
+message.radSickness.0.1=Your skin starts to burn...
+message.radSickness.0.2=You can feel the radiation around you...
+message.radSickness.1.0=The radiation is becoming too much to handle...
+message.radSickness.1.1=You feel the need to die, it's too much suffering...
+message.radSickness.1.2=You choke back vomit as you weaken...
+
+message.unknownElement.decay=The strange element suddenly vanishes
+
+info.geigerCounter.desc=Detects radiation at its position
+
+death.attack.minerad:nuke=%1$s was blown up by a nuke
+death.attack.minerad:radiation=%1$s was overexposed to radiation
+
+potion.minerad:radx=Rad-X
+potion.minerad:radiationSickness=Radiation Sickness
+
+achievement.minerad:uraniumChunk=Radioactive
+achievement.minerad:uraniumChunk.desc=Get your first uranium chunk
+achievement.minerad:geigerCounter=The Count
+achievement.minerad:geigerCounter.desc=Craft a Geiger Counter
+achievement.minerad:radPlating=Radioactive Shielding
+achievement.minerad:radPlating.desc=Make radioactive plating to craft into armour
+achievement.minerad:uraniumOre=Even Deadlier
+achievement.minerad:uraniumOre.desc=Find your first uranium ore
+achievement.minerad:fissionCore=Pocket Reaction
+achievement.minerad:fissionCore.desc=Make a fission core
+achievement.minerad:fissionReactor=Nuclear Engineering
+achievement.minerad:fissionReactor.desc=Make a fission reactor
+achievement.minerad:purifiedUranium=Even purer
+achievement.minerad:purifiedUranium.desc=Purify uranium ore
+achievement.minerad:plutonium=The Deadliest
+achievement.minerad:plutonium.desc=Make plutonium in a fission reactor
+achievement.minerad:fusionReactor=The Future
+achievement.minerad:fusionReactor.desc=Make a fusion reactor
+achievement.minerad:unknownElement=What's this?
+achievement.minerad:unknownElement.desc=Fuse plutonium into something... strange
+achievement.minerad:nuclearArsenal=Not so cold
+achievement.minerad:nuclearArsenal.desc=Activate a nuclear arsenal
+achievement.minerad:nukeDrop=Sticks and stones
+achievement.minerad:nukeDrop.desc=Drop a nuclear bomb
+
+itemGroup.minerad=MineRad
