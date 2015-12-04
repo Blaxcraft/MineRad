@@ -15,7 +15,7 @@ import us.mcsw.minerad.util.RadUtil;
 public class BlockUraniumLump extends BlockRadEmitter {
 
 	public BlockUraniumLump() {
-		super(Material.rock, "uraniumLump", 3, 0);
+		super(Material.rock, "uraniumLump", 2, 0);
 
 		setHardness(7.0f);
 		setHarvestLevel("pickaxe", 2);

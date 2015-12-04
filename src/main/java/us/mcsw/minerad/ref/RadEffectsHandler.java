@@ -20,7 +20,7 @@ public class RadEffectsHandler {
 		if (e instanceof EntityPlayer) {
 			if (props.getRadiation() > 200) {
 				((EntityPlayer) e).addPotionEffect(new PotionEffect(MineRad.potionRadiationSickness.id, 19,
-						props.getRadiation() > 400 ? 1 : 0, true));
+						props.getRadiation() > 500 ? 2 : props.getRadiation() > 400 ? 1 : 0, true));
 			}
 		}
 		if (rds > 0) {

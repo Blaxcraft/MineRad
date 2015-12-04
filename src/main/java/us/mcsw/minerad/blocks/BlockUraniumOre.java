@@ -13,7 +13,7 @@ import us.mcsw.minerad.util.RadUtil;
 public class BlockUraniumOre extends BlockRadEmitter {
 
 	public BlockUraniumOre() {
-		super(Material.rock, "uraniumOre", 7, 0);
+		super(Material.rock, "uraniumOre", 3, 0);
 
 		setHardness(15.0f);
 		setHarvestLevel("pickaxe", 3);

@@ -81,6 +81,14 @@ public class CraftingInit {
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.nukeMarker), " NN", " IN", "I  ", 'I',
 				"ingotIron", 'N', ModItems.nuggetNeptunium));
 
+		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.basicMachineBlock, "IRI", "RUR", "IRI", 'I', "ingotIron",
+				'R', Items.redstone, 'U', ModItems.uraniumChunk));
+		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.advancedMachineBlock, "INI", "GBG", "INI", 'B',
+				ModBlocks.basicMachineBlock, 'N', ModItems.purifiedNeptunium, 'I', "blockIron", 'G', Blocks.glowstone));
+
+		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.uraniumInfuser, "CCC", "IBI", "IUI", 'C',
+				ModItems.emptyCore, 'I', "ingotIron", 'B', ModBlocks.basicMachineBlock, 'U', ModItems.uraniumOreItem));
+
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.radAway), ModItems.acidSolution,
 				Items.sugar, ModItems.radX));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.radX), Items.glass_bottle, Items.melon,

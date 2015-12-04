@@ -29,20 +29,24 @@ public class PotionRadiationSickness extends Potion {
 		return 0;
 	}
 
-	Potion[][] badEffects = { { Potion.confusion, Potion.digSlowdown, Potion.hunger, Potion.weakness },
-			{ Potion.blindness, Potion.moveSlowdown } };
+	Potion[][] badEffects = { { Potion.moveSlowdown, Potion.weakness }, { Potion.digSlowdown, Potion.hunger },
+			{ Potion.blindness } };
 
 	@Override
 	public void performEffect(EntityLivingBase elb, int amp) {
 		if (!elb.worldObj.isRemote) {
 			if (elb instanceof EntityPlayer) {
-				if (elb.getRNG().nextInt(2000 / (amp * 2 + 1)) == 0) {
+				if (elb.getRNG().nextInt(2000 / (amp * amp * 2 + 1)) == 0) {
 					EntityPlayer pl = (EntityPlayer) elb;
-					pl.addChatMessage(
-							new ChatComponentTranslation("message.radSickness." + amp + "." + pl.getRNG().nextInt(3))
-									.setChatStyle(
-											new ChatStyle().setItalic(true).setColor(EnumChatFormatting.DARK_GREEN)));
+					pl.addChatMessage(new ChatComponentTranslation(
+							"message.radSickness." + (amp > 0 ? 1 : 0) + "." + pl.getRNG().nextInt(3)).setChatStyle(
+									new ChatStyle().setItalic(true).setColor(EnumChatFormatting.DARK_GREEN)));
 					pl.attackEntityFrom(RadUtil.radiationDamage, pl.getRNG().nextInt(3 + amp * 3) + 2 + amp * 2);
+				}
+				for (int i = 0; i <= amp; i++) {
+					for (Potion p : badEffects[i]) {
+						elb.addPotionEffect(new PotionEffect(p.getId(), 20, amp - i));
+					}
 				}
 			}
 		}

@@ -74,15 +74,15 @@ public class RadProperties implements IExtendedEntityProperties {
 		}
 		return ret + 1;
 	}
-	
+
 	public double getRadiation() {
 		return rads;
 	}
-	
+
 	public void addRadiation(double amt) {
 		double add;
 		if (amt < 0) {
-			add = amt * getRadiation();
+			add = amt * getRadResistance() / 20;
 		} else
 			add = (double) amt / getRadResistance();
 		rads += add;
@@ -90,7 +90,7 @@ public class RadProperties implements IExtendedEntityProperties {
 			rads = 0;
 		}
 	}
-	
+
 	public void setRadiation(double amt) {
 		rads = amt;
 	}

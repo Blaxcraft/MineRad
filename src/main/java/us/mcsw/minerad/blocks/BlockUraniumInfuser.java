@@ -15,6 +15,7 @@ public class BlockUraniumInfuser extends BlockMRMachine implements ITileEntityPr
 
 	public BlockUraniumInfuser() {
 		super(MachineReference.URANIUM_INFUSER_ID, Material.iron, "uraniumInfuser");
+		setHardness(0.5f);
 	}
 
 	@Override

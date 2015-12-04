@@ -41,6 +41,8 @@ block.minerad:blockPlutonium.name=Plutonium Block
 block.minerad:nuclearArsenal.name=Nuclear Arsenal
 block.minerad:groundZero.name=Ground Zero
 
+block.minerad:basicMachineBlock.name=Basic Machine Block
+block.minerad:advancedMachineBlock.name=Advanced Machine Block
 block.minerad:uraniumInfuser.name=Uranium Infuser
 
 container.minerad:uraniumInfuserTile=Uranium Infuser
