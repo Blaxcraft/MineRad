@@ -3,6 +3,7 @@ package us.mcsw.minerad;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraft.entity.Entity;
@@ -83,9 +84,16 @@ public class EventListener {
 				pl.addStat(AchievementsInit.geigerCounter, 1);
 			} else if (i.equals(ModItems.radResistantPlating)) {
 				pl.addStat(AchievementsInit.radPlating, 1);
-			} else if (i.equals(ModItems.fissionCore)) {
-				pl.addStat(AchievementsInit.fissionCore, 1);
-			} else if (i.equals(ModItems.purifiedUranium)) {
+			} 
+		}
+	}
+	
+	@SubscribeEvent
+	public void onSmelt(ItemSmeltedEvent event) {
+		Item i = event.smelting.getItem();
+		EntityPlayer pl = event.player;
+		if (i != null) {
+			if (i.equals(ModItems.purifiedUranium)) {
 				pl.addStat(AchievementsInit.purifiedUranium, 1);
 			}
 		}

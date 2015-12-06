@@ -11,7 +11,7 @@ public class UraniumInfuserRecipes {
 	private static ArrayList<InfuserRecipe> recipes = new ArrayList<UraniumInfuserRecipes.InfuserRecipe>();
 
 	public static void init() {
-		addRecipe(new ItemStack(ModItems.uraniumChunk, 5), new ItemStack(ModItems.fissionCore), 1, 16000);
+		addRecipe(new ItemStack(ModItems.uraniumChunk, 8), new ItemStack(ModItems.fissionCore), 1, 16000);
 		addRecipe(ModItems.uraniumOreItem, new ItemStack(ModItems.fusionCore), 1, 48000);
 	}
 

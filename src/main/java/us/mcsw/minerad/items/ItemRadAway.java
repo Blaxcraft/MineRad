@@ -16,7 +16,7 @@ public class ItemRadAway extends ItemMR {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack it, World w, EntityPlayer pl) {
-		if (pl.canEat(true)) {
+		if (pl.canEat(true) || pl.capabilities.isCreativeMode) {
 			pl.setItemInUse(it, getMaxItemUseDuration(it));
 		}
 		return it;
@@ -39,7 +39,7 @@ public class ItemRadAway extends ItemMR {
 		if (!w.isRemote) {
 			it.stackSize--;
 			RadProperties props = RadProperties.get(pl);
-			props.addRadiation(-RAD_LOSS);
+			props.addRadiation(-RAD_LOSS, true);
 		}
 		return it;
 	}

@@ -19,11 +19,13 @@ item.minerad:yellowCake.name=Yellowcake
 item.minerad:diamondGrinder.name=Diamond Grinder
 item.minerad:nuclearPod.name=Nuclear Pod
 item.minerad:radioReceiver.name=Radio Receiver
+item.minerad:denseCore.name=Dense Core
 item.minerad:nukePackage.name=Nuke Package
 item.minerad:nuclearArsenalUpgrade.name=Nuclear Arsenal Upgrade
 item.minerad:nukeMarker.name=Nuclear Airstrike Marker
 item.minerad:radX.name=Rad-X
 item.minerad:radAway.name=RadAway
+item.minerad:magnetItem.name=Portable Black Hole
 
 item.minerad:radSuit0.name=Radiation Suit Helmet
 item.minerad:radSuit1.name=Radiation Suit Chest
@@ -40,6 +42,7 @@ block.minerad:pureNeptunium.name=Pure Neptunium Block
 block.minerad:blockPlutonium.name=Plutonium Block
 block.minerad:nuclearArsenal.name=Nuclear Arsenal
 block.minerad:groundZero.name=Ground Zero
+block.minerad:magnet.name=Black Hole Collector
 
 block.minerad:basicMachineBlock.name=Basic Machine Block
 block.minerad:advancedMachineBlock.name=Advanced Machine Block

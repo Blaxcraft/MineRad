@@ -19,7 +19,7 @@ public class ItemRadX extends ItemMR {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack it, World w, EntityPlayer pl) {
-		if (pl.canEat(true)) {
+		if (pl.canEat(true) || pl.capabilities.isCreativeMode) {
 			pl.setItemInUse(it, getMaxItemUseDuration(it));
 		}
 		return it;

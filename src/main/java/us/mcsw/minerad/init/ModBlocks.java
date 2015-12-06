@@ -7,6 +7,7 @@ import us.mcsw.minerad.blocks.BlockFissionReactor;
 import us.mcsw.minerad.blocks.BlockFusionReactor;
 import us.mcsw.minerad.blocks.BlockGroundZero;
 import us.mcsw.minerad.blocks.BlockMR;
+import us.mcsw.minerad.blocks.BlockMagnet;
 import us.mcsw.minerad.blocks.BlockNuclearArsenal;
 import us.mcsw.minerad.blocks.BlockPlutonium;
 import us.mcsw.minerad.blocks.BlockPureNeptunium;
@@ -34,11 +35,11 @@ public class ModBlocks {
 
 	public static final BlockGroundZero groundZero = new BlockGroundZero();
 
+	public static final BlockMagnet magnet = new BlockMagnet();
+
 	public static final BlockCraftingMachine basicMachineBlock = new BlockCraftingMachine("basicMachineBlock");
 	public static final BlockCraftingMachine advancedMachineBlock = new BlockCraftingMachine("advancedMachineBlock");
 	public static final BlockUraniumInfuser uraniumInfuser = new BlockUraniumInfuser();
-
-	public static final BlockTest blockTest = new BlockTest();
 
 	public static void init() {
 		GameRegistry.registerBlock(uraniumTraces, uraniumTraces.getBasicName());
@@ -55,12 +56,12 @@ public class ModBlocks {
 		GameRegistry.registerBlock(nuclearArsenal, nuclearArsenal.getBasicName());
 
 		GameRegistry.registerBlock(groundZero, groundZero.getBasicName());
+		
+		GameRegistry.registerBlock(magnet, magnet.getBasicName());
 
 		GameRegistry.registerBlock(basicMachineBlock, basicMachineBlock.getBasicName());
 		GameRegistry.registerBlock(advancedMachineBlock, advancedMachineBlock.getBasicName());
 		GameRegistry.registerBlock(uraniumInfuser, uraniumInfuser.getBasicName());
-
-		GameRegistry.registerBlock(blockTest, blockTest.getBasicName());
 	}
 
 }

@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import us.mcsw.minerad.init.ModItems;
+import us.mcsw.minerad.util.NumbersUtil;
 
 public class ItemCoolantCore extends ItemMR {
 
@@ -44,7 +45,8 @@ public class ItemCoolantCore extends ItemMR {
 	public void addInformation(ItemStack it, EntityPlayer p, List list, boolean n) {
 		super.addInformation(it, p, list, n);
 		list.add("Used to cool down reactors");
-		list.add("Capacity: " + (((double) MAX_DMG - it.getItemDamage()) / (MAX_DMG / 100)) + "%");
+		list.add("Capacity: " + NumbersUtil.roundDouble((((double) MAX_DMG - it.getItemDamage()) / (MAX_DMG / 100)), 1)
+				+ "%");
 	}
-	
+
 }

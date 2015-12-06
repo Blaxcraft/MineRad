@@ -7,6 +7,7 @@ import us.mcsw.minerad.items.ItemDiamondGrinder;
 import us.mcsw.minerad.items.ItemFissionCore;
 import us.mcsw.minerad.items.ItemFusionCore;
 import us.mcsw.minerad.items.ItemGeigerCounter;
+import us.mcsw.minerad.items.ItemMagnet;
 import us.mcsw.minerad.items.ItemNeptuniumNugget;
 import us.mcsw.minerad.items.ItemNuclearArsenalUpgrade;
 import us.mcsw.minerad.items.ItemNukeMarker;
@@ -45,6 +46,7 @@ public class ModItems {
 	public static final ItemDiamondGrinder diamondGrinder = new ItemDiamondGrinder();
 	public static final ItemCrafting nuclearPod = new ItemCrafting("nuclearPod");
 	public static final ItemCrafting radioReceiver = new ItemCrafting("radioReceiver");
+	public static final ItemCrafting denseCore = new ItemCrafting("denseCore");
 
 	public static final ItemRadArmour radHelm = new ItemRadArmour(0);
 	public static final ItemRadArmour radChest = new ItemRadArmour(1);
@@ -66,6 +68,8 @@ public class ModItems {
 	public static final ItemRadAway radAway = new ItemRadAway();
 	public static final ItemRadX radX = new ItemRadX();
 
+	public static final ItemMagnet magnetItem = new ItemMagnet();
+
 	public static void init() {
 		GameRegistry.registerItem(geigerCounter, geigerCounter.getBasicName());
 		GameRegistry.registerItem(uraniumChunk, uraniumChunk.getBasicName());
@@ -84,6 +88,7 @@ public class ModItems {
 		GameRegistry.registerItem(diamondGrinder, diamondGrinder.getBasicName());
 		GameRegistry.registerItem(nuclearPod, nuclearPod.getBasicName());
 		GameRegistry.registerItem(radioReceiver, radioReceiver.getBasicName());
+		GameRegistry.registerItem(denseCore, denseCore.getBasicName());
 
 		GameRegistry.registerItem(radHelm, radHelm.getBasicName());
 		GameRegistry.registerItem(radChest, radChest.getBasicName());
@@ -104,6 +109,8 @@ public class ModItems {
 
 		GameRegistry.registerItem(radAway, radAway.getBasicName());
 		GameRegistry.registerItem(radX, radX.getBasicName());
+		
+		GameRegistry.registerItem(magnetItem, magnetItem.getBasicName());
 	}
 
 }

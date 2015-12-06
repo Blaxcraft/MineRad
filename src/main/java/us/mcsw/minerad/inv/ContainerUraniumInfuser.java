@@ -7,14 +7,14 @@ import us.mcsw.minerad.tiles.TileMRMachine;
 import us.mcsw.minerad.tiles.TileUraniumInfuser;
 
 public class ContainerUraniumInfuser extends ContainerMRMachine {
-	
+
 	TileUraniumInfuser tile;
 
 	public ContainerUraniumInfuser(InventoryPlayer ip, TileUraniumInfuser tile) {
 		super(ip, tile);
 		this.tile = tile;
 	}
-	
+
 	int lastProgress = 0;
 
 	@Override
@@ -28,7 +28,7 @@ public class ContainerUraniumInfuser extends ContainerMRMachine {
 				c.sendProgressBarUpdate(this, 1, tile.progress);
 			}
 		}
-		
+
 		lastProgress = tile.progress;
 	}
 
@@ -39,9 +39,10 @@ public class ContainerUraniumInfuser extends ContainerMRMachine {
 			tile.progress = v;
 		}
 	}
+
 	@Override
 	public void addSlotsToContainer(TileMRMachine tile) {
-		addSlotToContainer(new SlotCore(tile, 0, 8, 54));
+		addSlotToContainer(new SlotCore(tile, 0, 34, 35));
 		addSlotToContainer(new Slot(tile, 1, 56, 35));
 		addSlotToContainer(new SlotProduct(tile, 2, 116, 35));
 	}

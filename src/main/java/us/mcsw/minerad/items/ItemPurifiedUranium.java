@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import us.mcsw.minerad.util.NumbersUtil;
 
 public class ItemPurifiedUranium extends ItemMR {
 
@@ -25,7 +26,7 @@ public class ItemPurifiedUranium extends ItemMR {
 		super.addInformation(it, p, list, n);
 		list.add("Even more dangerous!");
 		if (it.getItemDamage() > 0) {
-			list.add("Progress: " + it.getItemDamage() * 100 / getMaxDamage() + "%");
+			list.add("Progress: " + NumbersUtil.roundDouble(it.getItemDamage() * 100 / getMaxDamage(), 1) + "%");
 		}
 	}
 

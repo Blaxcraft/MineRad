@@ -15,6 +15,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.ref.TextureReference;
 import us.mcsw.minerad.util.LogUtil;
@@ -45,6 +46,17 @@ public abstract class BlockMRMachine extends BlockMR implements ITileEntityProvi
 		}
 		if (s == ba.getBlockMetadata(x, y, z)) {
 			return super.getIcon(ba, x, y, z, s);
+		}
+		return side;
+	}
+
+	@Override
+	public IIcon getIcon(int s, int m) {
+		if (s == 0 || s == 1) {
+			return top;
+		}
+		if (s == (m == 0 ? 3 : m)) {
+			return super.getIcon(s, m);
 		}
 		return side;
 	}

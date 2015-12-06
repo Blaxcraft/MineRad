@@ -24,12 +24,12 @@ public class ItemUnknownElement extends ItemMR {
 		setNoRepair();
 	}
 
-	static final int RADIATION_LEVEL = 5;
+	static final int RADIATION_LEVEL = 10;
 
 	@Override
 	public void addInformation(ItemStack it, EntityPlayer pl, List list, boolean n) {
 		super.addInformation(it, pl, list, n);
-		list.add("It seems to be much denser than most materials known...");
+		list.add("It appears to be much denser than most known materials...");
 		list.add("It also seems to be incredibly unstable, it may decay very quickly...");
 		list.add(EnumChatFormatting.RED + "+ " + RADIATION_LEVEL + " RAD/s");
 	}
@@ -47,11 +47,6 @@ public class ItemUnknownElement extends ItemMR {
 	}
 
 	@Override
-	public boolean showDurabilityBar(ItemStack it) {
-		return true;
-	}
-
-	@Override
 	public void onUpdate(ItemStack it, World w, Entity e, int m, boolean n) {
 		if (!w.isRemote) {
 			if (e instanceof EntityPlayer && RadProperties.get(e) != null) {
@@ -61,7 +56,7 @@ public class ItemUnknownElement extends ItemMR {
 					decay(it, pl);
 				}
 				RadProperties props = RadProperties.get(pl);
-				props.addRadiation((double) RADIATION_LEVEL / 20.0);
+				props.addRadiation((double) RADIATION_LEVEL / 20.0, true);
 			}
 		}
 		super.onUpdate(it, w, e, m, n);

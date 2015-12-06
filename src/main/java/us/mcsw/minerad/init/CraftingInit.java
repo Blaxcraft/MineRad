@@ -28,6 +28,8 @@ public class CraftingInit {
 
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.radResistantPlating), "IUI", "UIU", 'I',
 				"ingotIron", 'U', ModItems.uraniumChunk));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.radResistantPlating), "UIU", "IUI", 'I',
+				"ingotIron", 'U', ModItems.uraniumChunk));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.uraniumDust, 3),
 				new ItemStack(ModItems.diamondGrinder, 1, OreDictionary.WILDCARD_VALUE), ModItems.uraniumOreItem));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.acidSolution), Items.bowl,
@@ -88,6 +90,13 @@ public class CraftingInit {
 
 		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.uraniumInfuser, "CCC", "IBI", "IUI", 'C',
 				ModItems.emptyCore, 'I', "ingotIron", 'B', ModBlocks.basicMachineBlock, 'U', ModItems.uraniumOreItem));
+
+		GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.magnetItem, " R ", "DBD", " R ", 'R', Items.redstone, 'B',
+				ModBlocks.magnet, 'D', "gemDiamond"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.magnet, " I ", "CBC", " G ", 'I', "blockIron", 'C',
+				ModItems.denseCore, 'B', ModBlocks.basicMachineBlock, 'G', "blockGold"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(ModItems.denseCore,
+				new ItemStack(ModItems.unknownElement, 1, OreDictionary.WILDCARD_VALUE), ModItems.emptyCore));
 
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.radAway), ModItems.acidSolution,
 				Items.sugar, ModItems.radX));

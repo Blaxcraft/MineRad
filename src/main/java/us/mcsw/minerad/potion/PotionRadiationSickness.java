@@ -14,6 +14,8 @@ import us.mcsw.minerad.util.RadUtil;
 
 public class PotionRadiationSickness extends Potion {
 
+	public static final int RAD_THRESHOLD_1 = 200, RAD_THRESHOLD_2 = 400, RAD_THRESHOLD_3 = 500;
+
 	public PotionRadiationSickness() {
 		super(79, true, 10044730);
 		setPotionName("potion." + MineRad.MODID + ":radiationSickness");
