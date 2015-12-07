@@ -5,6 +5,9 @@ import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.tiles.TileFissionReactor;
 import us.mcsw.minerad.tiles.TileFusionReactor;
 import us.mcsw.minerad.tiles.TileMagnet;
+import us.mcsw.minerad.tiles.TileMicrowave;
+import us.mcsw.minerad.tiles.TileRadioTowerAntenna;
+import us.mcsw.minerad.tiles.TileRadioTowerBase;
 import us.mcsw.minerad.tiles.TileTestRF;
 import us.mcsw.minerad.tiles.TileUraniumInfuser;
 
@@ -15,8 +18,12 @@ public class ModTileEntities {
 		GameRegistry.registerTileEntity(TileFissionReactor.class, MineRad.MODID + ".multiblock.fissionReactor");
 		
 		GameRegistry.registerTileEntity(TileMagnet.class, MineRad.MODID + ".magnet");
+		GameRegistry.registerTileEntity(TileMicrowave.class, MineRad.MODID + ".microwave");
 		
 		GameRegistry.registerTileEntity(TileUraniumInfuser.class, MineRad.MODID + ".machine.uraniumInfuser");
+		GameRegistry.registerTileEntity(TileRadioTowerBase.class, MineRad.MODID + ".machine.radioTowerBase");
+		
+		GameRegistry.registerTileEntity(TileRadioTowerAntenna.class, MineRad.MODID + ".radioTower");
 		
 		GameRegistry.registerTileEntity(TileTestRF.class, MineRad.MODID + ".testrf");
 	}

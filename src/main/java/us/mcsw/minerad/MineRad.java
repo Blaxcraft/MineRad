@@ -10,6 +10,7 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -28,6 +29,7 @@ import us.mcsw.minerad.init.CraftingInit;
 import us.mcsw.minerad.init.DungeonLootInit;
 import us.mcsw.minerad.init.FissionRecipes;
 import us.mcsw.minerad.init.FusionRecipes;
+import us.mcsw.minerad.init.MicrowaveRecipes;
 import us.mcsw.minerad.init.ModBlocks;
 import us.mcsw.minerad.init.ModEntities;
 import us.mcsw.minerad.init.ModItems;
@@ -35,6 +37,7 @@ import us.mcsw.minerad.init.ModPotions;
 import us.mcsw.minerad.init.ModTileEntities;
 import us.mcsw.minerad.init.UraniumInfuserRecipes;
 import us.mcsw.minerad.inv.MRGuiHandler;
+import us.mcsw.minerad.net.MessageUpdateFrequency;
 import us.mcsw.minerad.potion.PotionRadX;
 import us.mcsw.minerad.potion.PotionRadiationSickness;
 import us.mcsw.minerad.proxy.IProxy;
@@ -56,6 +59,8 @@ public class MineRad {
 	@Instance
 	public static MineRad ins;
 
+	public static SimpleNetworkWrapper network;
+
 	public static final BiomeWasteland wasteland = new BiomeWasteland();
 
 	public static PotionRadX potionRadX;
@@ -76,6 +81,9 @@ public class MineRad {
 		EventListener listener = new EventListener();
 		MinecraftForge.EVENT_BUS.register(listener);
 		FMLCommonHandler.instance().bus().register(listener);
+		
+		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
+		network.registerMessage(MessageUpdateFrequency.Handler.class, MessageUpdateFrequency.class, 0, Side.SERVER);
 	}
 
 	@EventHandler
@@ -88,6 +96,7 @@ public class MineRad {
 		FissionRecipes.init();
 		FusionRecipes.init();
 		UraniumInfuserRecipes.init();
+		MicrowaveRecipes.init();
 		DungeonLootInit.init();
 		AchievementsInit.init();
 		GameRegistry.registerWorldGenerator(new UraniumGenerator(), 0);

@@ -14,4 +14,8 @@ public class MachineReference {
 	public static final ResourceLocation URANIUM_INFUSER_GUI = new ResourceLocation(MineRad.MODID,
 			textureLocation + "uraniumInfuser.png");
 
+	public static final int RADIO_TOWER_ID = 1;
+	public static final ResourceLocation RADIO_TOWER_GUI = new ResourceLocation(MineRad.MODID,
+			textureLocation + "radioTowerBase.png");
+
 }

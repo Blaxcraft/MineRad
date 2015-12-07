@@ -6,6 +6,7 @@ import cpw.mods.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
@@ -69,7 +70,7 @@ public class EventListener {
 	@SubscribeEvent
 	public void onItemForm(ItemTossEvent event) {
 		EntityItem it = event.entityItem;
-		if (it.getEntityItem().getItem().equals(ModItems.unknownElement)) {
+		if (it.getEntityItem().getItem().equals(ModItems.unknownElement) && !event.player.capabilities.isCreativeMode) {
 			ModItems.unknownElement.decay(it.getEntityItem(), event.player);
 			event.setCanceled(true);
 		}
@@ -84,10 +85,16 @@ public class EventListener {
 				pl.addStat(AchievementsInit.geigerCounter, 1);
 			} else if (i.equals(ModItems.radResistantPlating)) {
 				pl.addStat(AchievementsInit.radPlating, 1);
-			} 
+			} else if (Block.getBlockFromItem(i).equals(ModBlocks.microwave)) {
+				pl.addStat(AchievementsInit.microwave, 1);
+			} else if (Block.getBlockFromItem(i).equals(ModBlocks.radioTowerBase)) {
+				pl.addStat(AchievementsInit.radioTower, 1);
+			} else if (Block.getBlockFromItem(i).equals(ModBlocks.magnet)) {
+				pl.addStat(AchievementsInit.magnet, 1);
+			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void onSmelt(ItemSmeltedEvent event) {
 		Item i = event.smelting.getItem();

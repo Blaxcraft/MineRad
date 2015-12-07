@@ -60,6 +60,9 @@ public class RadProperties implements IExtendedEntityProperties {
 					ret += ira.damageReduceAmount;
 				}
 			}
+			if (p.capabilities.isCreativeMode) {
+				ret += 10000;
+			}
 		}
 		if (e instanceof EntityLivingBase) {
 			EntityLivingBase elb = (EntityLivingBase) e;

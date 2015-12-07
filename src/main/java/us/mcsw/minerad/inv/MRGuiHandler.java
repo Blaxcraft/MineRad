@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import us.mcsw.minerad.tiles.TileMRMachine;
+import us.mcsw.minerad.tiles.TileRadioTowerBase;
 import us.mcsw.minerad.tiles.TileUraniumInfuser;
 
 public class MRGuiHandler implements IGuiHandler {
@@ -15,6 +16,9 @@ public class MRGuiHandler implements IGuiHandler {
 		if (te instanceof TileUraniumInfuser) {
 			return new ContainerUraniumInfuser(player.inventory, (TileUraniumInfuser) te);
 		}
+		if (te instanceof TileRadioTowerBase) {
+			return new ContainerRadioTowerBase(player.inventory, (TileRadioTowerBase) te);
+		}
 		return null;
 	}
 
@@ -23,6 +27,9 @@ public class MRGuiHandler implements IGuiHandler {
 		TileEntity te = world.getTileEntity(x, y, z);
 		if (te instanceof TileUraniumInfuser) {
 			return new GuiUraniumInfuser(player.inventory, (TileUraniumInfuser) te);
+		}
+		if (te instanceof TileRadioTowerBase) {
+			return new GuiRadioTowerBase(player.inventory, (TileRadioTowerBase) te);
 		}
 		return null;
 	}

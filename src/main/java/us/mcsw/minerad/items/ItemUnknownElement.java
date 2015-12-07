@@ -2,6 +2,7 @@ package us.mcsw.minerad.items;
 
 import java.util.List;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -9,15 +10,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 import us.mcsw.minerad.ref.RadProperties;
+import us.mcsw.minerad.ref.TextureReference;
 import us.mcsw.minerad.util.RadUtil;
 
 public class ItemUnknownElement extends ItemMR {
 
+	IIcon background, foreground;
+
 	public ItemUnknownElement() {
 		super("unknownElement");
+
+		setTextureName(TextureReference.RESOURCE_PREFIX + "unknownElementBackground");
 
 		setMaxDamage(200);
 		setMaxStackSize(1);
@@ -36,7 +43,7 @@ public class ItemUnknownElement extends ItemMR {
 
 	@Override
 	public boolean hasEffect(ItemStack it, int pass) {
-		return true;
+		return pass == 0;
 	}
 
 	static final EnumRarity specialRarity = EnumHelper.addRarity("special", EnumChatFormatting.DARK_GRAY, "Special");
@@ -67,6 +74,31 @@ public class ItemUnknownElement extends ItemMR {
 		pl.attackEntityFrom(RadUtil.radiationDamage, 12);
 		pl.addChatMessage(new ChatComponentTranslation("message.unknownElement.decay")
 				.setChatStyle(new ChatStyle().setItalic(true).setColor(EnumChatFormatting.DARK_AQUA)));
+	}
+
+	@Override
+	public void registerIcons(IIconRegister reg) {
+		super.registerIcons(reg);
+		background = reg.registerIcon(TextureReference.RESOURCE_PREFIX + "unknownElementBackground");
+		foreground = reg.registerIcon(TextureReference.RESOURCE_PREFIX + "unknownElementForeground");
+	}
+
+	@Override
+	public IIcon getIcon(ItemStack stack, int pass) {
+		if (pass == 0) {
+			return background;
+		} else
+			return foreground;
+	}
+
+	@Override
+	public boolean requiresMultipleRenderPasses() {
+		return true;
+	}
+
+	@Override
+	public int getRenderPasses(int metadata) {
+		return 2;
 	}
 
 }

@@ -21,8 +21,11 @@ public class AchievementsInit {
 			fissionReactor = makeAchievement("fissionReactor", 4, 2, ModBlocks.fissionReactor, fissionCore, false),
 			purifiedUranium = makeAchievement("purifiedUranium", 4, 0, ModItems.purifiedUranium, uraniumOre, false),
 			plutonium = makeAchievement("plutonium", 5, 1, ModItems.plutonium, fissionReactor, false),
+			microwave = makeAchievement("microwave", 7, 0, ModBlocks.microwave, plutonium, false),
+			radioTower = makeAchievement("radioTower", 7, 1, ModBlocks.radioTowerBase, plutonium, false),
 			fusionReactor = makeAchievement("fusionReactor", 7, 2, ModBlocks.fusionReactor, plutonium, false),
-			unknownElement = makeAchievement("unknownElement", 8, 2, ModItems.unknownElement, fusionReactor, true),
+			unknownElement = makeAchievement("unknownElement", 9, 2, ModItems.unknownElement, fusionReactor, true),
+			magnet = makeAchievement("magnet", 11, 2, ModBlocks.magnet, unknownElement, false),
 			nuclearArsenal = makeAchievement("nuclearArsenal", 6, 3, ModBlocks.nuclearArsenal, plutonium, false),
 			nukeDrop = makeAchievement("nukeDrop", 6, 5, ModItems.nukePackage, nuclearArsenal, true);
 

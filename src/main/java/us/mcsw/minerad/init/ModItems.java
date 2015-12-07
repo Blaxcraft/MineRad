@@ -20,6 +20,7 @@ import us.mcsw.minerad.items.ItemRadArmour;
 import us.mcsw.minerad.items.ItemRadAway;
 import us.mcsw.minerad.items.ItemRadX;
 import us.mcsw.minerad.items.ItemUnknownElement;
+import us.mcsw.minerad.items.ItemCapacitor;
 import us.mcsw.minerad.items.ItemCoolantCore;
 import us.mcsw.minerad.items.ItemCrafting;
 import us.mcsw.minerad.items.ItemUraniumChunk;
@@ -40,13 +41,21 @@ public class ModItems {
 	public static final ItemEmptyCore emptyCore = new ItemEmptyCore();
 
 	public static final ItemCrafting radResistantPlating = new ItemCrafting("radResistantPlating");
-	public static final ItemCrafting uraniumDust = new ItemCrafting("uraniumDust");
+	public static final ItemCrafting dustUranium = new ItemCrafting("dustUranium");
 	public static final ItemCrafting acidSolution = new ItemCrafting("acidSolution");
 	public static final ItemCrafting yellowCake = new ItemCrafting("yellowCake");
 	public static final ItemDiamondGrinder diamondGrinder = new ItemDiamondGrinder();
 	public static final ItemCrafting nuclearPod = new ItemCrafting("nuclearPod");
 	public static final ItemCrafting radioReceiver = new ItemCrafting("radioReceiver");
+	public static final ItemCrafting radioEmitter = new ItemCrafting("radioEmitter");
 	public static final ItemCrafting denseCore = new ItemCrafting("denseCore");
+	public static final ItemCrafting microwaveModule = new ItemCrafting("microwaveModule");
+
+	public static final ItemCapacitor capacitorBasic = new ItemCapacitor("Basic", 0x883333);
+	public static final ItemCapacitor capacitorIron = new ItemCapacitor("Iron", 0xababab);
+	public static final ItemCapacitor capacitorGold = new ItemCapacitor("Gold", 0xbfbf60);
+	public static final ItemCapacitor capacitorDiamond = new ItemCapacitor("Diamond", 0x4dbfbf);
+	public static final ItemCapacitor capacitorQuartz = new ItemCapacitor("Quartz", 0xdfdfdf);
 
 	public static final ItemRadArmour radHelm = new ItemRadArmour(0);
 	public static final ItemRadArmour radChest = new ItemRadArmour(1);
@@ -82,13 +91,21 @@ public class ModItems {
 		GameRegistry.registerItem(emptyCore, emptyCore.getBasicName());
 
 		GameRegistry.registerItem(radResistantPlating, radResistantPlating.getBasicName());
-		GameRegistry.registerItem(uraniumDust, uraniumDust.getBasicName());
+		GameRegistry.registerItem(dustUranium, dustUranium.getBasicName());
 		GameRegistry.registerItem(acidSolution, acidSolution.getBasicName());
 		GameRegistry.registerItem(yellowCake, yellowCake.getBasicName());
 		GameRegistry.registerItem(diamondGrinder, diamondGrinder.getBasicName());
 		GameRegistry.registerItem(nuclearPod, nuclearPod.getBasicName());
 		GameRegistry.registerItem(radioReceiver, radioReceiver.getBasicName());
+		GameRegistry.registerItem(radioEmitter, radioEmitter.getBasicName());
 		GameRegistry.registerItem(denseCore, denseCore.getBasicName());
+		GameRegistry.registerItem(microwaveModule, microwaveModule.getBasicName());
+
+		GameRegistry.registerItem(capacitorBasic, capacitorBasic.getBasicName());
+		GameRegistry.registerItem(capacitorIron, capacitorIron.getBasicName());
+		GameRegistry.registerItem(capacitorGold, capacitorGold.getBasicName());
+		GameRegistry.registerItem(capacitorDiamond, capacitorDiamond.getBasicName());
+		GameRegistry.registerItem(capacitorQuartz, capacitorQuartz.getBasicName());
 
 		GameRegistry.registerItem(radHelm, radHelm.getBasicName());
 		GameRegistry.registerItem(radChest, radChest.getBasicName());
@@ -109,7 +126,7 @@ public class ModItems {
 
 		GameRegistry.registerItem(radAway, radAway.getBasicName());
 		GameRegistry.registerItem(radX, radX.getBasicName());
-		
+
 		GameRegistry.registerItem(magnetItem, magnetItem.getBasicName());
 	}
 
