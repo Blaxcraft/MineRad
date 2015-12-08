@@ -31,7 +31,7 @@ public class ItemArcThrower extends ItemMR implements IEnergyContainerItem {
 		setNoRepair();
 	}
 
-	public static final int ENERGY_USAGE = 25000, USE_TICKS = 40;
+	public static final int ENERGY_USAGE = CapacitorReference.CAPACITY_GOLD / 10, USE_TICKS = 40;
 
 	public void use(ItemStack it, World w, EntityPlayer pl) {
 		double vel = 1.35;
