@@ -10,10 +10,10 @@ import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.util.LogUtil;
 import us.mcsw.minerad.util.RadUtil;
 
-public class BlockUraniumTraces extends BlockRadEmitter {
+public class BlockUraniumTraces extends BlockMR {
 
 	public BlockUraniumTraces() {
-		super(Material.rock, "uraniumTraces", 1, 0);
+		super(Material.rock, "uraniumTraces");
 
 		setHardness(3.0f);
 		setHarvestLevel("pickaxe", 1);
