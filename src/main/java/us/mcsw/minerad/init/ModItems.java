@@ -20,6 +20,7 @@ import us.mcsw.minerad.items.ItemRadArmour;
 import us.mcsw.minerad.items.ItemRadAway;
 import us.mcsw.minerad.items.ItemRadX;
 import us.mcsw.minerad.items.ItemUnknownElement;
+import us.mcsw.minerad.items.ItemArcThrower;
 import us.mcsw.minerad.items.ItemCapacitor;
 import us.mcsw.minerad.items.ItemCoolantCore;
 import us.mcsw.minerad.items.ItemCrafting;
@@ -79,6 +80,8 @@ public class ModItems {
 
 	public static final ItemMagnet magnetItem = new ItemMagnet();
 
+	public static final ItemArcThrower arcThrower = new ItemArcThrower();
+
 	public static void init() {
 		GameRegistry.registerItem(geigerCounter, geigerCounter.getBasicName());
 		GameRegistry.registerItem(uraniumChunk, uraniumChunk.getBasicName());
@@ -128,6 +131,8 @@ public class ModItems {
 		GameRegistry.registerItem(radX, radX.getBasicName());
 
 		GameRegistry.registerItem(magnetItem, magnetItem.getBasicName());
+
+		GameRegistry.registerItem(arcThrower, arcThrower.getBasicName());
 	}
 
 }

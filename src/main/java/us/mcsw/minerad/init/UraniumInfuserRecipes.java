@@ -11,8 +11,8 @@ public class UraniumInfuserRecipes {
 	private static ArrayList<InfuserRecipe> recipes = new ArrayList<UraniumInfuserRecipes.InfuserRecipe>();
 
 	public static void init() {
-		addRecipe(new ItemStack(ModItems.uraniumChunk, 8), new ItemStack(ModItems.fissionCore), 1, 16000);
-		addRecipe(ModItems.uraniumOreItem, new ItemStack(ModItems.fusionCore), 1, 48000);
+		addRecipe(new ItemStack(ModItems.uraniumChunk, 12), new ItemStack(ModItems.fissionCore), 1, 5000);
+		addRecipe(ModItems.uraniumOreItem, new ItemStack(ModItems.fusionCore), 1, 10000);
 	}
 
 	public static void addRecipe(Item source, ItemStack product, int cores, int power) {
@@ -27,9 +27,9 @@ public class UraniumInfuserRecipes {
 		recipes.add(new InfuserRecipe(source, product, cores, power));
 	}
 
-	public static InfuserRecipe getRecipeFor(ItemStack source) {
+	public static InfuserRecipe getRecipeFor(ItemStack source, boolean stack) {
 		for (InfuserRecipe r : recipes) {
-			if (r.source.isItemEqual(source) && source.stackSize >= r.source.stackSize) {
+			if (r.source.isItemEqual(source) && (stack ? source.stackSize >= r.source.stackSize : true)) {
 				return r;
 			}
 		}

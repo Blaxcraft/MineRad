@@ -13,7 +13,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public abstract class TileMRMachine extends TileEntity implements IEnergyReceiver, ISidedInventory {
 
 	public EnergyStorage storage;
-	private ItemStack[] items;
+	protected ItemStack[] items;
 
 	public TileMRMachine(int capacity, int transfer, int size) {
 		storage = new EnergyStorage(capacity, transfer);

@@ -19,6 +19,7 @@ import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.init.UraniumInfuserRecipes;
 import us.mcsw.minerad.init.UraniumInfuserRecipes.InfuserRecipe;
+import us.mcsw.minerad.ref.CapacitorReference;
 import us.mcsw.minerad.util.LogUtil;
 
 public class TileUraniumInfuser extends TileMRMachine {
@@ -26,7 +27,7 @@ public class TileUraniumInfuser extends TileMRMachine {
 	public int progress = 0;
 
 	public TileUraniumInfuser() {
-		super(64000, 200, 3);
+		super(CapacitorReference.CAPACITY_IRON, CapacitorReference.MAX_TRANSFER_IRON, 3);
 	}
 
 	@Override
@@ -35,7 +36,7 @@ public class TileUraniumInfuser extends TileMRMachine {
 		boolean changed = false;
 		if (!worldObj.isRemote) {
 			if (canRun()) {
-				progress += storage.extractEnergy(60, false);
+				progress += storage.extractEnergy(50, false);
 				if (progress >= getMaxProgress()) {
 					if (getStackInSlot(2) != null) {
 						ItemStack p = getStackInSlot(2);
@@ -91,7 +92,7 @@ public class TileUraniumInfuser extends TileMRMachine {
 	public InfuserRecipe getCurrentRecipe() {
 		ItemStack it = getStackInSlot(1);
 		if (it != null) {
-			return UraniumInfuserRecipes.getRecipeFor(it);
+			return UraniumInfuserRecipes.getRecipeFor(it, true);
 		}
 		return null;
 	}
@@ -126,6 +127,9 @@ public class TileUraniumInfuser extends TileMRMachine {
 	public boolean isItemValidForSlot(int i, ItemStack it) {
 		if (i == 0) {
 			return it.getItem().equals(ModItems.emptyCore);
+		}
+		if (i == 1) {
+			return UraniumInfuserRecipes.getRecipeFor(it, false) != null;
 		}
 		if (i == 2) {
 			return false;

@@ -3,6 +3,8 @@ package us.mcsw.minerad.inv;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import us.mcsw.minerad.init.UraniumInfuserRecipes;
 import us.mcsw.minerad.tiles.TileMRMachine;
 import us.mcsw.minerad.tiles.TileUraniumInfuser;
 
@@ -43,7 +45,11 @@ public class ContainerUraniumInfuser extends ContainerMRMachine {
 	@Override
 	public void addSlotsToContainer(TileMRMachine tile) {
 		addSlotToContainer(new SlotCore(tile, 0, 34, 35));
-		addSlotToContainer(new Slot(tile, 1, 56, 35));
+		addSlotToContainer(new Slot(tile, 1, 56, 35) {
+			public boolean isItemValid(ItemStack it) {
+				return UraniumInfuserRecipes.getRecipeFor(it, false) != null;
+			}
+		});
 		addSlotToContainer(new SlotProduct(tile, 2, 116, 35));
 	}
 

@@ -116,6 +116,11 @@ public class CraftingInit {
 		GameRegistry.addRecipe(new ShapelessOreRecipe(ModItems.denseCore,
 				new ItemStack(ModItems.unknownElement, 1, OreDictionary.WILDCARD_VALUE), ModItems.emptyCore));
 
+		GameRegistry.addRecipe(
+				new ShapedOreRecipe(new ItemStack(ModItems.arcThrower, 1, ModItems.arcThrower.getMaxDamage()), " IQ",
+						"PQC", "  B", 'I', "ingotIron", 'Q', Blocks.quartz_block, 'P', ModItems.plutonium, 'C',
+						ModItems.capacitorGold, 'B', "blockIron"));
+
 		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.microwave, "IMI", "NBN", "NCN", 'I', "blockIron", 'M',
 				ModItems.microwaveModule, 'N', ModItems.nuggetPlutonium, 'B', ModBlocks.advancedMachineBlock, 'C',
 				ModItems.capacitorGold));

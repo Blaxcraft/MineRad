@@ -28,6 +28,7 @@ item.minerad:nukeMarker.name=Nuclear Airstrike Marker
 item.minerad:radX.name=Rad-X
 item.minerad:radAway.name=RadAway
 item.minerad:magnetItem.name=Portable Black Hole
+item.minerad:arcThrower.name=Arc Thrower
 
 item.minerad:capacitorBasic.name=Basic Capacitor
 item.minerad:capacitorIron.name=Iron Capacitor
