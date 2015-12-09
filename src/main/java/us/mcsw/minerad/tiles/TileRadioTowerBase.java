@@ -12,15 +12,16 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+import us.mcsw.core.TileMRMachine;
+import us.mcsw.core.util.ItemUtil;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.init.ModBlocks;
-import us.mcsw.minerad.ref.CapacitorReference;
-import us.mcsw.minerad.util.ItemUtil;
+import us.mcsw.minerad.ref.CapacitorTier;
 
 public class TileRadioTowerBase extends TileMRMachine {
 
 	public TileRadioTowerBase() {
-		super(CapacitorReference.CAPACITY_DIAMOND, CapacitorReference.MAX_TRANSFER_DIAMOND, 2);
+		super(CapacitorTier.DIAMOND.getMachineCapacity(), CapacitorTier.DIAMOND.getMaxTransfer(), 2);
 	}
 
 	@Override
@@ -44,7 +45,7 @@ public class TileRadioTowerBase extends TileMRMachine {
 								tile.items[destId] = items[sourceId].copy();
 								energyToUse += getEnergyCost(items[sourceId]);
 								items[sourceId].stackSize = 0;
-							} else if (items[sourceId].isItemEqual(tile.items[destId])) {
+							} else if (ItemStack.areItemStacksEqual(items[sourceId], tile.items[destId])) {
 								int maxStack = Math.min(tile.getInventoryStackLimit(),
 										tile.items[destId].getMaxStackSize());
 								if (tile.items[destId].stackSize < maxStack) {
@@ -82,7 +83,7 @@ public class TileRadioTowerBase extends TileMRMachine {
 		if (ch == null || ch.stackSize <= 0) {
 			return true;
 		}
-		if (ch.isItemEqual(it)) {
+		if (ItemStack.areItemStacksEqual(ch, it)) {
 			int maxStack = Math.min(getInventoryStackLimit(), ch.getMaxStackSize());
 			if (ch.stackSize < maxStack) {
 				return true;

@@ -4,7 +4,8 @@ import java.util.Random;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
-import us.mcsw.minerad.util.LogUtil;
+import us.mcsw.core.BlockMR;
+import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.util.RadUtil;
 
 public class BlockRadEmitter extends BlockMR {

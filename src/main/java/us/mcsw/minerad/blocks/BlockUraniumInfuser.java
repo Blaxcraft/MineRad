@@ -7,6 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import us.mcsw.core.BlockMRMachine;
 import us.mcsw.minerad.ref.MachineReference;
 import us.mcsw.minerad.ref.TextureReference;
 import us.mcsw.minerad.tiles.TileUraniumInfuser;

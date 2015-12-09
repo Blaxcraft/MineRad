@@ -5,10 +5,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import us.mcsw.core.util.ChatUtil;
 import us.mcsw.minerad.init.AchievementsInit;
 import us.mcsw.minerad.init.ModBlocks;
 import us.mcsw.minerad.ref.PlayerProperties;
-import us.mcsw.minerad.util.ChatUtil;
 import us.mcsw.minerad.util.RadUtil;
 
 public class EntityStationaryMarker extends Entity {

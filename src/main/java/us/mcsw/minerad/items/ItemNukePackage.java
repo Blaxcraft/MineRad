@@ -6,8 +6,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import us.mcsw.core.ItemMR;
+import us.mcsw.core.util.ChatUtil;
 import us.mcsw.minerad.ref.PlayerProperties;
-import us.mcsw.minerad.util.ChatUtil;
 
 public class ItemNukePackage extends ItemMR {
 

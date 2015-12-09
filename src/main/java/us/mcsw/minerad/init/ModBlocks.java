@@ -2,14 +2,15 @@ package us.mcsw.minerad.init;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.material.Material;
+import us.mcsw.core.BlockMR;
 import us.mcsw.minerad.blocks.BlockCraftingMachine;
 import us.mcsw.minerad.blocks.BlockFissionReactor;
 import us.mcsw.minerad.blocks.BlockFusionReactor;
 import us.mcsw.minerad.blocks.BlockGroundZero;
-import us.mcsw.minerad.blocks.BlockMR;
 import us.mcsw.minerad.blocks.BlockMagnet;
 import us.mcsw.minerad.blocks.BlockMicrowave;
 import us.mcsw.minerad.blocks.BlockNuclearArsenal;
+import us.mcsw.minerad.blocks.BlockPipe;
 import us.mcsw.minerad.blocks.BlockPlutonium;
 import us.mcsw.minerad.blocks.BlockPureNeptunium;
 import us.mcsw.minerad.blocks.BlockPureUranium;
@@ -20,6 +21,7 @@ import us.mcsw.minerad.blocks.BlockUraniumInfuser;
 import us.mcsw.minerad.blocks.BlockUraniumLump;
 import us.mcsw.minerad.blocks.BlockUraniumOre;
 import us.mcsw.minerad.blocks.BlockUraniumTraces;
+import us.mcsw.minerad.items.ItemPipe;
 
 public class ModBlocks {
 
@@ -45,8 +47,9 @@ public class ModBlocks {
 	public static final BlockCraftingMachine advancedMachineBlock = new BlockCraftingMachine("advancedMachineBlock");
 	public static final BlockUraniumInfuser uraniumInfuser = new BlockUraniumInfuser();
 	public static final BlockRadioTowerBase radioTowerBase = new BlockRadioTowerBase();
-
 	public static final BlockRadioTowerAntenna radioTowerAntenna = new BlockRadioTowerAntenna();
+
+	public static final BlockPipe pipeBlock = new BlockPipe();
 
 	public static void init() {
 		GameRegistry.registerBlock(uraniumTraces, uraniumTraces.getBasicName());
@@ -71,8 +74,9 @@ public class ModBlocks {
 		GameRegistry.registerBlock(advancedMachineBlock, advancedMachineBlock.getBasicName());
 		GameRegistry.registerBlock(uraniumInfuser, uraniumInfuser.getBasicName());
 		GameRegistry.registerBlock(radioTowerBase, radioTowerBase.getBasicName());
-
-		GameRegistry.registerBlock(radioTowerAntenna, radioTowerAntenna.getBasicName());
+		GameRegistry.registerBlock(radioTowerAntenna, radioTowerAntenna.getBasicName());		
+		
+		GameRegistry.registerBlock(pipeBlock, ItemPipe.class, pipeBlock.getBasicName());
 	}
 
 }

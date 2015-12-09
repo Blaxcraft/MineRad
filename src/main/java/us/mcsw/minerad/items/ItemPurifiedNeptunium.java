@@ -5,7 +5,8 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import us.mcsw.minerad.util.NumbersUtil;
+import us.mcsw.core.ItemMR;
+import us.mcsw.core.util.NumbersUtil;
 
 public class ItemPurifiedNeptunium extends ItemMR {
 

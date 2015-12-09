@@ -1,4 +1,4 @@
-package us.mcsw.minerad.blocks;
+package us.mcsw.core;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import us.mcsw.minerad.tiles.TileFusionReactor;
-import us.mcsw.minerad.tiles.TileMultiblock;
 
 public abstract class BlockMultiblock extends BlockMR implements ITileEntityProvider {
 

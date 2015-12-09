@@ -6,7 +6,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.ForgeDirection;
-import us.mcsw.minerad.util.ItemUtil;
+import us.mcsw.core.util.ItemUtil;
 
 public class TileMagnet extends TileEntity {
 

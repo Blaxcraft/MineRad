@@ -3,6 +3,7 @@ package us.mcsw.minerad.items;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import us.mcsw.core.ItemMR;
 import us.mcsw.minerad.entity.EntityThrownMarker;
 
 public class ItemNukeMarker extends ItemMR {

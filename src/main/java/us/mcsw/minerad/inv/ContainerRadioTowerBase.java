@@ -2,7 +2,7 @@ package us.mcsw.minerad.inv;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
-import us.mcsw.minerad.tiles.TileMRMachine;
+import us.mcsw.core.TileMRMachine;
 import us.mcsw.minerad.tiles.TileRadioTowerBase;
 
 public class ContainerRadioTowerBase extends ContainerMRMachine {

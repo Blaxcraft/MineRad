@@ -1,4 +1,4 @@
-package us.mcsw.minerad.util;
+package us.mcsw.core.util;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;

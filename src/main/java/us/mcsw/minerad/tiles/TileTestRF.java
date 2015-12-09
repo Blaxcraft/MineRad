@@ -7,7 +7,7 @@ import cofh.api.energy.TileEnergyHandler;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-import us.mcsw.minerad.util.EnergyUtil;
+import us.mcsw.core.util.EnergyUtil;
 
 public class TileTestRF extends TileEntity implements IEnergyHandler {
 

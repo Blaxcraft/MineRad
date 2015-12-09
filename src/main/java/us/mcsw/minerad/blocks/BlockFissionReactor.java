@@ -11,11 +11,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import us.mcsw.core.BlockMultiblock;
+import us.mcsw.core.TileMultiblock;
 import us.mcsw.minerad.init.FissionRecipes;
 import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.ref.TextureReference;
 import us.mcsw.minerad.tiles.TileFissionReactor;
-import us.mcsw.minerad.tiles.TileMultiblock;
 
 public class BlockFissionReactor extends BlockMultiblock {
 

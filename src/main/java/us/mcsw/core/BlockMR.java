@@ -1,4 +1,4 @@
-package us.mcsw.minerad.blocks;
+package us.mcsw.core;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

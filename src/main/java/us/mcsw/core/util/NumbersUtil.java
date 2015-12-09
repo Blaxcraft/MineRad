@@ -1,4 +1,4 @@
-package us.mcsw.minerad.util;
+package us.mcsw.core.util;
 
 public class NumbersUtil {
 	

@@ -3,10 +3,11 @@ package us.mcsw.minerad.blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import us.mcsw.core.BlockMR;
+import us.mcsw.core.util.ChatUtil;
 import us.mcsw.minerad.init.AchievementsInit;
 import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.ref.PlayerProperties;
-import us.mcsw.minerad.util.ChatUtil;
 
 public class BlockNuclearArsenal extends BlockMR {
 

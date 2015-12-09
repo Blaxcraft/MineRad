@@ -8,8 +8,8 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
+import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.MineRad;
-import us.mcsw.minerad.util.LogUtil;
 import us.mcsw.minerad.util.RadUtil;
 
 public class PotionRadiationSickness extends Potion {

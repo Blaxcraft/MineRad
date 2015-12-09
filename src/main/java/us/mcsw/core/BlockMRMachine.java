@@ -1,4 +1,4 @@
-package us.mcsw.minerad.blocks;
+package us.mcsw.core;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -16,9 +16,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.ref.TextureReference;
-import us.mcsw.minerad.util.LogUtil;
 
 public abstract class BlockMRMachine extends BlockMR implements ITileEntityProvider {
 

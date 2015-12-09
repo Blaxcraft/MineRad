@@ -15,19 +15,20 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.common.util.ForgeDirection;
+import us.mcsw.core.TileMRMachine;
+import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.init.UraniumInfuserRecipes;
 import us.mcsw.minerad.init.UraniumInfuserRecipes.InfuserRecipe;
-import us.mcsw.minerad.ref.CapacitorReference;
-import us.mcsw.minerad.util.LogUtil;
+import us.mcsw.minerad.ref.CapacitorTier;
 
 public class TileUraniumInfuser extends TileMRMachine {
 
 	public int progress = 0;
 
 	public TileUraniumInfuser() {
-		super(CapacitorReference.CAPACITY_IRON, CapacitorReference.MAX_TRANSFER_IRON, 3);
+		super(CapacitorTier.IRON.getMachineCapacity(), CapacitorTier.IRON.getMaxTransfer(), 3);
 	}
 
 	@Override
@@ -40,7 +41,7 @@ public class TileUraniumInfuser extends TileMRMachine {
 				if (progress >= getMaxProgress()) {
 					if (getStackInSlot(2) != null) {
 						ItemStack p = getStackInSlot(2);
-						if (p.isItemEqual(getCurrentRecipe().getProduct())) {
+						if (ItemStack.areItemStacksEqual(getCurrentRecipe().getProduct(), p)) {
 							p.stackSize += getCurrentRecipe().getProduct().stackSize;
 						}
 						setInventorySlotContents(2, p);
@@ -82,7 +83,7 @@ public class TileUraniumInfuser extends TileMRMachine {
 		ItemStack it = getStackInSlot(2);
 		if (it != null) {
 			ItemStack p = getCurrentRecipe().getProduct();
-			if (it.isItemEqual(p)) {
+			if (ItemStack.areItemStacksEqual(it, p)) {
 				return it.stackSize + p.stackSize <= it.getMaxStackSize();
 			}
 		}

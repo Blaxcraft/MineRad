@@ -13,16 +13,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import us.mcsw.core.ItemMR;
 import us.mcsw.minerad.entity.EntityArcThrowerProjectile;
-import us.mcsw.minerad.ref.CapacitorReference;
+import us.mcsw.minerad.ref.CapacitorTier;
 import us.mcsw.minerad.ref.TextureReference;
 
 public class ItemArcThrower extends ItemMR implements IEnergyContainerItem {
 
 	IIcon useable = null;
 
-	public int maxTransfer = CapacitorReference.MAX_TRANSFER_GOLD;
-	public int capacity = CapacitorReference.CAPACITY_GOLD;
+	public int maxTransfer = CapacitorTier.GOLD.getMaxTransfer();
+	public int capacity = CapacitorTier.GOLD.getMachineCapacity();
 
 	public ItemArcThrower() {
 		super("arcThrower");
@@ -31,7 +32,7 @@ public class ItemArcThrower extends ItemMR implements IEnergyContainerItem {
 		setNoRepair();
 	}
 
-	public static final int ENERGY_USAGE = CapacitorReference.CAPACITY_GOLD / 10, USE_TICKS = 40;
+	public static final int ENERGY_USAGE = CapacitorTier.GOLD.getMachineCapacity() / 10, USE_TICKS = 40;
 
 	public void use(ItemStack it, World w, EntityPlayer pl) {
 		double vel = 1.35;

@@ -5,8 +5,9 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import us.mcsw.core.ItemMR;
+import us.mcsw.core.util.NumbersUtil;
 import us.mcsw.minerad.init.ModItems;
-import us.mcsw.minerad.util.NumbersUtil;
 
 public class ItemCoolantCore extends ItemMR {
 

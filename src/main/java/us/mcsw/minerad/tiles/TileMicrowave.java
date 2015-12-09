@@ -12,14 +12,14 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.util.ForgeDirection;
+import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.init.MicrowaveRecipes;
 import us.mcsw.minerad.init.MicrowaveRecipes.MicrowaveRecipe;
-import us.mcsw.minerad.ref.CapacitorReference;
-import us.mcsw.minerad.util.LogUtil;
+import us.mcsw.minerad.ref.CapacitorTier;
 
 public class TileMicrowave extends TileEntity implements IEnergyReceiver {
 
-	EnergyStorage storage = new EnergyStorage(CapacitorReference.CAPACITY_GOLD, CapacitorReference.MAX_TRANSFER_GOLD);
+	EnergyStorage storage = CapacitorTier.GOLD.createStorage(true);
 
 	private static final int USAGE_PER_TICK = 100, RADIUS = 5;
 

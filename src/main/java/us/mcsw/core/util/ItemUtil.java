@@ -1,4 +1,4 @@
-package us.mcsw.minerad.util;
+package us.mcsw.core.util;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -65,7 +65,7 @@ public class ItemUtil {
 
 		int maxStack = Math.min(inv.getInventoryStackLimit(), it.getMaxStackSize());
 		if (cur != null) {
-			if (cur.isItemEqual(it)) {
+			if (ItemStack.areItemStacksEqual(cur, it)) {
 				if (cur.stackSize + it.stackSize > maxStack) {
 					it.stackSize = (cur.stackSize + it.stackSize) - maxStack;
 					cur.stackSize = maxStack;

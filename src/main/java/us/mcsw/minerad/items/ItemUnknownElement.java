@@ -13,6 +13,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
+import us.mcsw.core.ItemMR;
 import us.mcsw.minerad.ref.RadProperties;
 import us.mcsw.minerad.ref.TextureReference;
 import us.mcsw.minerad.util.RadUtil;

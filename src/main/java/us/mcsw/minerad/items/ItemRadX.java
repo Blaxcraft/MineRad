@@ -7,6 +7,7 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+import us.mcsw.core.ItemMR;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.potion.PotionRadX;
 import us.mcsw.minerad.ref.RadProperties;

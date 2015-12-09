@@ -1,4 +1,4 @@
-package us.mcsw.minerad.tiles;
+package us.mcsw.core;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;

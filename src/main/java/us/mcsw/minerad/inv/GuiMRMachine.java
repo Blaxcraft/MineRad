@@ -11,8 +11,8 @@ import net.minecraft.inventory.ContainerFurnace;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.ResourceLocation;
+import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.MineRad;
-import us.mcsw.minerad.util.LogUtil;
 
 public abstract class GuiMRMachine extends GuiContainer {
 

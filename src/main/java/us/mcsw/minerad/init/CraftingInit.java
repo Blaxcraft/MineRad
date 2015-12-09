@@ -7,7 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import us.mcsw.minerad.util.LogUtil;
+import us.mcsw.core.util.LogUtil;
+import us.mcsw.minerad.ref.CapacitorTier;
 
 public class CraftingInit {
 
@@ -126,6 +127,13 @@ public class CraftingInit {
 				ModItems.capacitorGold));
 		GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.microwaveModule, "IUI", "URU", "IUI", 'I', "ingotIron", 'U',
 				ModItems.purifiedUranium, 'R', ModItems.radioEmitter));
+
+		for (CapacitorTier ct : CapacitorTier.values()) {
+			ItemStack result = new ItemStack(ModBlocks.pipeBlock, 6);
+			CapacitorTier.setInItemStack(result, ct);
+			GameRegistry.addRecipe(new ShapedOreRecipe(result, "RRR", "CGC", "RRR", 'R', Items.redstone, 'G',
+					new ItemStack(Blocks.glass, 1, OreDictionary.WILDCARD_VALUE), 'C', CapacitorTier.getCapacitor(ct)));
+		}
 
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.radAway), ModItems.acidSolution,
 				Items.sugar, ModItems.radX));

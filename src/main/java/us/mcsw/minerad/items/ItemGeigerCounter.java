@@ -7,8 +7,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import us.mcsw.core.ItemMR;
+import us.mcsw.core.util.ChatUtil;
 import us.mcsw.minerad.ref.RadProperties;
-import us.mcsw.minerad.util.ChatUtil;
 import us.mcsw.minerad.util.RadUtil;
 
 public class ItemGeigerCounter extends ItemMR {

@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import us.mcsw.core.TileMultiblock;
 import us.mcsw.minerad.init.FissionRecipes;
 import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.util.RadUtil;

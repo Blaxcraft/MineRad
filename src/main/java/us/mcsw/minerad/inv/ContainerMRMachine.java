@@ -9,7 +9,7 @@ import net.minecraft.inventory.ContainerFurnace;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import us.mcsw.minerad.tiles.TileMRMachine;
+import us.mcsw.core.TileMRMachine;
 
 public abstract class ContainerMRMachine extends Container {
 

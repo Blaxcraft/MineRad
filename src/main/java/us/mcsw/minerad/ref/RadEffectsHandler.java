@@ -9,9 +9,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.potion.PotionRadiationSickness;
-import us.mcsw.minerad.util.LogUtil;
 import us.mcsw.minerad.util.RadUtil;
 
 public class RadEffectsHandler {

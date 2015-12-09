@@ -12,6 +12,7 @@ import us.mcsw.minerad.items.ItemNeptuniumNugget;
 import us.mcsw.minerad.items.ItemNuclearArsenalUpgrade;
 import us.mcsw.minerad.items.ItemNukeMarker;
 import us.mcsw.minerad.items.ItemNukePackage;
+import us.mcsw.minerad.items.ItemPipe;
 import us.mcsw.minerad.items.ItemPlutonium;
 import us.mcsw.minerad.items.ItemPlutoniumNugget;
 import us.mcsw.minerad.items.ItemPurifiedNeptunium;
@@ -27,6 +28,7 @@ import us.mcsw.minerad.items.ItemCrafting;
 import us.mcsw.minerad.items.ItemUraniumChunk;
 import us.mcsw.minerad.items.ItemUraniumNugget;
 import us.mcsw.minerad.items.ItemUraniumOre;
+import us.mcsw.minerad.ref.CapacitorTier;
 
 public class ModItems {
 
@@ -52,11 +54,11 @@ public class ModItems {
 	public static final ItemCrafting denseCore = new ItemCrafting("denseCore");
 	public static final ItemCrafting microwaveModule = new ItemCrafting("microwaveModule");
 
-	public static final ItemCapacitor capacitorBasic = new ItemCapacitor("Basic", 0x883333);
-	public static final ItemCapacitor capacitorIron = new ItemCapacitor("Iron", 0xababab);
-	public static final ItemCapacitor capacitorGold = new ItemCapacitor("Gold", 0xbfbf60);
-	public static final ItemCapacitor capacitorDiamond = new ItemCapacitor("Diamond", 0x4dbfbf);
-	public static final ItemCapacitor capacitorQuartz = new ItemCapacitor("Quartz", 0xdfdfdf);
+	public static final ItemCapacitor capacitorBasic = new ItemCapacitor(CapacitorTier.BASIC);
+	public static final ItemCapacitor capacitorIron = new ItemCapacitor(CapacitorTier.IRON);
+	public static final ItemCapacitor capacitorGold = new ItemCapacitor(CapacitorTier.GOLD);
+	public static final ItemCapacitor capacitorDiamond = new ItemCapacitor(CapacitorTier.DIAMOND);
+	public static final ItemCapacitor capacitorQuartz = new ItemCapacitor(CapacitorTier.QUARTZ);
 
 	public static final ItemRadArmour radHelm = new ItemRadArmour(0);
 	public static final ItemRadArmour radChest = new ItemRadArmour(1);
@@ -109,6 +111,8 @@ public class ModItems {
 		GameRegistry.registerItem(capacitorGold, capacitorGold.getBasicName());
 		GameRegistry.registerItem(capacitorDiamond, capacitorDiamond.getBasicName());
 		GameRegistry.registerItem(capacitorQuartz, capacitorQuartz.getBasicName());
+
+		// GameRegistry.registerItem(pipeItem, pipeItem.getBasicName());
 
 		GameRegistry.registerItem(radHelm, radHelm.getBasicName());
 		GameRegistry.registerItem(radChest, radChest.getBasicName());

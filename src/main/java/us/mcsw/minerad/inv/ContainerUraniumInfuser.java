@@ -4,8 +4,8 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import us.mcsw.core.TileMRMachine;
 import us.mcsw.minerad.init.UraniumInfuserRecipes;
-import us.mcsw.minerad.tiles.TileMRMachine;
 import us.mcsw.minerad.tiles.TileUraniumInfuser;
 
 public class ContainerUraniumInfuser extends ContainerMRMachine {

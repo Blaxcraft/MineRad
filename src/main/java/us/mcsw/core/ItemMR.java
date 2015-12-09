@@ -1,4 +1,4 @@
-package us.mcsw.minerad.items;
+package us.mcsw.core;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;

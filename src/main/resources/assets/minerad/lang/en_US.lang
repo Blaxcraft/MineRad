@@ -54,6 +54,7 @@ block.minerad:groundZero.name=Ground Zero
 block.minerad:magnet.name=Black Hole Collector
 block.minerad:microwave.name=Microwave Emitter
 block.minerad:radioTowerAntenna.name=Radio Tower Antenna
+block.minerad:pipeBlock.name=Energy Pipe
 
 block.minerad:basicMachineBlock.name=Basic Machine Block
 block.minerad:advancedMachineBlock.name=Advanced Machine Block
@@ -62,6 +63,12 @@ block.minerad:radioTowerBase.name=Radio Tower Base
 
 container.minerad:uraniumInfuserTile=Uranium Infuser
 container.minerad:radioTowerBase=Radio Tower
+
+description.pipe.basic=Basic
+description.pipe.iron=Iron
+description.pipe.gold=Gold
+description.pipe.diamond=Diamond
+description.pipe.quartz=Quartz
 
 message.geigerCounter.info=Detecting %s RAD/s, Gaining %s RAD/s, %s RADS dose
 
@@ -123,5 +130,8 @@ achievement.minerad:nuclearArsenal=Not so cold
 achievement.minerad:nuclearArsenal.desc=Activate a nuclear arsenal
 achievement.minerad:nukeDrop=Sticks and stones
 achievement.minerad:nukeDrop.desc=Drop a nuclear bomb
+
+option.minerad.showFissionDamage=Show Fission Reactor Info
+option.minerad:showFusionDamage=Show Fusion Reactor Info
 
 itemGroup.minerad=MineRad

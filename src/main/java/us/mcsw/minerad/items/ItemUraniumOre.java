@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import us.mcsw.core.ItemMR;
 
 public class ItemUraniumOre extends ItemMR {
 

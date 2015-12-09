@@ -15,10 +15,12 @@ import net.minecraft.world.World;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.blocks.BlockFissionReactor;
 import us.mcsw.minerad.blocks.BlockFusionReactor;
+import us.mcsw.minerad.blocks.BlockPipe;
 import us.mcsw.minerad.init.ModBlocks;
 import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.tiles.TileFissionReactor;
 import us.mcsw.minerad.tiles.TileFusionReactor;
+import us.mcsw.minerad.tiles.TilePipe;
 
 public class WailaTileHandler implements IWailaDataProvider {
 
@@ -129,6 +131,15 @@ public class WailaTileHandler implements IWailaDataProvider {
 	@Optional.Method(modid = "Waila")
 	@Override
 	public ItemStack getWailaStack(IWailaDataAccessor acc, IWailaConfigHandler config) {
+		if (acc.getBlock().equals(ModBlocks.pipeBlock)) {
+			if (acc.getTileEntity() != null && acc.getTileEntity() instanceof TilePipe) {
+				TilePipe tp = (TilePipe) acc.getTileEntity();
+				
+				ItemStack ret = new ItemStack(acc.getBlock());
+				CapacitorTier.setInItemStack(ret, tp.getTier());
+				return ret;
+			}
+		}
 		return acc.getStack();
 	}
 
@@ -151,6 +162,9 @@ public class WailaTileHandler implements IWailaDataProvider {
 
 		reg.registerNBTProvider(ins, BlockFusionReactor.class);
 		reg.registerNBTProvider(ins, BlockFissionReactor.class);
+		
+		reg.registerNBTProvider(ins, BlockPipe.class);
+		reg.registerStackProvider(ins, BlockPipe.class);
 
 		reg.addConfig(MineRad.MODID, "option.minerad.showFusionDamage");
 		reg.addConfig(MineRad.MODID, "option.minerad.showFissionDamage");

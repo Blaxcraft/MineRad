@@ -1,6 +1,7 @@
 package us.mcsw.minerad.blocks;
 
 import net.minecraft.block.material.Material;
+import us.mcsw.core.BlockMR;
 
 public class BlockCraftingMachine extends BlockMR {
 

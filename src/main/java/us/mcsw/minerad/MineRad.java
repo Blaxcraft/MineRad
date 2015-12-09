@@ -70,8 +70,8 @@ public class MineRad {
 	public void preInit(FMLPreInitializationEvent event) {
 		// load network handling, mod config, items + blocks
 
-		ModItems.init();
 		ModBlocks.init();
+		ModItems.init();
 
 		BiomeDictionary.registerBiomeType(wasteland);
 		BiomeManager.addBiome(BiomeType.DESERT, new BiomeEntry(wasteland, 100));

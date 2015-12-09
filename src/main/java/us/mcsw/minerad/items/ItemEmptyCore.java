@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import us.mcsw.core.ItemMR;
 import us.mcsw.minerad.ref.MachineReference;
 import us.mcsw.minerad.ref.TextureReference;
 

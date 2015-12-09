@@ -1,6 +1,7 @@
 package us.mcsw.minerad.items;
 
 import net.minecraft.item.ItemStack;
+import us.mcsw.core.ItemMR;
 
 public class ItemDiamondGrinder extends ItemMR {
 

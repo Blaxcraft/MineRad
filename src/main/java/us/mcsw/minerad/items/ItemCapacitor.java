@@ -6,18 +6,20 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import us.mcsw.core.ItemMR;
+import us.mcsw.core.util.LogUtil;
+import us.mcsw.minerad.ref.CapacitorTier;
 import us.mcsw.minerad.ref.TextureReference;
-import us.mcsw.minerad.util.LogUtil;
 
 public class ItemCapacitor extends ItemMR {
 
 	IIcon background, foreground;
-	public int colour;
+	CapacitorTier type;
 
-	public ItemCapacitor(String id, int colour) {
-		super("capacitor" + id);
+	public ItemCapacitor(CapacitorTier type) {
+		super("capacitor" + type.getCapitalizedName());
+		this.type = type;
 		setTextureName(TextureReference.RESOURCE_PREFIX + "capacitorBackground");
-		this.colour = colour;
 	}
 
 	@Override
@@ -43,7 +45,7 @@ public class ItemCapacitor extends ItemMR {
 	@Override
 	public int getColorFromItemStack(ItemStack it, int pass) {
 		if (pass == 0) {
-			return colour;
+			return type.getColour();
 		}
 		return super.getColorFromItemStack(it, pass);
 	}

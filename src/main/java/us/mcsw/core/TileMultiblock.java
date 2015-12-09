@@ -1,4 +1,4 @@
-package us.mcsw.minerad.tiles;
+package us.mcsw.core;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -7,6 +7,8 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import us.mcsw.minerad.init.AchievementsInit;
+import us.mcsw.minerad.tiles.TileFissionReactor;
+import us.mcsw.minerad.tiles.TileFusionReactor;
 
 public abstract class TileMultiblock extends TileEntity {
 	private boolean hasMaster, isMaster;

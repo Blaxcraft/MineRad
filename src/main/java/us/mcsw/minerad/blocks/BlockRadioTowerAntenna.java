@@ -11,10 +11,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import us.mcsw.core.BlockMR;
+import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.init.ModBlocks;
 import us.mcsw.minerad.ref.TextureReference;
 import us.mcsw.minerad.tiles.TileRadioTowerAntenna;
-import us.mcsw.minerad.util.LogUtil;
 
 public class BlockRadioTowerAntenna extends BlockMR implements ITileEntityProvider {
 

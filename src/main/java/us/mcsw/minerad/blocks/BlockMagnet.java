@@ -4,6 +4,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import us.mcsw.core.BlockMR;
 import us.mcsw.minerad.tiles.TileMagnet;
 
 public class BlockMagnet extends BlockMR implements ITileEntityProvider {

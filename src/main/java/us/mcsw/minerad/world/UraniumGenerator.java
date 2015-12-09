@@ -6,8 +6,8 @@ import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.init.ModBlocks;
-import us.mcsw.minerad.util.LogUtil;
 
 public class UraniumGenerator implements IWorldGenerator {
 

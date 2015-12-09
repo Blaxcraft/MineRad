@@ -18,6 +18,7 @@ import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import us.mcsw.core.ItemMR;
 
 public class ItemMagnet extends ItemMR {
 

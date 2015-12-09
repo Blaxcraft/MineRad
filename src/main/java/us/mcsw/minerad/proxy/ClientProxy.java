@@ -11,7 +11,9 @@ import us.mcsw.minerad.entity.EntityArcThrowerProjectile;
 import us.mcsw.minerad.entity.EntityStationaryMarker;
 import us.mcsw.minerad.entity.EntityThrownMarker;
 import us.mcsw.minerad.init.ModItems;
+import us.mcsw.minerad.render.TilePipeRenderer;
 import us.mcsw.minerad.render.TileRadioTowerAntennaRenderer;
+import us.mcsw.minerad.tiles.TilePipe;
 import us.mcsw.minerad.tiles.TileRadioTowerAntenna;
 
 public class ClientProxy extends CommonProxy {
@@ -29,6 +31,7 @@ public class ClientProxy extends CommonProxy {
 		});
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileRadioTowerAntenna.class, new TileRadioTowerAntennaRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TilePipe.class, new TilePipeRenderer());
 	}
 
 }

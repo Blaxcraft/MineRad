@@ -6,8 +6,8 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.tileentity.TileEntity;
+import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.tiles.TileRadioTowerBase;
-import us.mcsw.minerad.util.LogUtil;
 
 public class MessageUpdateFrequency implements IMessage {
 
