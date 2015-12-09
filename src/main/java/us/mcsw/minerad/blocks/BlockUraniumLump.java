@@ -1,16 +1,12 @@
 package us.mcsw.minerad.blocks;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import scala.actors.threadpool.Arrays;
-import us.mcsw.core.util.LogUtil;
+import us.mcsw.core.BlockMR;
 import us.mcsw.minerad.init.ModItems;
-import us.mcsw.minerad.ref.TextureReference;
-import us.mcsw.minerad.util.RadUtil;
 
 public class BlockUraniumLump extends BlockMR {
 
