@@ -77,6 +77,13 @@ public class ItemPipe extends ItemBlockMR {
 		return super.getItemStackDisplayName(it) + " [" + LanguageRegistry.instance().getStringLocalization(
 				"description.pipe." + CapacitorTier.getFromItemStack(it).getLowercaseName()) + "]";
 	}
+	
+	@Override
+	public void addInformation(ItemStack it, EntityPlayer pl, List list, boolean n) {
+		if (CapacitorTier.getFromItemStack(it) != null) {
+			list.add("Transfers " + CapacitorTier.getFromItemStack(it).getMaxTransferPipe() + " RF/t");
+		}
+	}
 
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {

@@ -63,6 +63,8 @@ block.minerad:radioTowerBase.name=Radio Tower Base
 
 container.minerad:uraniumInfuserTile=Uranium Infuser
 container.minerad:radioTowerBase=Radio Tower
+container.minerad:fissionReactor=Fission Reactor
+container.minerad:fusionReactor=Fusion Reactor
 
 description.pipe.basic=Basic
 description.pipe.iron=Iron
@@ -93,6 +95,13 @@ message.radSickness.1.2=You choke back vomit as you weaken...
 message.unknownElement.decay=The strange element suddenly vanishes
 
 info.geigerCounter.desc=Detects radiation at its position
+
+info.reactor.heat=Heat: 
+info.reactor.heat.cool=Cool
+info.reactor.heat.warm=Warm
+info.reactor.heat.hot=Hot
+info.reactor.heat.extreme=Extreme
+info.reactor.heat.danger=DANGER
 
 death.attack.minerad:nuke=%1$s was blown up by a nuke
 death.attack.minerad:radiation=%1$s was overexposed to radiation
@@ -130,8 +139,5 @@ achievement.minerad:nuclearArsenal=Not so cold
 achievement.minerad:nuclearArsenal.desc=Activate a nuclear arsenal
 achievement.minerad:nukeDrop=Sticks and stones
 achievement.minerad:nukeDrop.desc=Drop a nuclear bomb
-
-option.minerad.showFissionDamage=Show Fission Reactor Info
-option.minerad:showFusionDamage=Show Fusion Reactor Info
 
 itemGroup.minerad=MineRad

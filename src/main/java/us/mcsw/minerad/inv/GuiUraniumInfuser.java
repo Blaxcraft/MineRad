@@ -4,6 +4,7 @@ import net.minecraft.client.gui.inventory.GuiFurnace;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
+import us.mcsw.core.GuiMRMachine;
 import us.mcsw.minerad.ref.MachineReference;
 import us.mcsw.minerad.tiles.TileUraniumInfuser;
 

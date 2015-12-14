@@ -31,7 +31,8 @@ public class ItemPurifiedNeptunium extends ItemMR {
 	public void addInformation(ItemStack it, EntityPlayer p, List list, boolean n) {
 		super.addInformation(it, p, list, n);
 		if (it.getItemDamage() > 0) {
-			list.add("Progress: " + NumbersUtil.roundDouble(it.getItemDamage() * 100 / getMaxDamage(), 1) + "%");
+			list.add("Progress: " + NumbersUtil.roundDouble((((double) it.getItemDamage()) / (getMaxDamage() / 100.0)), 1)
+					+ "%");
 		}
 	}
 

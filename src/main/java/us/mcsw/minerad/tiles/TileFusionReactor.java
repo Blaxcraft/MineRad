@@ -5,10 +5,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.event.terraingen.BiomeEvent.GetWaterColor;
 import us.mcsw.core.TileMultiblock;
+import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.init.FissionRecipes;
 import us.mcsw.minerad.init.FusionRecipes;
 import us.mcsw.minerad.init.ModItems;
+import us.mcsw.minerad.items.ItemCoolantCore;
+import us.mcsw.minerad.items.ItemFissionCore;
+import us.mcsw.minerad.items.ItemFusionCore;
 import us.mcsw.minerad.util.RadUtil;
 
 public class TileFusionReactor extends TileMultiblock {
@@ -20,19 +25,21 @@ public class TileFusionReactor extends TileMultiblock {
 
 	public int heat = 0;
 
+	public TileFusionReactor() {
+		super(5);
+	}
+
 	@Override
 	public void onUpdate() {
-		if (hasCore && !isCoreDepleted()) {
+		if (hasCore() && !isCoreDepleted() && hasSource()) {
 			RadUtil.setPowerAndReach(worldObj, xCoord, yCoord + 1, zCoord, 5, 1);
 			if (++coreDamageCount > 5) {
 				damageCore(1);
 				coreDamageCount = 0;
 			}
-			if (hasOre && !isOreCompleted()) {
-				if (++oreProgressCount > 2) {
-					incrProgress(1);
-					oreProgressCount = 0;
-				}
+			if (++oreProgressCount > 2) {
+				incrProgress(1);
+				oreProgressCount = 0;
 			}
 		} else {
 			RadUtil.setPowerAndReach(worldObj, xCoord, yCoord + 1, zCoord, 0, 0);
@@ -42,8 +49,8 @@ public class TileFusionReactor extends TileMultiblock {
 				}
 			}
 		}
-		if (hasCoolant && !isCoolantDepleted()) {
-			if (hasCore && !isCoreDepleted()) {
+		if (hasCoolant() && !isCoolantDepleted()) {
+			if (hasCore() && !isCoreDepleted() && hasSource()) {
 				if (++coolantDamageCount > 7) {
 					damageCoolant(1);
 					coolantDamageCount = 0;
@@ -53,60 +60,45 @@ public class TileFusionReactor extends TileMultiblock {
 				heat--;
 				damageCoolant(1);
 			}
-		} else if (hasCore && !isCoreDepleted()) {
+		} else if (hasCore() && !isCoreDepleted()) {
 			heat += 1;
 		}
 		if (!worldObj.isRemote) {
 			if (heat > DANGER_HEAT_LEVEL) {
 				if (Math.random() > 0.995) {
-					hasCore = false;
-					this.worldObj.createExplosion(null, coreX, coreY, coreZ, 15.0f, true);
+					this.worldObj.createExplosion(null, xCoord, yCoord + 1, zCoord, 20.0f, true);
 				}
 			}
 		}
+	}
+
+	@Override
+	public String getInventoryName() {
+		return MineRad.MODID + ":fusionReactor";
+	}
+
+	@Override
+	public int getInventoryStackLimit() {
+		return 1;
 	}
 
 	public static final int DANGER_HEAT_LEVEL = 1000;
 
 	public String getHeatLevel() {
 		if (heat <= 20) {
-			return "Cool";
+			return "cool";
 		} else if (heat <= 200) {
-			return "Warm";
+			return "warm";
 		} else if (heat <= 500) {
-			return "Hot";
+			return "hot";
 		} else if (heat <= DANGER_HEAT_LEVEL) {
-			return "Extreme";
+			return "extreme";
 		} else {
-			return "DANGER";
+			return "danger";
 		}
 	}
 
-	private void onCoreDepleted() {
-		worldObj.markBlockForUpdate(coreX, coreY, coreZ);
-	}
-
-	private void onOreCompleted() {
-		worldObj.markBlockForUpdate(oreX, oreY, oreZ);
-	}
-
-	private void onCoolantDepleted() {
-		worldObj.markBlockForUpdate(coolantX, coolantY, coolantZ);
-	}
-
 	int updateCount = 0;
-
-	public boolean hasCore = false;
-	public int coreX = 0, coreY = 0, coreZ = 0;
-	public int coreDamage = -1;
-
-	public boolean hasOre = false;
-	public int oreX = 0, oreY = 0, oreZ = 0;
-	public int oreProgress = -1;
-
-	public boolean hasCoolant = false;
-	public int coolantX = 0, coolantY = 0, coolantZ = 0;
-	public int coolantDamage = -1;
 
 	@Override
 	public void updateEntity() {
@@ -115,6 +107,18 @@ public class TileFusionReactor extends TileMultiblock {
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			updateCount = 20;
 		}
+	}
+
+	@Override
+	public boolean isItemValidForSlot(int slot, ItemStack stack) {
+		if (slot <= 1) {
+			return FusionRecipes.hasRecipe(stack);
+		} else if (slot == 3) {
+			return stack.getItem() instanceof ItemFusionCore;
+		} else if (slot == 4) {
+			return stack.getItem() instanceof ItemCoolantCore;
+		}
+		return false;
 	}
 
 	@Override
@@ -163,91 +167,75 @@ public class TileFusionReactor extends TileMultiblock {
 						((TileMultiblock) tile).reset();
 					}
 				}
+	}
 
-		if (hasCore) {
-			ItemStack core = !isCoreDepleted() ? new ItemStack(ModItems.fusionCore, 1, coreDamage)
-					: new ItemStack(ModItems.emptyCore);
-			if (!worldObj.isRemote) {
-				EntityItem drop = new EntityItem(worldObj);
-				drop.setPosition(coreX, coreY, coreZ);
-				drop.setEntityItemStack(core);
-				worldObj.spawnEntityInWorld(drop);
-			}
-		}
+	public boolean hasCore() {
+		return getStackInSlot(3) != null && getStackInSlot(3).stackSize > 0;
+	}
 
-		if (hasOre) {
-			ItemStack ore = !isOreCompleted() ? new ItemStack(source, 1, coreDamage)
-					: new ItemStack(FusionRecipes.getResultFrom(source));
-			if (!worldObj.isRemote) {
-				EntityItem drop = new EntityItem(worldObj);
-				drop.setPosition(oreX, oreY, oreZ);
-				drop.setEntityItemStack(ore);
-				worldObj.spawnEntityInWorld(drop);
-			}
-		}
+	public boolean hasSource() {
+		return getStackInSlot(0) != null && getStackInSlot(0).stackSize > 0 && getStackInSlot(1) != null
+				&& getStackInSlot(1).stackSize > 0
+				&& FusionRecipes.getRecipeFor(getStackInSlot(0), getStackInSlot(1)) != null;
+	}
 
-		if (hasCoolant) {
-			ItemStack cool = !isCoolantDepleted() ? new ItemStack(ModItems.coolantCore, 1, coolantDamage)
-					: new ItemStack(ModItems.emptyCore);
-			if (!worldObj.isRemote) {
-				EntityItem drop = new EntityItem(worldObj);
-				drop.setPosition(oreX, oreY, oreZ);
-				drop.setEntityItemStack(cool);
-				worldObj.spawnEntityInWorld(drop);
-			}
-		}
-
-		RadUtil.setPowerAndReach(worldObj, xCoord, yCoord + 1, zCoord, 0, 0);
-		coreX = coreY = coreZ = 0;
-		coreDamage = -1;
-		hasCore = false;
-
-		oreX = oreY = oreZ = 0;
-		oreProgress = -1;
-		hasOre = false;
-
-		coolantX = coolantY = coolantZ = 0;
-		coolantDamage = -1;
-		hasCoolant = false;
-
-		source = null;
+	public boolean hasCoolant() {
+		return getStackInSlot(4) != null && getStackInSlot(4).stackSize > 0;
 	}
 
 	public boolean isCoreDepleted() {
-		return coreDamage > ModItems.fusionCore.getMaxDamage();
+		if (!hasCore()) {
+			return true;
+		}
+		return getStackInSlot(3).getItemDamage() > getStackInSlot(3).getMaxDamage();
 	}
 
-	public boolean isOreCompleted() {
-		return oreProgress >= maxNeeded;
+	public boolean isSourceCompleted() {
+		if (!hasSource()) {
+			return false;
+		}
+		return getStackInSlot(0).getItemDamage() >= getStackInSlot(0).getMaxDamage()
+				&& getStackInSlot(1).getItemDamage() >= getStackInSlot(1).getMaxDamage();
 	}
 
 	public boolean isCoolantDepleted() {
-		return coolantDamage > ModItems.coolantCore.getMaxDamage();
+		if (!hasCoolant()) {
+			return true;
+		}
+		return getStackInSlot(4).getItemDamage() > getStackInSlot(4).getMaxDamage();
 	}
 
 	public void damageCore(int amount) {
 		if (!isCoreDepleted()) {
-			coreDamage += amount;
+			getStackInSlot(3).setItemDamage(getStackInSlot(3).getItemDamage() + amount);
 			if (isCoreDepleted()) {
-				onCoreDepleted();
+				setInventorySlotContents(4, new ItemStack(ModItems.emptyCore));
 			}
 		}
 	}
 
 	public void incrProgress(int amount) {
-		if (!isOreCompleted()) {
-			oreProgress += amount;
-			if (isOreCompleted()) {
-				onOreCompleted();
+		if (hasSource() && !isSourceCompleted()) {
+			if (getStackInSlot(0).getItemDamage() < getStackInSlot(0).getMaxDamage()) {
+				getStackInSlot(0).setItemDamage(getStackInSlot(0).getItemDamage() + amount);
 			}
+			if (getStackInSlot(1).getItemDamage() < getStackInSlot(1).getMaxDamage()) {
+				getStackInSlot(1).setItemDamage(getStackInSlot(1).getItemDamage() + amount);
+			}
+		}
+		if (isSourceCompleted() && getStackInSlot(2) == null) {
+			ItemStack result = FusionRecipes.getRecipeFor(getStackInSlot(0), getStackInSlot(1)).getResult();
+			setInventorySlotContents(2, result.copy());
+			setInventorySlotContents(0, null);
+			setInventorySlotContents(1, null);
 		}
 	}
 
 	public void damageCoolant(int amount) {
 		if (!isCoolantDepleted()) {
-			coolantDamage += amount;
+			getStackInSlot(4).setItemDamage(getStackInSlot(4).getItemDamage() + amount);
 			if (isCoolantDepleted()) {
-				onCoolantDepleted();
+				setInventorySlotContents(4, new ItemStack(ModItems.emptyCore));
 			}
 		}
 	}
@@ -258,31 +246,7 @@ public class TileFusionReactor extends TileMultiblock {
 
 	@Override
 	public void masterWriteSyncable(NBTTagCompound data) {
-		data.setBoolean("hasCore", hasCore);
-		if (hasCore) {
-			data.setInteger("coreDamage", coreDamage);
-			data.setInteger("coreX", coreX);
-			data.setInteger("coreY", coreY);
-			data.setInteger("coreZ", coreZ);
-		}
-		data.setBoolean("hasOre", hasOre);
-		if (hasOre) {
-			data.setInteger("oreProgress", oreProgress);
-			data.setInteger("oreX", oreX);
-			data.setInteger("oreY", oreY);
-			data.setInteger("oreZ", oreZ);
-		}
-		data.setBoolean("hasCoolant", hasCoolant);
-		if (hasCoolant) {
-			data.setInteger("coolantDamage", coolantDamage);
-			data.setInteger("coolantX", coolantX);
-			data.setInteger("coolantY", coolantY);
-			data.setInteger("coolantZ", coolantZ);
-		}
-		data.setInteger("maxNeeded", maxNeeded);
 		data.setInteger("heat", heat);
-		if (source != null)
-			data.setTag("source", new ItemStack(source).stackTagCompound);
 	}
 
 	@Override
@@ -291,51 +255,6 @@ public class TileFusionReactor extends TileMultiblock {
 
 	@Override
 	public void masterReadSyncable(NBTTagCompound data) {
-		hasCore = data.getBoolean("hasCore");
-		if (hasCore) {
-			coreDamage = data.getInteger("coreDamage");
-			coreX = data.getInteger("coreX");
-			coreY = data.getInteger("coreY");
-			coreZ = data.getInteger("coreZ");
-		} else {
-			coreDamage = -1;
-			coreX = 0;
-			coreY = 0;
-			coreZ = 0;
-		}
-		hasOre = data.getBoolean("hasOre");
-		if (hasOre) {
-			oreProgress = data.getInteger("oreProgress");
-			oreX = data.getInteger("oreX");
-			oreY = data.getInteger("oreY");
-			oreZ = data.getInteger("oreZ");
-		} else {
-			oreProgress = -1;
-			oreX = 0;
-			oreY = 0;
-			oreZ = 0;
-		}
-		hasCoolant = data.getBoolean("hasCoolant");
-		if (hasCoolant) {
-			coolantDamage = data.getInteger("coolantDamage");
-			coolantX = data.getInteger("coolantX");
-			coolantY = data.getInteger("coolantY");
-			coolantZ = data.getInteger("coolantZ");
-		} else {
-			coolantDamage = -1;
-			coolantX = 0;
-			coolantY = 0;
-			coolantZ = 0;
-		}
 		heat = data.getInteger("heat");
-		maxNeeded = data.getInteger("maxNeeded");
-		if (data.getCompoundTag("source") != null) {
-			NBTTagCompound item = data.getCompoundTag("source");
-			if (ItemStack.loadItemStackFromNBT(item) != null) {
-				source = ItemStack.loadItemStackFromNBT(item).getItem();
-			}
-		} else {
-			source = null;
-		}
 	}
 }

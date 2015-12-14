@@ -7,9 +7,9 @@ import net.minecraft.util.ResourceLocation;
 import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.ref.MachineReference;
 
-public class SlotCore extends Slot {
+public class SlotCoreEmpty extends Slot {
 
-	public SlotCore(IInventory inv, int i, int x, int y) {
+	public SlotCoreEmpty(IInventory inv, int i, int x, int y) {
 		super(inv, i, x, y);
 		setBackgroundIcon(MachineReference.CORE_BACKGROUND);
 	}

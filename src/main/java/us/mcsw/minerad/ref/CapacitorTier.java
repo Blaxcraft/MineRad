@@ -11,16 +11,17 @@ import us.mcsw.minerad.items.ItemCapacitor;
 
 public enum CapacitorTier {
 
-	BASIC(0x883333, 10000, 25000, 100), IRON(0xababab, 25000, 100000, 350), GOLD(0xbfbf60, 50000, 250000,
-			650), DIAMOND(0x4dbfbf, 100000, 1000000, 1250), QUARTZ(0xdfdfdf, 250000, 2500000, 2500);
+	BASIC(0x883333, 10000, 100000, 100, 250), IRON(0xababab, 25000, 250000, 350, 1000), GOLD(0xbfbf60, 50000, 750000,
+			650, 2500), DIAMOND(0x4dbfbf, 100000, 2500000, 1250, 5000), QUARTZ(0xdfdfdf, 250000, 10000000, 5000, 10000);
 
-	int colour, capMachine, capStorage, maxTransfer;
+	int colour, capMachine, capStorage, maxTransferMachine, maxTransferPipe;
 
-	private CapacitorTier(int colour, int capMachine, int capStorage, int maxTransfer) {
+	private CapacitorTier(int colour, int capMachine, int capStorage, int maxTransferMachine, int maxTransferPipe) {
 		this.colour = colour;
 		this.capMachine = capMachine;
 		this.capStorage = capStorage;
-		this.maxTransfer = maxTransfer;
+		this.maxTransferMachine = maxTransferMachine;
+		this.maxTransferPipe = maxTransferPipe;
 	}
 
 	public String getCapitalizedName() {
@@ -43,12 +44,17 @@ public enum CapacitorTier {
 		return capStorage;
 	}
 
-	public int getMaxTransfer() {
-		return maxTransfer;
+	public int getMaxTransferMachine() {
+		return maxTransferMachine;
+	}
+
+	public int getMaxTransferPipe() {
+		return maxTransferPipe;
 	}
 
 	public EnergyStorage createStorage(boolean machine) {
-		EnergyStorage ret = new EnergyStorage(machine ? capMachine : capStorage, maxTransfer);
+		EnergyStorage ret = new EnergyStorage(machine ? capMachine : capStorage,
+				machine ? maxTransferMachine : maxTransferPipe);
 		return ret;
 	}
 

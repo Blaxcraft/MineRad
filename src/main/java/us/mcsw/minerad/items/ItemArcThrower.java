@@ -22,7 +22,7 @@ public class ItemArcThrower extends ItemMR implements IEnergyContainerItem {
 
 	IIcon useable = null;
 
-	public int maxTransfer = CapacitorTier.GOLD.getMaxTransfer();
+	public int maxTransfer = CapacitorTier.GOLD.getMaxTransferMachine();
 	public int capacity = CapacitorTier.GOLD.getMachineCapacity();
 
 	public ItemArcThrower() {

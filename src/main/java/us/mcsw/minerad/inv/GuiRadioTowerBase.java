@@ -1,16 +1,14 @@
 package us.mcsw.minerad.inv;
 
-import com.sun.org.apache.xml.internal.resolver.readers.XCatalogReader;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
+import us.mcsw.core.GuiMR;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.net.MessageUpdateFrequency;
 import us.mcsw.minerad.ref.MachineReference;
 import us.mcsw.minerad.tiles.TileRadioTowerBase;
 
-public class GuiRadioTowerBase extends GuiMRMachine {
+public class GuiRadioTowerBase extends GuiMR {
 
 	TileRadioTowerBase tile;
 
@@ -23,8 +21,8 @@ public class GuiRadioTowerBase extends GuiMRMachine {
 	public void initGui() {
 		super.initGui();
 
-		this.buttonList.add(new GuiButton(0, this.guiLeft + 25, this.guiTop + 40, 20, 20, "-"));
-		this.buttonList.add(new GuiButton(1, this.guiLeft + this.xSize - 45, this.guiTop + 40, 20, 20, "+"));
+		this.buttonList.add(new GuiButton(0, this.guiLeft + 25, this.guiTop + 40, 20, 20, "<"));
+		this.buttonList.add(new GuiButton(1, this.guiLeft + this.xSize - 45, this.guiTop + 40, 20, 20, ">"));
 
 		this.buttonList.add(new GuiButton(2, this.guiLeft + 4, this.guiTop + 40, 20, 20, "<<"));
 		this.buttonList.add(new GuiButton(3, this.guiLeft + this.xSize - 24, this.guiTop + 40, 20, 20, ">>"));
@@ -38,10 +36,16 @@ public class GuiRadioTowerBase extends GuiMRMachine {
 		if (button.id == 1) {
 			tile.freq++;
 		}
-		if (tile.freq < 0 || button.id == 2) {
+		if (button.id == 2) {
+			tile.freq -= 10;
+		}
+		if (button.id == 3) {
+			tile.freq += 10;
+		}
+		if (tile.freq < 0) {
 			tile.freq = 0;
 		}
-		if (tile.freq > 9999 || button.id == 3) {
+		if (tile.freq > 9999) {
 			tile.freq = 9999;
 		}
 		updateScreen();

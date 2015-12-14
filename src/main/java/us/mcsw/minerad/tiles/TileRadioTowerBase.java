@@ -21,7 +21,7 @@ import us.mcsw.minerad.ref.CapacitorTier;
 public class TileRadioTowerBase extends TileMRMachine {
 
 	public TileRadioTowerBase() {
-		super(CapacitorTier.DIAMOND.getMachineCapacity(), CapacitorTier.DIAMOND.getMaxTransfer(), 2);
+		super(CapacitorTier.DIAMOND.getMachineCapacity(), CapacitorTier.DIAMOND.getMaxTransferMachine(), 2);
 	}
 
 	@Override

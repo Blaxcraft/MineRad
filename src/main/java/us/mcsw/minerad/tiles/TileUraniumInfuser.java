@@ -28,7 +28,7 @@ public class TileUraniumInfuser extends TileMRMachine {
 	public int progress = 0;
 
 	public TileUraniumInfuser() {
-		super(CapacitorTier.IRON.getMachineCapacity(), CapacitorTier.IRON.getMaxTransfer(), 3);
+		super(CapacitorTier.IRON.getMachineCapacity(), CapacitorTier.IRON.getMaxTransferMachine(), 3);
 	}
 
 	@Override

@@ -35,89 +35,6 @@ public class WailaTileHandler implements IWailaDataProvider {
 	@Override
 	public List<String> getWailaBody(ItemStack it, List<String> list, IWailaDataAccessor data,
 			IWailaConfigHandler config) {
-		if (config.getConfig("option.minerad.showFusionDamage")) {
-			if (data.getBlock().equals(ModBlocks.fusionReactor)) {
-				TileEntity tile = data.getTileEntity();
-				if (tile != null && tile instanceof TileFusionReactor) {
-					TileFusionReactor tf = (TileFusionReactor) tile;
-					if (tf.hasMaster() && tf.checkForMaster()) {
-						TileFusionReactor tfm = (TileFusionReactor) tf.getMaster();
-						
-						list.add("Heat: " + tfm.getHeatLevel());
-						
-						if (tfm.hasCore) {
-							if (tfm.isCoreDepleted()) {
-								list.add("Fusion Core Depleted");
-							} else
-								list.add("Fusion Core Power: " + (ModItems.fusionCore.getMaxDamage() - tfm.coreDamage));
-						} else {
-							list.add("No core present");
-						}
-
-						if (tfm.hasOre) {
-							if (tfm.isOreCompleted()) {
-								list.add("Process complete");
-							} else
-								list.add("Progress: " + (tfm.oreProgress * 100 / tfm.maxNeeded) + "%");
-						} else {
-							list.add("No item present");
-						}
-
-						if (tfm.hasCoolant) {
-							if (tfm.isCoolantDepleted()) {
-								list.add("Coolant depleted");
-							} else
-								list.add("Coolant durability: "
-										+ (ModItems.coolantCore.getMaxDamage() - tfm.coolantDamage));
-						} else {
-							list.add("No coolant present");
-						}
-					}
-				}
-			}
-		}
-		if (config.getConfig("option.minerad.showFissionDamage")) {
-			if (data.getBlock().equals(ModBlocks.fissionReactor)) {
-				TileEntity tile = data.getTileEntity();
-				if (tile != null && tile instanceof TileFissionReactor) {
-					TileFissionReactor tf = (TileFissionReactor) tile;
-					if (tf.hasMaster() && tf.checkForMaster()) {
-						TileFissionReactor tfm = (TileFissionReactor) tf.getMaster();
-						
-						list.add("Heat: " + tfm.getHeatLevel());
-						
-						if (tfm.hasCore) {
-							if (tfm.isCoreDepleted()) {
-								list.add("Fission Core Depleted");
-							} else
-								list.add("Fission Core Power: "
-										+ (ModItems.fissionCore.getMaxDamage() - tfm.coreDamage));
-						} else {
-							list.add("No core present");
-						}
-
-						if (tfm.hasOre) {
-							if (tfm.isOreCompleted()) {
-								list.add("Process complete");
-							} else
-								list.add("Progress: " + (tfm.oreProgress * 100 / tfm.maxNeeded) + "%");
-						} else {
-							list.add("No item present");
-						}
-
-						if (tfm.hasCoolant) {
-							if (tfm.isCoolantDepleted()) {
-								list.add("Coolant depleted");
-							} else
-								list.add("Coolant durability: "
-										+ (ModItems.coolantCore.getMaxDamage() - tfm.coolantDamage));
-						} else {
-							list.add("No coolant present");
-						}
-					}
-				}
-			}
-		}
 		return list;
 	}
 
@@ -157,17 +74,9 @@ public class WailaTileHandler implements IWailaDataProvider {
 	@Optional.Method(modid = "Waila")
 	public static void callbackRegister(IWailaRegistrar reg) {
 		WailaTileHandler ins = new WailaTileHandler();
-		reg.registerBodyProvider(ins, BlockFusionReactor.class);
-		reg.registerBodyProvider(ins, BlockFissionReactor.class);
 
-		reg.registerNBTProvider(ins, BlockFusionReactor.class);
-		reg.registerNBTProvider(ins, BlockFissionReactor.class);
-		
 		reg.registerNBTProvider(ins, BlockPipe.class);
 		reg.registerStackProvider(ins, BlockPipe.class);
-
-		reg.addConfig(MineRad.MODID, "option.minerad.showFusionDamage");
-		reg.addConfig(MineRad.MODID, "option.minerad.showFissionDamage");
 	}
 
 }

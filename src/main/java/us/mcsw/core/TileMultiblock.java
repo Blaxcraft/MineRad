@@ -1,6 +1,7 @@
 package us.mcsw.core;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -10,7 +11,12 @@ import us.mcsw.minerad.init.AchievementsInit;
 import us.mcsw.minerad.tiles.TileFissionReactor;
 import us.mcsw.minerad.tiles.TileFusionReactor;
 
-public abstract class TileMultiblock extends TileEntity {
+public abstract class TileMultiblock extends TileMRInventory {
+	
+	public TileMultiblock(int size) {
+		super(size);
+	}
+
 	private boolean hasMaster, isMaster;
 	private int masterX, masterY, masterZ;
 
@@ -128,6 +134,8 @@ public abstract class TileMultiblock extends TileEntity {
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		readSyncable(pkt.func_148857_g());
 	}
+	
+	
 
 	public boolean hasMaster() {
 		return hasMaster;
@@ -161,5 +169,38 @@ public abstract class TileMultiblock extends TileEntity {
 		masterX = x;
 		masterY = y;
 		masterZ = z;
+	}
+	
+	@Override
+	public ItemStack getStackInSlot(int i) {
+		if (hasMaster() && !isMaster()) {
+			return getMaster().getStackInSlot(i);
+		}
+		return super.getStackInSlot(i);
+	}
+	
+	@Override
+	public ItemStack decrStackSize(int i, int a) {
+		if (hasMaster() && !isMaster()) {
+			return getMaster().decrStackSize(i, a);
+		}
+		return super.decrStackSize(i, a);
+	}
+	
+	@Override
+	public ItemStack getStackInSlotOnClosing(int i) {
+		if (hasMaster() && !isMaster()) {
+			return getMaster().getStackInSlotOnClosing(i);
+		}
+		return super.getStackInSlotOnClosing(i);
+	}
+	
+	@Override
+	public void setInventorySlotContents(int i, ItemStack it) {
+		if (hasMaster() && !isMaster()) {
+			getMaster().setInventorySlotContents(i, it);
+			return;
+		}
+		super.setInventorySlotContents(i, it);
 	}
 }

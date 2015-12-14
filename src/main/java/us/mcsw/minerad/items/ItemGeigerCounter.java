@@ -9,6 +9,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import us.mcsw.core.ItemMR;
 import us.mcsw.core.util.ChatUtil;
+import us.mcsw.core.util.LangUtil;
 import us.mcsw.minerad.ref.RadProperties;
 import us.mcsw.minerad.util.RadUtil;
 
@@ -39,7 +40,7 @@ public class ItemGeigerCounter extends ItemMR {
 	@Override
 	public void addInformation(ItemStack it, EntityPlayer p, List list, boolean n) {
 		super.addInformation(it, p, list, n);
-		list.add(LanguageRegistry.instance().getStringLocalization("info.geigerCounter.desc"));
+		list.add(LangUtil.translate("info.geigerCounter.desc"));
 	}
 
 }

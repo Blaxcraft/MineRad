@@ -35,30 +35,32 @@ public class TilePipe extends TileEntity implements IEnergyConnection {
 
 	@Override
 	public void updateEntity() {
-		// if (!worldObj.isRemote) {
-		for (ForgeDirection dir : pushDirs) {
-			TileEntity te = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ);
-			if (te != null && te instanceof IEnergyReceiver) {
-				IEnergyReceiver receive = (IEnergyReceiver) te;
-				if (receive.receiveEnergy(dir.getOpposite(), getTier().getMaxTransfer(), true) > 0) {
-					int baseEnergyTransfer = 0;
-					for (Entry<IEnergyProvider, ForgeDirection> e : getConnectedProviders().entrySet()) {
-						baseEnergyTransfer += e.getKey().extractEnergy(e.getValue(), getTier().getMaxTransfer(), true);
-					}
-					int topEnergyTransfer = baseEnergyTransfer;
-					baseEnergyTransfer -= receive.receiveEnergy(dir.getOpposite(),
-							Math.min(baseEnergyTransfer, getTier().getMaxTransfer()), false);
-					int energyToTransfer = topEnergyTransfer - baseEnergyTransfer;
-					for (Entry<IEnergyProvider, ForgeDirection> e : getConnectedProviders().entrySet()) {
-						if (energyToTransfer > 0) {
-							energyToTransfer -= e.getKey().extractEnergy(e.getValue(),
-									Math.min(getTier().getMaxTransfer(), energyToTransfer), false);
+		if (!worldObj.isRemote) {
+			for (ForgeDirection dir : pushDirs) {
+				TileEntity te = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY,
+						zCoord + dir.offsetZ);
+				if (te != null && te instanceof IEnergyReceiver) {
+					IEnergyReceiver receive = (IEnergyReceiver) te;
+					if (receive.receiveEnergy(dir.getOpposite(), getTier().getMaxTransferPipe(), true) > 0) {
+						int baseEnergyTransfer = 0;
+						for (Entry<IEnergyProvider, ForgeDirection> e : getConnectedProviders().entrySet()) {
+							baseEnergyTransfer += e.getKey().extractEnergy(e.getValue(), getTier().getMaxTransferPipe(),
+									true);
+						}
+						int topEnergyTransfer = baseEnergyTransfer;
+						baseEnergyTransfer -= receive.receiveEnergy(dir.getOpposite(),
+								Math.min(baseEnergyTransfer, getTier().getMaxTransferPipe()), false);
+						int energyToTransfer = topEnergyTransfer - baseEnergyTransfer;
+						for (Entry<IEnergyProvider, ForgeDirection> e : getConnectedProviders().entrySet()) {
+							if (energyToTransfer > 0) {
+								energyToTransfer -= e.getKey().extractEnergy(e.getValue(),
+										Math.min(getTier().getMaxTransferPipe(), energyToTransfer), false);
+							}
 						}
 					}
 				}
 			}
 		}
-		// }
 	}
 
 	public boolean isConnected(ForgeDirection side) {
@@ -110,13 +112,13 @@ public class TilePipe extends TileEntity implements IEnergyConnection {
 		HashMap<IEnergyProvider, ForgeDirection> ret = new HashMap<IEnergyProvider, ForgeDirection>();
 		for (TilePipe tp : getConnectedPipes()) {
 			for (ForgeDirection dir : tp.pushDirs) {
-				if (isConnected(dir)) {
+				if (tp.isConnected(dir)) {
 					TileEntity te = worldObj.getTileEntity(tp.xCoord + dir.offsetX, tp.yCoord + dir.offsetY,
 							tp.zCoord + dir.offsetZ);
 					if (te != null) {
 						if (te instanceof IEnergyProvider) {
 							IEnergyProvider add = (IEnergyProvider) te;
-							if (add.canConnectEnergy(dir.getOpposite()) && !ret.containsKey(add)) {
+							if (!ret.containsKey(add)) {
 								ret.put(add, dir.getOpposite());
 							}
 						}
@@ -140,7 +142,12 @@ public class TilePipe extends TileEntity implements IEnergyConnection {
 				if (te instanceof TilePipe) {
 					TilePipe tp = (TilePipe) te;
 					if (!recur.contains(tp)) {
-						recur.addAll(tp.getConnectedPipes(recur));
+						ArrayList<TilePipe> pipes = tp.getConnectedPipes((ArrayList<TilePipe>) recur.clone());
+						for (TilePipe p : pipes) {
+							if (!recur.contains(p)) {
+								recur.add(p);
+							}
+						}
 					}
 				}
 			}
