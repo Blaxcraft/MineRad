@@ -208,9 +208,9 @@ public class TileFusionReactor extends TileMultiblock {
 	public void damageCore(int amount) {
 		if (!isCoreDepleted()) {
 			getStackInSlot(3).setItemDamage(getStackInSlot(3).getItemDamage() + amount);
-			if (isCoreDepleted()) {
-				setInventorySlotContents(4, new ItemStack(ModItems.emptyCore));
-			}
+		}
+		if (isCoreDepleted()) {
+			setInventorySlotContents(3, new ItemStack(ModItems.emptyCore));
 		}
 	}
 

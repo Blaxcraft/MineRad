@@ -11,13 +11,17 @@ public class DungeonLootInit {
 		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,
 				new WeightedRandomChestContent(ModItems.radAway, 0, 1, 2, 5));
 		ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,
-				new WeightedRandomChestContent(ModItems.uraniumOreItem, 0, 1, 2, 3));
+				new WeightedRandomChestContent(ModItems.uraniumOreItem, 0, 1, 2, 5));
 		ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,
-				new WeightedRandomChestContent(ModItems.emptyCore, 0, 1, 2, 4));
+				new WeightedRandomChestContent(ModItems.uraniumChunk, 0, 1, 5, 10));
+		ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,
+				new WeightedRandomChestContent(ModItems.emptyCore, 0, 1, 4, 10));
 		ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,
-				new WeightedRandomChestContent(ModItems.uraniumOreItem, 0, 1, 2, 3));
+				new WeightedRandomChestContent(ModItems.uraniumOreItem, 0, 1, 2, 5));
 		ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,
-				new WeightedRandomChestContent(ModItems.emptyCore, 0, 1, 2, 4));
+				new WeightedRandomChestContent(ModItems.uraniumChunk, 0, 1, 5, 10));
+		ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,
+				new WeightedRandomChestContent(ModItems.emptyCore, 0, 1, 4, 10));
 	}
 
 }

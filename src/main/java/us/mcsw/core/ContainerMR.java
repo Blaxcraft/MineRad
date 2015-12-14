@@ -85,8 +85,9 @@ public abstract class ContainerMR extends Container {
 				slot = (Slot) this.inventorySlots.get(k);
 				itemstack1 = slot.getStack();
 
-				// changed to ItemStack.areItemStacksEqual
-				if (ItemStack.areItemStacksEqual(itemstack1, it)) {
+				if (itemstack1 != null && itemstack1.getItem() == it.getItem()
+						&& (!it.getHasSubtypes() || it.getItemDamage() == itemstack1.getItemDamage())
+						&& ItemStack.areItemStackTagsEqual(it, itemstack1)) {
 					int l = itemstack1.stackSize + it.stackSize;
 					// added max stack size check for slot and inventory
 					int maxStackSize = Math.min(it.getMaxStackSize(),
@@ -133,15 +134,14 @@ public abstract class ContainerMR extends Container {
 						slot.putStack(it.copy());
 						slot.onSlotChanged();
 						it.stackSize = 0;
-						flag1 = true;
 						break;
 					} else {
 						ItemStack put = it.copy();
 						put.stackSize = maxStackSize;
 						slot.putStack(put);
 						it.stackSize -= maxStackSize;
-						flag1 = true;
 					}
+					flag1 = true;
 				}
 
 				if (backwards) {

@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import us.mcsw.core.ItemMR;
 import us.mcsw.core.util.ChatUtil;
 import us.mcsw.core.util.LangUtil;
+import us.mcsw.core.util.NumbersUtil;
 import us.mcsw.minerad.ref.RadProperties;
 import us.mcsw.minerad.util.RadUtil;
 
@@ -32,7 +33,9 @@ public class ItemGeigerCounter extends ItemMR {
 				radResist = RadProperties.get(p).getRadResistance();
 			}
 			int rps = RadUtil.getRadsAtLocation(w, x, y, z);
-			ChatUtil.sendTranslatedTo(p, "message.geigerCounter.info", rps, (int) (rps / radResist), rads);
+			double gainVal = (double) rps / radResist;
+			String gainDisp = (gainVal < 1 ? NumbersUtil.roundDouble(gainVal, 1) : (int) gainVal) + "";
+			ChatUtil.sendTranslatedTo(p, "message.geigerCounter.info", rps, gainDisp, rads);
 		}
 		return it;
 	}

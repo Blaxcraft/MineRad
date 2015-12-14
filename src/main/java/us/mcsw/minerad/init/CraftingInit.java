@@ -59,8 +59,8 @@ public class CraftingInit {
 		GameRegistry.addSmelting(ModItems.yellowCake, new ItemStack(ModItems.purifiedUranium), 0.1f);
 
 		GameRegistry.addRecipe(new ItemStack(ModBlocks.pureUranium), "UUU", "UUU", "UUU", 'U', uranium);
-		GameRegistry.addRecipe(new ItemStack(ModBlocks.pureNeptunium), "NNN", "NNN", "NNN", 'N', plutonium);
-		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockPlutonium), "PPP", "PPP", "PPP", 'P', ModItems.plutonium);
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.pureNeptunium), "NNN", "NNN", "NNN", 'N', neptunium);
+		GameRegistry.addRecipe(new ItemStack(ModBlocks.blockPlutonium), "PPP", "PPP", "PPP", 'P', plutonium);
 
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.purifiedUranium, 9), ModBlocks.pureUranium);
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.purifiedNeptunium, 9), ModBlocks.pureNeptunium);
@@ -73,7 +73,7 @@ public class CraftingInit {
 		GameRegistry.addRecipe(new ItemStack(ModItems.plutonium), "PPP", "PPP", "PPP", 'P', ModItems.nuggetPlutonium);
 
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.nuggetUranium, 9), uranium);
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.nuggetNeptunium, 9), plutonium);
+		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.nuggetNeptunium, 9), neptunium);
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.nuggetPlutonium, 9), plutonium);
 
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.radHelm), "PWP", "W W", 'P',
@@ -90,20 +90,20 @@ public class CraftingInit {
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.nuclearArsenal), "PIP", "NRN", "PIP", 'P',
 				ModItems.nuclearPod, 'I', "blockIron", 'N', plutonium, 'R', ModItems.radioReceiver));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.nuclearPod), "III", "NCN", "III", 'I',
-				"ingotIron", 'N', plutonium, 'C', Blocks.chest));
+				"ingotIron", 'N', neptunium, 'C', Blocks.chest));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.radioReceiver), " B ", "NBN", "RIR", 'B',
 				Blocks.iron_bars, 'N', ModItems.nuggetUranium, 'R', Items.redstone, 'I', "blockIron"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.radioEmitter), " B ", "NBN", "RIR", 'B',
 				Blocks.iron_bars, 'N', ModItems.nuggetPlutonium, 'R', Items.redstone, 'I', "blockIron"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.nuclearArsenalUpgrade), "IPI", "PNP", "IPI",
-				'I', "ingotIron", 'P', ModItems.nuclearPod, 'N', plutonium));
+				'I', "ingotIron", 'P', ModItems.nuclearPod, 'N', neptunium));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.nukeMarker), " NN", " IN", "I  ", 'I',
 				"ingotIron", 'N', ModItems.nuggetNeptunium));
 
 		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.basicMachineBlock, "IRI", "RUR", "IRI", 'I', "ingotIron",
 				'R', Items.redstone, 'U', ModItems.uraniumChunk));
-		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.advancedMachineBlock, "IPI", "GBG", "IPI", 'B',
-				ModBlocks.basicMachineBlock, 'P', plutonium, 'I', "ingotIron", 'G', Blocks.glowstone));
+		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.advancedMachineBlock, "IUI", "GBG", "IUI", 'B',
+				ModBlocks.basicMachineBlock, 'U', uranium, 'I', "ingotIron", 'G', Blocks.glowstone));
 
 		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.uraniumInfuser, "CCC", "IBI", "IAI", 'C',
 				ModItems.emptyCore, 'I', "ingotIron", 'B', ModBlocks.basicMachineBlock, 'A', ModItems.capacitorIron));

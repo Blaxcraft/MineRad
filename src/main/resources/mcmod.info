@@ -11,7 +11,7 @@
   "credits": "",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": ["CoFHLib", "Waila"],
+  "dependencies": ["CoFHLib", "Waila", "CodeChickenCore", "NotEnoughItems"],
   "useDependencyInformation": "true"
 }
 ]

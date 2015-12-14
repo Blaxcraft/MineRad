@@ -12,6 +12,7 @@ public class BlockGroundZero extends BlockRadEmitter {
 		super(Material.ground, "groundZero", 15, 2);
 
 		setHardness(2.0f);
+		setCreativeTab(null);
 	}
 
 	@Override

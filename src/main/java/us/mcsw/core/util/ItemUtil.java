@@ -4,91 +4,86 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class ItemUtil {
 
-	public static boolean pushToNearbyInventories(TileEntity start, ItemStack toAdd, boolean simulate,
-			ForgeDirection... pushDirs) {
-		return pushToNearbyInventories(start, toAdd, true, simulate, pushDirs);
-	}
-
-	public static boolean pushToNearbyInventories(TileEntity start, ItemStack toAdd, boolean excludePairs,
-			boolean simulate, ForgeDirection... pushDirs) {
-		ItemStack it;
-		if (simulate) {
-			it = toAdd.copy();
-		} else
-			it = toAdd;
-		for (ForgeDirection dir : pushDirs) {
-			if (it.stackSize <= 0) {
+	public static ItemStack addItemToNearbyInventories(TileEntity source, ItemStack add, boolean excludePairs,
+			boolean sim, ForgeDirection... sides) {
+		add = add.copy();
+		for (ForgeDirection dir : sides) {
+			if (add == null)
 				break;
-			}
-			TileEntity te = start.getWorldObj().getTileEntity(start.xCoord + dir.offsetX, start.yCoord + dir.offsetY,
-					start.zCoord + dir.offsetZ);
+			TileEntity te = source.getWorldObj().getTileEntity(source.xCoord + dir.offsetX, source.yCoord + dir.offsetY,
+					source.zCoord + dir.offsetZ);
 			if (te != null && te instanceof IInventory
-					&& (excludePairs ? !te.getClass().equals(start.getClass()) : true)) {
-				if (te instanceof ISidedInventory) {
-					ISidedInventory inv = (ISidedInventory) te;
-					int sideTest = dir.getOpposite().ordinal();
-					for (int slot : inv.getAccessibleSlotsFromSide(sideTest)) {
-						if (it.stackSize <= 0) {
-							break;
-						}
-						if (inv.canInsertItem(slot, it, sideTest) && inv.isItemValidForSlot(slot, it)) {
-							addItem(inv, slot, it, simulate);
-						}
-					}
-				} else {
-					IInventory inv = (IInventory) te;
-					for (int slot = 0; slot < inv.getSizeInventory(); slot++) {
-						if (it.stackSize <= 0) {
-							break;
-						}
-						if (inv.isItemValidForSlot(slot, it)) {
-							addItem(inv, slot, it, simulate);
-						}
-					}
-				}
+					&& (excludePairs ? !te.getClass().equals(source.getClass()) : true)) {
+				IInventory inv = (IInventory) te;
+				add = addItemToInventory(inv, dir.getOpposite(), add, sim);
 			}
 		}
-		return it.stackSize < toAdd.stackSize;
+		return add;
 	}
 
-	public static void addItem(IInventory inv, int slot, ItemStack it, boolean simulate) {
-		ItemStack cur, toCheck = inv.getStackInSlot(slot);
-		if (simulate && toCheck != null) {
-			cur = toCheck.copy();
-		} else
-			cur = toCheck;
-
-		int maxStack = Math.min(inv.getInventoryStackLimit(), it.getMaxStackSize());
-		if (cur != null) {
-			if (ItemStack.areItemStacksEqual(cur, it)) {
-				if (cur.stackSize + it.stackSize > maxStack) {
-					it.stackSize = (cur.stackSize + it.stackSize) - maxStack;
-					cur.stackSize = maxStack;
-				} else {
-					cur.stackSize += it.stackSize;
-					it.stackSize = 0;
-				}
-			}
+	public static ItemStack addItemToInventory(IInventory inv, ForgeDirection side, ItemStack add, boolean sim) {
+		add = add.copy();
+		int[] slots = {};
+		if (inv instanceof ISidedInventory) {
+			ISidedInventory si = (ISidedInventory) inv;
+			slots = si.getAccessibleSlotsFromSide(side.ordinal());
 		} else {
-			if (it.stackSize > maxStack) {
-				if (!simulate) {
-					ItemStack set = it.splitStack(maxStack);
-					inv.setInventorySlotContents(slot, set);
-				} else {
-					it.stackSize -= maxStack;
+			slots = new int[inv.getSizeInventory()];
+			for (int i = 0; i < slots.length; i++) {
+				slots[i] = i;
+			}
+		}
+		for (int slot : slots) {
+			if (add == null || add.stackSize <= 0)
+				break;
+			if (!inv.isItemValidForSlot(slot, add))
+				continue;
+			if (inv instanceof ISidedInventory && !((ISidedInventory) inv).canInsertItem(slot, add, side.ordinal()))
+				continue;
+			ItemStack in = inv.getStackInSlot(slot);
+			if (sim && in != null)
+				in = in.copy();
+			if (in != null) {
+				if (ItemUtil.areItemStacksEqual(in, add)) {
+					int maxStack = Math.min(in.getMaxStackSize(), inv.getInventoryStackLimit());
+					if (in.stackSize >= maxStack)
+						continue;
+
+					in.stackSize += add.stackSize;
+					if (in.stackSize > maxStack) {
+						add.stackSize = in.stackSize - maxStack;
+						in.stackSize = maxStack;
+					} else
+						add = null;
 				}
 			} else {
-				if (!simulate) {
-					inv.setInventorySlotContents(slot, it.copy());
-				}
-				it.stackSize = 0;
+				if (!sim)
+					inv.setInventorySlotContents(slot, add.copy());
+				add = null;
 			}
 		}
+		if (add != null && add.stackSize <= 0) {
+			add = null;
+		}
+		return add;
+	}
+
+	// because the one in ItemStack checks stack size -.-
+	public static boolean areItemStacksEqual(ItemStack s1, ItemStack s2) {
+		if (s1 == null && s2 == null) {
+			return true;
+		}
+		if (s1 == null || s2 == null) {
+			return false;
+		}
+
+		return s1.getItem().equals(s2.getItem()) && s1.getItemDamage() == s2.getItemDamage()
+				&& (s1.stackTagCompound == null && s2.stackTagCompound == null
+						|| s1.stackTagCompound.equals(s2.stackTagCompound));
 	}
 
 }

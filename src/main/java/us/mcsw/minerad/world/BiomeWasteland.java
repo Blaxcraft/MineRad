@@ -16,6 +16,7 @@ public class BiomeWasteland extends BiomeGenBase {
 		setColor(0xdd9944);
 		spawnableCreatureList.clear();
 		this.topBlock = Blocks.dirt;
+		this.field_150604_aj = 1;
 		this.fillerBlock = Blocks.dirt;
 		BiomeDecorator dec = this.theBiomeDecorator;
 		dec.treesPerChunk = -999;

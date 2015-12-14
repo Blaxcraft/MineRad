@@ -3,14 +3,11 @@ package us.mcsw.minerad.tiles;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import us.mcsw.core.TileMRMachine;
 import us.mcsw.core.util.ItemUtil;
@@ -45,7 +42,7 @@ public class TileRadioTowerBase extends TileMRMachine {
 								tile.items[destId] = items[sourceId].copy();
 								energyToUse += getEnergyCost(items[sourceId]);
 								items[sourceId].stackSize = 0;
-							} else if (ItemStack.areItemStacksEqual(items[sourceId], tile.items[destId])) {
+							} else if (ItemUtil.areItemStacksEqual(items[sourceId], tile.items[destId])) {
 								int maxStack = Math.min(tile.getInventoryStackLimit(),
 										tile.items[destId].getMaxStackSize());
 								if (tile.items[destId].stackSize < maxStack) {
@@ -66,7 +63,7 @@ public class TileRadioTowerBase extends TileMRMachine {
 				storage.extractEnergy(energyToUse, false);
 			}
 			if (items[1] != null) {
-				ItemUtil.pushToNearbyInventories(this, items[1], false, pushDirs);
+				items[1] = ItemUtil.addItemToNearbyInventories(this, items[1], true, false, pushDirs);
 			}
 		}
 	}
@@ -75,7 +72,7 @@ public class TileRadioTowerBase extends TileMRMachine {
 			ForgeDirection.WEST, ForgeDirection.DOWN };
 
 	public boolean canReceiveItem(ItemStack it) {
-		if (!ItemUtil.pushToNearbyInventories(this, it, true, pushDirs)) {
+		if (ItemUtil.addItemToNearbyInventories(this, it, true, true, pushDirs) != null) {
 			return false;
 		}
 
@@ -83,7 +80,7 @@ public class TileRadioTowerBase extends TileMRMachine {
 		if (ch == null || ch.stackSize <= 0) {
 			return true;
 		}
-		if (ItemStack.areItemStacksEqual(ch, it)) {
+		if (ItemUtil.areItemStacksEqual(ch, it)) {
 			int maxStack = Math.min(getInventoryStackLimit(), ch.getMaxStackSize());
 			if (ch.stackSize < maxStack) {
 				return true;

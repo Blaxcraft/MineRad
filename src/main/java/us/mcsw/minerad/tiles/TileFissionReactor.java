@@ -210,9 +210,9 @@ public class TileFissionReactor extends TileMultiblock {
 	public void damageCore(int amount) {
 		if (!isCoreDepleted()) {
 			getStackInSlot(4).setItemDamage(getStackInSlot(4).getItemDamage() + amount);
-			if (isCoreDepleted()) {
-				setInventorySlotContents(4, new ItemStack(ModItems.emptyCore));
-			}
+		}
+		if (isCoreDepleted()) {
+			setInventorySlotContents(4, new ItemStack(ModItems.emptyCore));
 		}
 	}
 

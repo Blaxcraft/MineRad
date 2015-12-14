@@ -1,12 +1,14 @@
 package us.mcsw.minerad.tiles;
 
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.ForgeDirection;
 import us.mcsw.core.util.ItemUtil;
+import us.mcsw.core.util.LogUtil;
 
 public class TileMagnet extends TileEntity {
 
@@ -25,12 +27,24 @@ public class TileMagnet extends TileEntity {
 					cy + radius, cz + radius);
 			for (Object o : worldObj.getEntitiesWithinAABB(EntityItem.class, range)) {
 				EntityItem i = (EntityItem) o;
-				if (!ItemUtil.pushToNearbyInventories(this, i.getEntityItem(), true, pushDirs)) {
+				ItemStack it = ItemUtil.addItemToNearbyInventories(this, i.getEntityItem(), true, true, pushDirs);
+				if (it != null) {
+					if (it.stackSize < i.getEntityItem().stackSize) {
+						EntityItem nw = new EntityItem(worldObj);
+						nw.setPosition(i.posX, i.posY, i.posZ);
+						nw.setEntityItemStack(i.getEntityItem().splitStack(it.stackSize));
+						nw.delayBeforeCanPickup = 40;
+					}
 					continue;
 				}
 				if (!worldObj.isRemote) {
 					if (i.getDistanceSq(cx, cy, cz) < 3) {
-						ItemUtil.pushToNearbyInventories(this, i.getEntityItem(), false, pushDirs);
+						ItemStack left = ItemUtil.addItemToNearbyInventories(this, i.getEntityItem(), true, false,
+								pushDirs);
+						if (left != null) {
+							i.setEntityItemStack(left);
+						} else
+							worldObj.removeEntity(i);
 						continue;
 					}
 				}

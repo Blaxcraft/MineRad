@@ -1,22 +1,10 @@
 package us.mcsw.minerad.tiles;
 
-import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
-import cofh.api.energy.TileEnergyHandler;
-import net.minecraft.block.BlockFurnace;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ContainerFurnace;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.common.util.ForgeDirection;
 import us.mcsw.core.TileMRMachine;
-import us.mcsw.core.util.LogUtil;
+import us.mcsw.core.util.ItemUtil;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.init.UraniumInfuserRecipes;
@@ -41,7 +29,7 @@ public class TileUraniumInfuser extends TileMRMachine {
 				if (progress >= getMaxProgress()) {
 					if (getStackInSlot(2) != null) {
 						ItemStack p = getStackInSlot(2);
-						if (ItemStack.areItemStacksEqual(getCurrentRecipe().getProduct(), p)) {
+						if (ItemUtil.areItemStacksEqual(getCurrentRecipe().getProduct(), p)) {
 							p.stackSize += getCurrentRecipe().getProduct().stackSize;
 						}
 						setInventorySlotContents(2, p);
@@ -83,7 +71,7 @@ public class TileUraniumInfuser extends TileMRMachine {
 		ItemStack it = getStackInSlot(2);
 		if (it != null) {
 			ItemStack p = getCurrentRecipe().getProduct();
-			if (ItemStack.areItemStacksEqual(it, p)) {
+			if (ItemUtil.areItemStacksEqual(it, p)) {
 				return it.stackSize + p.stackSize <= it.getMaxStackSize();
 			}
 		}

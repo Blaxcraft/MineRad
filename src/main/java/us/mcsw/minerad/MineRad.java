@@ -16,14 +16,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
-import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.BiomeManager.BiomeEntry;
 import net.minecraftforge.common.BiomeManager.BiomeType;
-import net.minecraftforge.common.DungeonHooks;
 import net.minecraftforge.common.MinecraftForge;
+import us.mcsw.minerad.gui.MRGuiHandler;
 import us.mcsw.minerad.init.AchievementsInit;
 import us.mcsw.minerad.init.CraftingInit;
 import us.mcsw.minerad.init.DungeonLootInit;
@@ -36,13 +34,14 @@ import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.init.ModPotions;
 import us.mcsw.minerad.init.ModTileEntities;
 import us.mcsw.minerad.init.UraniumInfuserRecipes;
-import us.mcsw.minerad.inv.MRGuiHandler;
+import us.mcsw.minerad.nei.NEIRecipes;
 import us.mcsw.minerad.net.MessageUpdateFrequency;
 import us.mcsw.minerad.potion.PotionRadX;
 import us.mcsw.minerad.potion.PotionRadiationSickness;
 import us.mcsw.minerad.proxy.IProxy;
 import us.mcsw.minerad.world.BiomeWasteland;
 import us.mcsw.minerad.world.UraniumGenerator;
+import us.mcsw.minerad.world.WastelandHutGen;
 
 @Mod(modid = MineRad.MODID, version = MineRad.VERSION, name = MineRad.MOD_NAME)
 public class MineRad {
@@ -100,12 +99,14 @@ public class MineRad {
 		DungeonLootInit.init();
 		AchievementsInit.init();
 		GameRegistry.registerWorldGenerator(new UraniumGenerator(), 0);
+		GameRegistry.registerWorldGenerator(new WastelandHutGen(), 0);
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new MRGuiHandler());
 
 		proxy.init();
 
 		FMLInterModComms.sendMessage("Waila", "register", "us.mcsw.minerad.ref.WailaTileHandler.callbackRegister");
+		NEIRecipes.init();
 	}
 
 	@EventHandler
