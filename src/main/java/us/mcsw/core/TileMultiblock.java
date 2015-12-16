@@ -12,12 +12,12 @@ import us.mcsw.minerad.tiles.TileFissionReactor;
 import us.mcsw.minerad.tiles.TileFusionReactor;
 
 public abstract class TileMultiblock extends TileMRInventory {
-	
+
 	public TileMultiblock(int size) {
 		super(size);
 	}
 
-	private boolean hasMaster, isMaster;
+	private boolean isMaster;
 	private int masterX, masterY, masterZ;
 
 	@Override
@@ -54,7 +54,6 @@ public abstract class TileMultiblock extends TileMRInventory {
 		masterX = 0;
 		masterY = 0;
 		masterZ = 0;
-		hasMaster = false;
 		isMaster = false;
 	}
 
@@ -107,7 +106,6 @@ public abstract class TileMultiblock extends TileMRInventory {
 		data.setInteger("masterX", masterX);
 		data.setInteger("masterY", masterY);
 		data.setInteger("masterZ", masterZ);
-		data.setBoolean("hasMaster", hasMaster);
 		data.setBoolean("isMaster", isMaster);
 		if (hasMaster() && isMaster())
 			masterWriteSyncable(data);
@@ -117,7 +115,6 @@ public abstract class TileMultiblock extends TileMRInventory {
 		masterX = data.getInteger("masterX");
 		masterY = data.getInteger("masterY");
 		masterZ = data.getInteger("masterZ");
-		hasMaster = data.getBoolean("hasMaster");
 		isMaster = data.getBoolean("isMaster");
 		if (hasMaster() && isMaster())
 			masterReadSyncable(data);
@@ -134,11 +131,9 @@ public abstract class TileMultiblock extends TileMRInventory {
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		readSyncable(pkt.func_148857_g());
 	}
-	
-	
 
 	public boolean hasMaster() {
-		return hasMaster;
+		return getMaster() != null;
 	}
 
 	public boolean isMaster() {
@@ -157,10 +152,6 @@ public abstract class TileMultiblock extends TileMRInventory {
 		return masterZ;
 	}
 
-	public void setHasMaster(boolean bool) {
-		hasMaster = bool;
-	}
-
 	public void setIsMaster(boolean bool) {
 		isMaster = bool;
 	}
@@ -170,7 +161,7 @@ public abstract class TileMultiblock extends TileMRInventory {
 		masterY = y;
 		masterZ = z;
 	}
-	
+
 	@Override
 	public ItemStack getStackInSlot(int i) {
 		if (hasMaster() && !isMaster()) {
@@ -178,7 +169,7 @@ public abstract class TileMultiblock extends TileMRInventory {
 		}
 		return super.getStackInSlot(i);
 	}
-	
+
 	@Override
 	public ItemStack decrStackSize(int i, int a) {
 		if (hasMaster() && !isMaster()) {
@@ -186,7 +177,7 @@ public abstract class TileMultiblock extends TileMRInventory {
 		}
 		return super.decrStackSize(i, a);
 	}
-	
+
 	@Override
 	public ItemStack getStackInSlotOnClosing(int i) {
 		if (hasMaster() && !isMaster()) {
@@ -194,7 +185,7 @@ public abstract class TileMultiblock extends TileMRInventory {
 		}
 		return super.getStackInSlotOnClosing(i);
 	}
-	
+
 	@Override
 	public void setInventorySlotContents(int i, ItemStack it) {
 		if (hasMaster() && !isMaster()) {

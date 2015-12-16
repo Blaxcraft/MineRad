@@ -151,7 +151,6 @@ public class TileFusionReactor extends TileMultiblock {
 					if (tile != null && tile instanceof TileFusionReactor) {
 						TileFusionReactor tf = (TileFusionReactor) tile;
 						tf.setMasterCoords(xCoord, yCoord, zCoord);
-						tf.setHasMaster(true);
 						tf.setIsMaster(master);
 					}
 				}

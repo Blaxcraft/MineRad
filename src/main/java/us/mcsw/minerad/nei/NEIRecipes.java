@@ -6,13 +6,22 @@ import net.minecraft.item.ItemStack;
 import us.mcsw.minerad.init.ModBlocks;
 
 public class NEIRecipes {
-	
+
 	@Optional.Method(modid = "NotEnoughItems")
 	public static void init() {
 		API.hideItem(new ItemStack(ModBlocks.groundZero));
-		
+
 		API.registerRecipeHandler(new RecipeHandlerFusion());
 		API.registerUsageHandler(new RecipeHandlerFusion());
+
+		API.registerRecipeHandler(new RecipeHandlerFission());
+		API.registerUsageHandler(new RecipeHandlerFission());
+
+		API.registerRecipeHandler(new RecipeHandlerInfuser());
+		API.registerUsageHandler(new RecipeHandlerInfuser());
+		
+		API.registerRecipeHandler(new RecipeHandlerMicrowave());
+		API.registerUsageHandler(new RecipeHandlerMicrowave());
 	}
 
 }

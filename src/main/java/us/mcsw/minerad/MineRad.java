@@ -21,6 +21,7 @@ import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.BiomeManager.BiomeEntry;
 import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
 import us.mcsw.minerad.gui.MRGuiHandler;
 import us.mcsw.minerad.init.AchievementsInit;
 import us.mcsw.minerad.init.CraftingInit;
@@ -68,6 +69,7 @@ public class MineRad {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		// load network handling, mod config, items + blocks
+		ConfigMR.init(event.getSuggestedConfigurationFile());
 
 		ModBlocks.init();
 		ModItems.init();
@@ -80,7 +82,7 @@ public class MineRad {
 		EventListener listener = new EventListener();
 		MinecraftForge.EVENT_BUS.register(listener);
 		FMLCommonHandler.instance().bus().register(listener);
-		
+
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 		network.registerMessage(MessageUpdateFrequency.Handler.class, MessageUpdateFrequency.class, 0, Side.SERVER);
 	}

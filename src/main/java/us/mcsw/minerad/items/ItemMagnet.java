@@ -19,6 +19,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import us.mcsw.core.ItemMR;
+import us.mcsw.minerad.ConfigMR;
 
 public class ItemMagnet extends ItemMR {
 
@@ -55,7 +56,7 @@ public class ItemMagnet extends ItemMR {
 
 	@Override
 	public void onUsingTick(ItemStack it, EntityPlayer pl, int c) {
-		pullItems(pl, 15);
+		pullItems(pl, ConfigMR.BLACK_HOLE_RADIUS_ACTIVE);
 	}
 
 	@Override
@@ -63,7 +64,7 @@ public class ItemMagnet extends ItemMR {
 		if (isEnabled(it) && e instanceof EntityPlayer) {
 			EntityPlayer pl = (EntityPlayer) e;
 			if (!pl.isSneaking()) {
-				pullItems(pl, 10);
+				pullItems(pl, ConfigMR.BLACK_HOLE_RADIUS_PASSIVE);
 			}
 		}
 	}

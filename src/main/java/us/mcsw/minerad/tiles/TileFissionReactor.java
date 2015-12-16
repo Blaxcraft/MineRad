@@ -146,7 +146,6 @@ public class TileFissionReactor extends TileMultiblock {
 					if (tile != null && tile instanceof TileFissionReactor) {
 						TileFissionReactor tf = (TileFissionReactor) tile;
 						tf.setMasterCoords(xCoord, yCoord, zCoord);
-						tf.setHasMaster(true);
 						tf.setIsMaster(master);
 					}
 				}

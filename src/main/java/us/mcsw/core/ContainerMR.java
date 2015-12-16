@@ -3,6 +3,7 @@ package us.mcsw.core;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -10,12 +11,13 @@ import us.mcsw.core.util.LogUtil;
 
 public abstract class ContainerMR extends Container {
 
-	TileMRInventory tile;
+	public IInventory inv;
+	public InventoryPlayer ip;
 
-	public ContainerMR(InventoryPlayer ip, TileMRInventory tile) {
-		this.tile = tile;
-
-		addSlotsToContainer(tile);
+	public ContainerMR(InventoryPlayer ip, IInventory inv) {
+		this.ip = ip;
+		this.inv = inv;
+		addSlotsToContainer(inv);
 	}
 
 	// player's inventory
@@ -38,11 +40,11 @@ public abstract class ContainerMR extends Container {
 			ItemStack cur = slot.getStack();
 			it = cur.copy();
 
-			if (s < tile.getSizeInventory()) {
-				if (!mergeItemStack(cur, tile.getSizeInventory(), tile.getSizeInventory() + 36, true)) {
+			if (s < inv.getSizeInventory()) {
+				if (!mergeItemStack(cur, inv.getSizeInventory(), inv.getSizeInventory() + 36, true)) {
 					return null;
 				}
-			} else if (!mergeItemStack(cur, 0, tile.getSizeInventory(), false)) {
+			} else if (!mergeItemStack(cur, 0, inv.getSizeInventory(), false)) {
 				return null;
 			}
 
@@ -60,11 +62,11 @@ public abstract class ContainerMR extends Container {
 		return it;
 	}
 
-	public abstract void addSlotsToContainer(TileMRInventory tile);
+	public abstract void addSlotsToContainer(IInventory inv);
 
 	@Override
 	public boolean canInteractWith(EntityPlayer pl) {
-		return tile.isUseableByPlayer(pl);
+		return true;
 	}
 
 	// Identical to superclass except for commented lines
@@ -91,7 +93,7 @@ public abstract class ContainerMR extends Container {
 					int l = itemstack1.stackSize + it.stackSize;
 					// added max stack size check for slot and inventory
 					int maxStackSize = Math.min(it.getMaxStackSize(),
-							Math.min(slot.getSlotStackLimit(), backwards ? 64 : tile.getInventoryStackLimit()));
+							Math.min(slot.getSlotStackLimit(), backwards ? 64 : inv.getInventoryStackLimit()));
 
 					if (l <= maxStackSize) {
 						it.stackSize = 0;
@@ -128,20 +130,22 @@ public abstract class ContainerMR extends Container {
 				// added check to see if item can actually go into the slot +
 				// max stack check
 				int maxStackSize = Math.min(it.getMaxStackSize(),
-						Math.min(slot.getSlotStackLimit(), backwards ? 64 : tile.getInventoryStackLimit()));
+						Math.min(slot.getSlotStackLimit(), backwards ? 64 : inv.getInventoryStackLimit()));
 				if (itemstack1 == null && slot.isItemValid(it)) {
 					if (it.stackSize <= maxStackSize) {
 						slot.putStack(it.copy());
 						slot.onSlotChanged();
 						it.stackSize = 0;
+						flag1 = true;
 						break;
 					} else {
 						ItemStack put = it.copy();
 						put.stackSize = maxStackSize;
 						slot.putStack(put);
+						slot.onSlotChanged();
 						it.stackSize -= maxStackSize;
+						flag1 = true;
 					}
-					flag1 = true;
 				}
 
 				if (backwards) {

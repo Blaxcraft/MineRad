@@ -20,7 +20,7 @@ public class BlockUraniumTraces extends BlockMR {
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
 		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
-		ret.add(new ItemStack(ModItems.uraniumChunk, 2 + fortune));
+		ret.add(new ItemStack(ModItems.uraniumChunk, world.rand.nextInt(2 * (fortune + 1)) + 2));
 		return ret;
 	}
 

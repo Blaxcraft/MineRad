@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 
 public class UraniumInfuserRecipes {
 
-	private static ArrayList<InfuserRecipe> recipes = new ArrayList<UraniumInfuserRecipes.InfuserRecipe>();
+	public static ArrayList<InfuserRecipe> recipes = new ArrayList<UraniumInfuserRecipes.InfuserRecipe>();
 
 	public static void init() {
 		addRecipe(new ItemStack(ModItems.uraniumChunk, 12), new ItemStack(ModItems.fusionCore), 1, 15000);

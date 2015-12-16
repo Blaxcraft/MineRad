@@ -32,8 +32,7 @@ public abstract class BlockMultiblock extends BlockMR implements ITileEntityProv
 						multiBlock.resetStructure();
 				} else {
 					if (!multiBlock.checkForMaster()) {
-						TileMultiblock master = multiBlock.getMaster();
-						master.resetStructure();
+						multiBlock.reset();
 					} else {
 						if (!multiBlock.getMaster().checkMultiblockForm()) {
 							multiBlock.getMaster().resetStructure();

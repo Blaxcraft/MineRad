@@ -21,10 +21,12 @@ import us.mcsw.minerad.items.ItemRadArmour;
 import us.mcsw.minerad.items.ItemRadAway;
 import us.mcsw.minerad.items.ItemRadX;
 import us.mcsw.minerad.items.ItemUnknownElement;
+import us.mcsw.minerad.items.ItemUnknownNugget;
 import us.mcsw.minerad.items.ItemArcThrower;
 import us.mcsw.minerad.items.ItemCapacitor;
 import us.mcsw.minerad.items.ItemCoolantCore;
 import us.mcsw.minerad.items.ItemCrafting;
+import us.mcsw.minerad.items.ItemDensePouch;
 import us.mcsw.minerad.items.ItemUraniumChunk;
 import us.mcsw.minerad.items.ItemUraniumNugget;
 import us.mcsw.minerad.items.ItemUraniumOre;
@@ -68,6 +70,7 @@ public class ModItems {
 	public static final ItemPurifiedNeptunium purifiedNeptunium = new ItemPurifiedNeptunium();
 	public static final ItemPlutonium plutonium = new ItemPlutonium();
 	public static final ItemUnknownElement unknownElement = new ItemUnknownElement();
+	public static final ItemUnknownNugget unknownNugget = new ItemUnknownNugget();
 
 	public static final ItemUraniumNugget nuggetUranium = new ItemUraniumNugget();
 	public static final ItemNeptuniumNugget nuggetNeptunium = new ItemNeptuniumNugget();
@@ -83,6 +86,8 @@ public class ModItems {
 	public static final ItemMagnet magnetItem = new ItemMagnet();
 
 	public static final ItemArcThrower arcThrower = new ItemArcThrower();
+
+	public static final ItemDensePouch densePouch = new ItemDensePouch();
 
 	public static void init() {
 		GameRegistry.registerItem(geigerCounter, geigerCounter.getBasicName());
@@ -112,8 +117,6 @@ public class ModItems {
 		GameRegistry.registerItem(capacitorDiamond, capacitorDiamond.getBasicName());
 		GameRegistry.registerItem(capacitorQuartz, capacitorQuartz.getBasicName());
 
-		// GameRegistry.registerItem(pipeItem, pipeItem.getBasicName());
-
 		GameRegistry.registerItem(radHelm, radHelm.getBasicName());
 		GameRegistry.registerItem(radChest, radChest.getBasicName());
 		GameRegistry.registerItem(radLegs, radLegs.getBasicName());
@@ -122,6 +125,7 @@ public class ModItems {
 		GameRegistry.registerItem(purifiedNeptunium, purifiedNeptunium.getBasicName());
 		GameRegistry.registerItem(plutonium, plutonium.getBasicName());
 		GameRegistry.registerItem(unknownElement, unknownElement.getBasicName());
+		GameRegistry.registerItem(unknownNugget, unknownNugget.getBasicName());
 
 		GameRegistry.registerItem(nuggetUranium, nuggetUranium.getBasicName());
 		GameRegistry.registerItem(nuggetNeptunium, nuggetNeptunium.getBasicName());
@@ -137,6 +141,8 @@ public class ModItems {
 		GameRegistry.registerItem(magnetItem, magnetItem.getBasicName());
 
 		GameRegistry.registerItem(arcThrower, arcThrower.getBasicName());
+		
+		GameRegistry.registerItem(densePouch, densePouch.getBasicName());
 	}
 
 }

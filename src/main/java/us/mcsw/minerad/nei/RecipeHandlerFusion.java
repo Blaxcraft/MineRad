@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.IUsageHandler;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import scala.actors.threadpool.Arrays;
-import us.mcsw.minerad.MineRad;
+import us.mcsw.minerad.gui.gui.GuiFusionReactor;
 import us.mcsw.minerad.init.FusionRecipes;
+import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.init.FusionRecipes.FusionRecipe;
+import us.mcsw.minerad.items.ItemCoolantCore;
+import us.mcsw.minerad.items.ItemFusionCore;
 import us.mcsw.minerad.ref.MachineReference;
 
 public class RecipeHandlerFusion extends RecipeHandlerMR {
@@ -35,7 +38,9 @@ public class RecipeHandlerFusion extends RecipeHandlerMR {
 	@Override
 	public void loadUsageRecipes(ItemStack ingredient) {
 		for (FusionRecipe fr : FusionRecipes.recipes) {
-			if (ingredient.getItem().equals(fr.getSource1()) || ingredient.getItem().equals(fr.getSource2())) {
+			if (ingredient.getItem().equals(fr.getSource1()) || ingredient.getItem().equals(fr.getSource2())
+					|| ingredient.getItem() instanceof ItemCoolantCore
+					|| ingredient.getItem() instanceof ItemFusionCore) {
 				this.arecipes.add(new RecipeFusion(fr));
 			}
 		}
@@ -51,14 +56,21 @@ public class RecipeHandlerFusion extends RecipeHandlerMR {
 
 		@Override
 		public PositionedStack getResult() {
-			return new PositionedStack(rec.getResult(), 85, 30);
+			return makeStack(rec.getResult(), 85, 30);
 		}
 
 		@Override
 		public List<PositionedStack> getIngredients() {
-			return new ArrayList<PositionedStack>(
-					Arrays.asList(new PositionedStack[] { new PositionedStack(new ItemStack(rec.getSource1()), 58, 30),
-							new PositionedStack(new ItemStack(rec.getSource2()), 112, 30) }));
+			PositionedStack[] ingredients = { makeStack(new ItemStack(rec.getSource1()), 58, 30),
+					makeStack(new ItemStack(rec.getSource2()), 112, 30) };
+			return Arrays.asList(ingredients);
+		}
+
+		@Override
+		public List<PositionedStack> getOtherStacks() {
+			PositionedStack[] others = { makeStack(new ItemStack(ModItems.fusionCore), 85, 57),
+					makeStack(new ItemStack(ModItems.coolantCore), 141, 57) };
+			return Arrays.asList(others);
 		}
 
 	}

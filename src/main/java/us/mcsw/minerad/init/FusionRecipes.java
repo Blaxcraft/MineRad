@@ -14,7 +14,6 @@ public class FusionRecipes {
 
 	public static void init() {
 		addRecipe(ModItems.plutonium, ModItems.plutonium, new ItemStack(ModItems.unknownElement));
-		addRecipe(ModItems.purifiedUranium, ModItems.dustUranium, new ItemStack(ModItems.plutonium));
 	}
 
 	public static void addRecipe(Item source1, Item source2, ItemStack result) {

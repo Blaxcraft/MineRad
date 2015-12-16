@@ -1,7 +1,10 @@
 package us.mcsw.minerad.blocks;
 
+import java.util.List;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
@@ -12,6 +15,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import us.mcsw.core.BlockMultiblock;
+import us.mcsw.core.ItemBlockMR;
 import us.mcsw.core.TileMultiblock;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.init.FusionRecipes;
@@ -70,6 +74,21 @@ public class BlockFusionReactor extends BlockMultiblock {
 			}
 		}
 		return super.getIcon(ba, x, y, z, side);
+	}
+
+	public static class ItemBlockFusionReactor extends ItemBlockMR {
+
+		public ItemBlockFusionReactor(Block block) {
+			super(block);
+		}
+
+		@Override
+		public void addInformation(ItemStack it, EntityPlayer pl, List list, boolean n) {
+			super.addInformation(it, pl, list, n);
+
+			list.add("Place in a 3x3x3 with no center");
+		}
+
 	}
 
 }

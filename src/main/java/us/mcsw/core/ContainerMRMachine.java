@@ -8,7 +8,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public abstract class ContainerMRMachine extends ContainerMR {
+public abstract class ContainerMRMachine extends ContainerMRTile {
 
 	TileMRMachine tile;
 

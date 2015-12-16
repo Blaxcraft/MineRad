@@ -9,10 +9,11 @@ import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.ForgeDirection;
 import us.mcsw.core.util.ItemUtil;
 import us.mcsw.core.util.LogUtil;
+import us.mcsw.minerad.ConfigMR;
 
 public class TileMagnet extends TileEntity {
 
-	int radius = 12;
+	int radius = ConfigMR.BLACK_HOLE_BLOCK_RADIUS;
 
 	public boolean isRunning() {
 		return !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);

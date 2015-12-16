@@ -5,6 +5,7 @@ item.minerad:purifiedUranium.name=Purified Uranium
 item.minerad:purifiedNeptunium.name=Purified Neptunium
 item.minerad:plutonium.name=Plutonium
 item.minerad:unknownElement.name=???
+item.minerad:nuggetUnknown.name=??? [Nugget]
 item.minerad:nuggetUranium.name=Uranium Nugget
 item.minerad:nuggetNeptunium.name=Neptunium Nugget
 item.minerad:nuggetPlutonium.name=Plutonium Nugget
@@ -29,6 +30,7 @@ item.minerad:radX.name=Rad-X
 item.minerad:radAway.name=RadAway
 item.minerad:magnetItem.name=Portable Black Hole
 item.minerad:arcThrower.name=Arc Thrower
+item.minerad:densePouch.name=Dense Pouch
 
 item.minerad:capacitorBasic.name=Basic Capacitor
 item.minerad:capacitorIron.name=Iron Capacitor
@@ -61,10 +63,12 @@ block.minerad:advancedMachineBlock.name=Advanced Machine Block
 block.minerad:uraniumInfuser.name=Uranium Infuser
 block.minerad:radioTowerBase.name=Radio Tower Base
 
+container.minerad:microwave=Microwave Emitter
 container.minerad:uraniumInfuserTile=Uranium Infuser
 container.minerad:radioTowerBase=Radio Tower
 container.minerad:fissionReactor=Fission Reactor
 container.minerad:fusionReactor=Fusion Reactor
+container.minerad:densePouch=Dense Pouch
 
 description.pipe.basic=Basic
 description.pipe.iron=Iron
@@ -91,8 +95,6 @@ message.radSickness.0.2=You can feel the radiation around you...
 message.radSickness.1.0=The radiation is becoming too much to handle...
 message.radSickness.1.1=You feel the need to die, it's too much suffering...
 message.radSickness.1.2=You choke back vomit as you weaken...
-
-message.unknownElement.decay=The strange element suddenly vanishes
 
 info.geigerCounter.desc=Detects radiation at its position
 

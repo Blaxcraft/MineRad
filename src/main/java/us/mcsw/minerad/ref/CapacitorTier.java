@@ -5,23 +5,40 @@ import org.apache.commons.lang3.text.WordUtils;
 import cofh.api.energy.EnergyStorage;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.config.Configuration;
 import us.mcsw.core.util.LogUtil;
+import us.mcsw.minerad.ConfigMR;
 import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.items.ItemCapacitor;
 
 public enum CapacitorTier {
 
-	BASIC(0x883333, 10000, 100000, 100, 250), IRON(0xababab, 25000, 250000, 350, 1000), GOLD(0xbfbf60, 50000, 750000,
-			650, 2500), DIAMOND(0x4dbfbf, 100000, 2500000, 1250, 5000), QUARTZ(0xdfdfdf, 250000, 10000000, 5000, 10000);
+	BASIC(0x883333, 10000, 100000, 150, 250), IRON(0xababab, 25000, 250000, 500, 1000), GOLD(0xbfbf60, 50000, 750000,
+			1250,
+			2500), DIAMOND(0x4dbfbf, 100000, 2500000, 2500, 5000), QUARTZ(0xdfdfdf, 250000, 10000000, 7500, 10000);
 
-	int colour, capMachine, capStorage, maxTransferMachine, maxTransferPipe;
+	final int colour, capMachineDefault, capStorageDefault, maxTransferMachineDefault, maxTransferPipeDefault;
+	int capMachine, capStorage, maxTransferMachine, maxTransferPipe;
 
 	private CapacitorTier(int colour, int capMachine, int capStorage, int maxTransferMachine, int maxTransferPipe) {
 		this.colour = colour;
-		this.capMachine = capMachine;
-		this.capStorage = capStorage;
-		this.maxTransferMachine = maxTransferMachine;
-		this.maxTransferPipe = maxTransferPipe;
+		capMachineDefault = this.capMachine = capMachine;
+		capStorageDefault = this.capStorage = capStorage;
+		maxTransferMachineDefault = this.maxTransferMachine = maxTransferMachine;
+		maxTransferPipeDefault = this.maxTransferPipe = maxTransferPipe;
+	}
+
+	public void loadFromConfig(Configuration conf) {
+		String cat = getCapitalizedName() + " Machine Tier";
+		conf.setCategoryComment(cat, "Values for the " + getCapitalizedName() + " tier of machines");
+		capMachine = conf.getInt(getLowercaseName() + "-machine-capacity", cat, capMachineDefault, 0, Integer.MAX_VALUE,
+				"Energy Capacity for " + getCapitalizedName() + " machines");
+		capStorage = conf.getInt(getLowercaseName() + "-storage-capacity", cat, capStorageDefault, 0, Integer.MAX_VALUE,
+				"Energy Capacity for " + getCapitalizedName() + " storage blocks");
+		maxTransferMachine = conf.getInt(getLowercaseName() + "-machine-transfer", cat, maxTransferMachineDefault, 0,
+				Integer.MAX_VALUE, "Max transfer (RF/t) for " + getCapitalizedName() + " machines");
+		maxTransferPipe = conf.getInt(getLowercaseName() + "-pipe-transfer", cat, maxTransferPipeDefault, 0,
+				Integer.MAX_VALUE, "Max transfer (RF/t) for " + getCapitalizedName() + " pipes");
 	}
 
 	public String getCapitalizedName() {

@@ -36,8 +36,8 @@ public class UraniumGenerator implements IWorldGenerator {
 			for (int i = 0; i < 2; i++) {
 				firstX = chunkX * 16 + rand.nextInt(16);
 				firstZ = chunkZ * 16 + rand.nextInt(16);
-				firstY = rand.nextInt(5) + 4;
-				new WorldGenMinable(ModBlocks.uraniumOre, rand.nextInt(2) + 1).generate(world, rand, firstX, firstY,
+				firstY = rand.nextInt(8) + 4;
+				new WorldGenMinable(ModBlocks.uraniumOre, rand.nextInt(2) + 2).generate(world, rand, firstX, firstY,
 						firstZ);
 			}
 		}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
+import us.mcsw.minerad.ConfigMR;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.init.ModItems;
 
@@ -36,13 +37,20 @@ public class RadUtil {
 			if (disSq <= 4 * powSq) {
 				double pow = (double) powSq / ((double) disSq + 1.0);
 				pow -= 0.5;
-				if (pow > maxPowerSq) {
+				if (ConfigMR.ADDITIVE_RADIATION) {
+					maxPowerSq += pow;
+				} else if (pow > maxPowerSq) {
 					maxPowerSq = pow;
 				}
 			}
 		}
-		if (maxPowerSq < 4 && w.getBiomeGenForCoords(x, z).equals(MineRad.wasteland) && w.canBlockSeeTheSky(x, y, z)) {
-			maxPowerSq = 4;
+		boolean wasteland = w.getBiomeGenForCoords(x, z).equals(MineRad.wasteland) && w.canBlockSeeTheSky(x, y, z);
+		if (wasteland) {
+			if (ConfigMR.ADDITIVE_RADIATION) {
+				maxPowerSq += ConfigMR.BACKGROUND_WASTELAND_RADIATION * ConfigMR.BACKGROUND_WASTELAND_RADIATION;
+			} else if (maxPowerSq < ConfigMR.BACKGROUND_WASTELAND_RADIATION * ConfigMR.BACKGROUND_WASTELAND_RADIATION) {
+				maxPowerSq = ConfigMR.BACKGROUND_WASTELAND_RADIATION * ConfigMR.BACKGROUND_WASTELAND_RADIATION;
+			}
 		}
 		if (maxPowerSq <= 0) {
 			return 0;

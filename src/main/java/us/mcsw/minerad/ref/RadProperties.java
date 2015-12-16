@@ -9,6 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import us.mcsw.minerad.ConfigMR;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.items.ItemRadArmour;
 import us.mcsw.minerad.potion.PotionRadX;
@@ -57,11 +58,11 @@ public class RadProperties implements IExtendedEntityProperties {
 			for (ItemStack it : p.inventory.armorInventory) {
 				if (it != null && it.getItem() instanceof ItemRadArmour) {
 					ItemRadArmour ira = (ItemRadArmour) it.getItem();
-					ret += ira.damageReduceAmount;
+					ret += ira.damageReduceAmount * ConfigMR.RAD_ARMOUR_PROTECTION_MULTIPLIER;
 				}
 			}
 			if (p.capabilities.isCreativeMode) {
-				ret += 10000;
+				return Double.MAX_VALUE;
 			}
 		}
 		if (e instanceof EntityLivingBase) {

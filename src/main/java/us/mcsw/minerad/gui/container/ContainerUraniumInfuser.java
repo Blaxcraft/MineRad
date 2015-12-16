@@ -2,6 +2,7 @@ package us.mcsw.minerad.gui.container;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import us.mcsw.core.ContainerMRMachine;
@@ -47,14 +48,14 @@ public class ContainerUraniumInfuser extends ContainerMRMachine {
 	}
 
 	@Override
-	public void addSlotsToContainer(TileMRInventory tile) {
-		addSlotToContainer(new SlotCoreEmpty(tile, 0, 34, 35));
-		addSlotToContainer(new Slot(tile, 1, 56, 35) {
+	public void addSlotsToContainer(IInventory inv) {
+		addSlotToContainer(new SlotCoreEmpty(inv, 0, 34, 35));
+		addSlotToContainer(new Slot(inv, 1, 56, 35) {
 			public boolean isItemValid(ItemStack it) {
 				return UraniumInfuserRecipes.getRecipeFor(it, false) != null;
 			}
 		});
-		addSlotToContainer(new SlotProduct(tile, 2, 116, 35));
+		addSlotToContainer(new SlotProduct(inv, 2, 116, 35));
 	}
 
 }

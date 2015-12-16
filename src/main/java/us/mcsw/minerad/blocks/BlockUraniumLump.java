@@ -2,6 +2,7 @@ package us.mcsw.minerad.blocks;
 
 import java.util.ArrayList;
 
+import net.minecraft.block.BlockOre;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -20,7 +21,12 @@ public class BlockUraniumLump extends BlockMR {
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
 		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
-		ret.add(new ItemStack(ModItems.uraniumChunk, 18 + fortune * 2));
+		if (world.rand.nextInt(15 / (fortune + 1)) == 0) {
+			ret.add(new ItemStack(ModItems.uraniumOreItem));
+			ret.add(new ItemStack(ModItems.uraniumChunk, world.rand.nextInt(2 * (fortune + 1)) + 2));
+		} else {
+			ret.add(new ItemStack(ModItems.uraniumChunk, world.rand.nextInt(6 * (fortune + 1)) + 8));
+		}
 		return ret;
 	}
 

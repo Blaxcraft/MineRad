@@ -22,8 +22,8 @@ public class BlockUraniumOre extends BlockRadEmitter {
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
 		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
-		ret.add(new ItemStack(ModItems.uraniumChunk, 12 + fortune * 2));
 		ret.add(new ItemStack(ModItems.uraniumOreItem, 2));
+		ret.add(new ItemStack(ModItems.uraniumChunk, world.rand.nextInt(2 * (fortune + 1)) + 3));
 		return ret;
 	}
 

@@ -9,14 +9,11 @@ import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.stats.Achievement;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
-import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import us.mcsw.minerad.init.AchievementsInit;
 import us.mcsw.minerad.init.ModBlocks;
@@ -68,15 +65,6 @@ public class EventListener {
 	}
 
 	@SubscribeEvent
-	public void onItemForm(ItemTossEvent event) {
-		EntityItem it = event.entityItem;
-		if (it.getEntityItem().getItem().equals(ModItems.unknownElement) && !event.player.capabilities.isCreativeMode) {
-			ModItems.unknownElement.decay(it.getEntityItem(), event.player);
-			event.setCanceled(true);
-		}
-	}
-
-	@SubscribeEvent
 	public void onCraft(ItemCraftedEvent event) {
 		Item i = event.crafting.getItem();
 		EntityPlayer pl = event.player;
@@ -121,6 +109,10 @@ public class EventListener {
 				pl.addStat(AchievementsInit.unknownElement, 1);
 			}
 		}
+	}
+	
+	public void onPlayerClick() {
+		
 	}
 
 }

@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import us.mcsw.minerad.ConfigMR;
 
 public class EntityArcThrowerProjectile extends EntityThrowable {
 
@@ -75,7 +76,7 @@ public class EntityArcThrowerProjectile extends EntityThrowable {
 			if (ent instanceof EntityLivingBase) {
 				EntityLivingBase elb = (EntityLivingBase) ent;
 				if (EntityList.entityEggs.containsKey(EntityList.getEntityID(elb))) {
-					if (Math.random() < getCaptureChance(elb)) {
+					if (Math.random() < getCaptureChance(elb) / ConfigMR.ARC_THROWER_CHANCE_MULTIPLIER) {
 						EntityItem drop = new EntityItem(worldObj, elb.posX, elb.posY, elb.posZ);
 						drop.setEntityItemStack(new ItemStack(Items.spawn_egg, 1, EntityList.getEntityID(elb)));
 						elb.worldObj.spawnEntityInWorld(drop);

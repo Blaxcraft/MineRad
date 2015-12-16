@@ -3,7 +3,7 @@ package us.mcsw.minerad.gui.gui;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import us.mcsw.core.ContainerMR;
+import us.mcsw.core.ContainerMRTile;
 import us.mcsw.core.GuiMR;
 import us.mcsw.minerad.gui.container.ContainerFissionReactor;
 import us.mcsw.minerad.ref.MachineReference;
