@@ -111,8 +111,4 @@ public class EventListener {
 		}
 	}
 	
-	public void onPlayerClick() {
-		
-	}
-
 }
