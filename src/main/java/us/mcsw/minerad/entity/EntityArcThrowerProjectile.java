@@ -76,7 +76,7 @@ public class EntityArcThrowerProjectile extends EntityThrowable {
 			if (ent instanceof EntityLivingBase) {
 				EntityLivingBase elb = (EntityLivingBase) ent;
 				if (EntityList.entityEggs.containsKey(EntityList.getEntityID(elb))) {
-					if (Math.random() < getCaptureChance(elb) / ConfigMR.ARC_THROWER_CHANCE_MULTIPLIER) {
+					if (Math.random() < getCaptureChance(elb)) {
 						EntityItem drop = new EntityItem(worldObj, elb.posX, elb.posY, elb.posZ);
 						drop.setEntityItemStack(new ItemStack(Items.spawn_egg, 1, EntityList.getEntityID(elb)));
 						elb.worldObj.spawnEntityInWorld(drop);
@@ -92,7 +92,8 @@ public class EntityArcThrowerProjectile extends EntityThrowable {
 	}
 
 	public double getCaptureChance(EntityLivingBase elb) {
-		return (elb.getMaxHealth() - elb.getHealth()) / elb.getMaxHealth() - 0.4;
+		return (elb.getMaxHealth() - elb.getHealth()) * ConfigMR.ARC_THROWER_CHANCE_MULTIPLIER / elb.getMaxHealth()
+				- 0.2;
 	}
 
 }

@@ -17,7 +17,7 @@ public abstract class TileMultiblock extends TileMRInventory {
 		super(size);
 	}
 
-	private boolean isMaster;
+	private boolean isMaster, hasMaster;
 	private int masterX, masterY, masterZ;
 
 	@Override
@@ -55,6 +55,7 @@ public abstract class TileMultiblock extends TileMRInventory {
 		masterY = 0;
 		masterZ = 0;
 		isMaster = false;
+		hasMaster = false;
 	}
 
 	public boolean checkForMaster() {
@@ -107,6 +108,7 @@ public abstract class TileMultiblock extends TileMRInventory {
 		data.setInteger("masterY", masterY);
 		data.setInteger("masterZ", masterZ);
 		data.setBoolean("isMaster", isMaster);
+		data.setBoolean("hasMaster", hasMaster);
 		if (hasMaster() && isMaster())
 			masterWriteSyncable(data);
 	}
@@ -116,6 +118,7 @@ public abstract class TileMultiblock extends TileMRInventory {
 		masterY = data.getInteger("masterY");
 		masterZ = data.getInteger("masterZ");
 		isMaster = data.getBoolean("isMaster");
+		hasMaster = data.getBoolean("hasMaster");
 		if (hasMaster() && isMaster())
 			masterReadSyncable(data);
 	}
@@ -133,7 +136,7 @@ public abstract class TileMultiblock extends TileMRInventory {
 	}
 
 	public boolean hasMaster() {
-		return getMaster() != null;
+		return hasMaster;
 	}
 
 	public boolean isMaster() {
@@ -154,6 +157,10 @@ public abstract class TileMultiblock extends TileMRInventory {
 
 	public void setIsMaster(boolean bool) {
 		isMaster = bool;
+	}
+	
+	public void setHasMaster(boolean bool) {
+		hasMaster = bool;
 	}
 
 	public void setMasterCoords(int x, int y, int z) {

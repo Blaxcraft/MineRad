@@ -1,15 +1,15 @@
 package us.mcsw.minerad.nei;
 
+import java.util.Arrays;
 import java.util.List;
 
 import codechicken.nei.PositionedStack;
 import net.minecraft.item.ItemStack;
-import scala.actors.threadpool.Arrays;
 import us.mcsw.core.util.ItemUtil;
 import us.mcsw.minerad.init.ModItems;
-import us.mcsw.minerad.init.UraniumInfuserRecipes;
-import us.mcsw.minerad.init.UraniumInfuserRecipes.InfuserRecipe;
 import us.mcsw.minerad.items.ItemEmptyCore;
+import us.mcsw.minerad.recipes.UraniumInfuserRecipes;
+import us.mcsw.minerad.recipes.UraniumInfuserRecipes.InfuserRecipe;
 import us.mcsw.minerad.ref.MachineReference;
 
 public class RecipeHandlerInfuser extends RecipeHandlerMR {

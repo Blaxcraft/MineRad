@@ -7,10 +7,10 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import us.mcsw.core.util.ItemUtil;
 import us.mcsw.minerad.blocks.BlockMicrowave;
-import us.mcsw.minerad.init.MicrowaveRecipes;
-import us.mcsw.minerad.init.MicrowaveRecipes.MicrowaveRecipe;
 import us.mcsw.minerad.ref.MachineReference;
 import us.mcsw.minerad.init.ModBlocks;
+import us.mcsw.minerad.recipes.MicrowaveRecipes;
+import us.mcsw.minerad.recipes.MicrowaveRecipes.MicrowaveRecipe;
 
 public class RecipeHandlerMicrowave extends RecipeHandlerMR {
 

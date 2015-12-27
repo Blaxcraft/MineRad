@@ -1,6 +1,7 @@
 package us.mcsw.minerad.gui.gui;
 
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import us.mcsw.core.GuiMR;
 import us.mcsw.minerad.MineRad;
@@ -55,7 +56,8 @@ public class GuiRadioTowerBase extends GuiMR {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		super.drawGuiContainerForegroundLayer(par1, par2);
+		String s = I18n.format("container." + tile.getInventoryName());
+		this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
 
 		int antennae = tile.getAntennaCount();
 		fontRendererObj.drawString("Antennae: " + antennae, 5, 20, 4210752);
@@ -66,6 +68,12 @@ public class GuiRadioTowerBase extends GuiMR {
 		int freq = tile.freq;
 		String f = "Frequency: " + freq;
 		fontRendererObj.drawString(f, (this.xSize / 2) - (fontRendererObj.getStringWidth(f) / 2), 45, 4210752);
+
+		int power = tile.storage.getEnergyStored();
+		int maxPower = tile.storage.getMaxEnergyStored();
+		String energy = power + " / " + maxPower + " RF";
+		this.fontRendererObj.drawString(energy, this.xSize / 2 - this.fontRendererObj.getStringWidth(power + ""), 65,
+				4210752);
 	}
 
 }

@@ -2,23 +2,27 @@ package us.mcsw.minerad.proxy;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import net.minecraft.client.renderer.entity.RenderEntity;
-import net.minecraft.client.renderer.entity.RenderFireball;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.entity.Entity;
-import net.minecraft.tileentity.TileEntity;
 import us.mcsw.minerad.entity.EntityArcThrowerProjectile;
 import us.mcsw.minerad.entity.EntityStationaryMarker;
 import us.mcsw.minerad.entity.EntityThrownMarker;
 import us.mcsw.minerad.init.ModItems;
-import us.mcsw.minerad.render.TilePipeRenderer;
-import us.mcsw.minerad.render.TileRadioTowerAntennaRenderer;
+import us.mcsw.minerad.render.RendererEnergyStorage;
+import us.mcsw.minerad.render.RendererPipe;
+import us.mcsw.minerad.render.RendererRadioAntenna;
+import us.mcsw.minerad.tiles.TileEnergyStorage;
 import us.mcsw.minerad.tiles.TilePipe;
-import us.mcsw.minerad.tiles.TileRadioTowerAntenna;
+import us.mcsw.minerad.tiles.TileRadioAntenna;
 
 public class ClientProxy extends CommonProxy {
 
-	public void init() {
+	@Override
+	public void init(FMLInitializationEvent event) {
+		super.init(event);
+
 		RenderingRegistry.registerEntityRenderingHandler(EntityThrownMarker.class,
 				new RenderSnowball(ModItems.nukeMarker));
 		RenderingRegistry.registerEntityRenderingHandler(EntityStationaryMarker.class,
@@ -30,8 +34,13 @@ public class ClientProxy extends CommonProxy {
 			}
 		});
 
-		ClientRegistry.bindTileEntitySpecialRenderer(TileRadioTowerAntenna.class, new TileRadioTowerAntennaRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TilePipe.class, new TilePipeRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TilePipe.class, new RendererPipe());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileRadioAntenna.class, new RendererRadioAntenna());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEnergyStorage.class, new RendererEnergyStorage());
+
+		RenderingRegistry.registerBlockHandler(new RendererEnergyStorage());
+		RenderingRegistry.registerBlockHandler(new RendererRadioAntenna());
+		RenderingRegistry.registerBlockHandler(new RendererPipe());
 	}
 
 }

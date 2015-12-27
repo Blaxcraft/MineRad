@@ -1,17 +1,19 @@
 package us.mcsw.minerad.util;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.EnumHelper;
+import net.minecraft.world.WorldSavedData;
 import us.mcsw.minerad.ConfigMR;
 import us.mcsw.minerad.MineRad;
-import us.mcsw.minerad.init.ModItems;
+import us.mcsw.minerad.net.MessageUpdateEmitters;
 
 public class RadUtil {
-
-	static ArrayList<RadEmitter> emitters = new ArrayList<RadEmitter>();
 
 	public static DamageSource radiationDamage = new DamageSource(MineRad.MODID + ":radiation").setDamageBypassesArmor()
 			.setDamageIsAbsolute();
@@ -20,16 +22,15 @@ public class RadUtil {
 
 	public static void addEmitter(World w, int x, int y, int z, int power, int reach) {
 		if (getPowerForEmitter(w, x, y, z) <= 0) {
-			emitters.add(new RadEmitter(w.provider.dimensionId, x, y, z, power, reach));
+			RadEmitter add = new RadEmitter(x, y, z, power, reach);
+			forWorld(w).addSource(add);
+			updateSavedDataForPlayers(w);
 		}
 	}
 
 	public static int getRadsAtLocation(World w, int x, int y, int z) {
 		double maxPowerSq = 0;
-		for (RadEmitter e : emitters.toArray(new RadEmitter[0])) {
-			if (e.dimensionId != w.provider.dimensionId) {
-				continue;
-			}
+		for (RadEmitter e : getEmitters(w).toArray(new RadEmitter[0])) {
 			int dX = e.x - x, dY = e.y - y, dZ = e.z - z;
 			int disSq = (dX * dX) + (dY * dY) + (dZ * dZ);
 			int powSq = e.power * e.power;
@@ -59,8 +60,8 @@ public class RadUtil {
 	}
 
 	public static int getPowerForEmitter(World w, int x, int y, int z) {
-		for (RadEmitter e : emitters.toArray(new RadEmitter[0])) {
-			if (e.matchesLocation(w, x, y, z)) {
+		for (RadEmitter e : getEmitters(w).toArray(new RadEmitter[0])) {
+			if (e.matchesLocation(x, y, z)) {
 				return e.power;
 			}
 		}
@@ -68,8 +69,8 @@ public class RadUtil {
 	}
 
 	public static int getReachForEmitter(World w, int x, int y, int z) {
-		for (RadEmitter e : emitters.toArray(new RadEmitter[0])) {
-			if (e.matchesLocation(w, x, y, z)) {
+		for (RadEmitter e : getEmitters(w).toArray(new RadEmitter[0])) {
+			if (e.matchesLocation(x, y, z)) {
 				return e.reach;
 			}
 		}
@@ -78,17 +79,19 @@ public class RadUtil {
 
 	public static void setPowerAndReach(World w, int x, int y, int z, int power, int reach) {
 		if (power <= 0) {
-			for (RadEmitter e : emitters.toArray(new RadEmitter[0])) {
-				if (e.matchesLocation(w, x, y, z)) {
-					emitters.remove(e);
+			for (RadEmitter e : getEmitters(w).toArray(new RadEmitter[0])) {
+				if (e.matchesLocation(x, y, z)) {
+					forWorld(w).removeSource(x, y, z);
+					updateSavedDataForPlayers(w);
 				}
 			}
 			return;
 		}
 		if (getPowerForEmitter(w, x, y, z) > 0) {
-			for (RadEmitter e : emitters.toArray(new RadEmitter[0])) {
-				if (e.matchesLocation(w, x, y, z)) {
-					e.power = power;
+			for (RadEmitter e : getEmitters(w).toArray(new RadEmitter[0])) {
+				if (e.matchesLocation(x, y, z)) {
+					setPowerAndReach(w, x, y, z, 0, 0);
+					setPowerAndReach(w, x, y, z, power, reach);
 				}
 			}
 		} else {
@@ -96,12 +99,15 @@ public class RadUtil {
 		}
 	}
 
+	public static List<RadEmitter> getEmitters(World w) {
+
+		return forWorld(w).getSources();
+	}
+
 	public static class RadEmitter {
-		public int dimensionId;
 		public int x, y, z, power, reach;
 
-		public RadEmitter(int dimensionId, int x, int y, int z, int power, int reach) {
-			this.dimensionId = dimensionId;
+		public RadEmitter(int x, int y, int z, int power, int reach) {
 			this.x = x;
 			this.y = y;
 			this.z = z;
@@ -109,12 +115,101 @@ public class RadUtil {
 			this.reach = reach;
 		}
 
-		public boolean matchesLocation(World w, int x, int y, int z) {
-			return matchesLocation(w.provider.dimensionId, x, y, z);
+		public RadEmitter(NBTTagCompound data) {
+			this.x = data.getInteger("x");
+			this.y = data.getInteger("y");
+			this.z = data.getInteger("z");
+			this.power = data.getInteger("power");
+			this.reach = data.getInteger("reach");
 		}
 
-		public boolean matchesLocation(int dimId, int x, int y, int z) {
-			return this.dimensionId == dimId && this.x == x && this.y == y && this.z == z;
+		public boolean matchesLocation(int x, int y, int z) {
+			return this.x == x && this.y == y && this.z == z;
+		}
+
+		public void writeToNBT(NBTTagCompound data) {
+			data.setInteger("x", x);
+			data.setInteger("y", y);
+			data.setInteger("z", z);
+			data.setInteger("power", power);
+			data.setInteger("reach", reach);
+		}
+	}
+
+	static final String DATA_TAG = "RadSources";
+
+	public static class RadSavedData extends WorldSavedData {
+
+		public NBTTagList sources = new NBTTagList();
+
+		public RadSavedData(String tag) {
+			super(tag);
+		}
+
+		@Override
+		public void readFromNBT(NBTTagCompound read) {
+			this.sources = read.getTagList("Sources", 10);
+		}
+
+		@Override
+		public void writeToNBT(NBTTagCompound write) {
+			write.setTag("Sources", this.sources);
+		}
+
+		public ArrayList<RadEmitter> getSources() {
+			ArrayList<RadEmitter> ret = new ArrayList<RadEmitter>();
+
+			for (int i = 0; i < sources.tagCount(); i++) {
+				NBTTagCompound e = sources.getCompoundTagAt(i);
+				ret.add(new RadEmitter(e));
+			}
+
+			return ret;
+		}
+
+		public void addSource(RadEmitter source) {
+			NBTTagCompound data = new NBTTagCompound();
+			source.writeToNBT(data);
+			sources.appendTag(data);
+			markDirty();
+		}
+
+		public void removeSource(int x, int y, int z) {
+			for (int i = 0; i < sources.tagCount(); i++) {
+				NBTTagCompound e = sources.getCompoundTagAt(i);
+				RadEmitter at = new RadEmitter(e);
+				if (at.matchesLocation(x, y, z)) {
+					sources.removeTag(i);
+					break;
+				}
+			}
+			markDirty();
+		}
+
+		public void setSourcesList(NBTTagList list) {
+			this.sources = list;
+			markDirty();
+		}
+
+	}
+
+	public static RadSavedData forWorld(World w) {
+		RadSavedData savedData = (RadSavedData) w.perWorldStorage.loadData(RadSavedData.class, DATA_TAG);
+
+		if (savedData != null)
+			return savedData;
+
+		savedData = new RadSavedData(DATA_TAG);
+		w.perWorldStorage.setData(DATA_TAG, savedData);
+		return savedData;
+	}
+
+	public static void updateSavedDataForPlayers(World w) {
+		if (!w.isRemote) {
+			for (Object o : w.playerEntities) {
+				EntityPlayerMP pl = (EntityPlayerMP) o;
+				MineRad.network.sendTo(new MessageUpdateEmitters(forWorld(w).sources), pl);
+			}
 		}
 	}
 

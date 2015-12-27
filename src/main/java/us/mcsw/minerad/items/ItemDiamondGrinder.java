@@ -10,7 +10,6 @@ public class ItemDiamondGrinder extends ItemMR {
 
 		maxStackSize = 1;
 		setMaxDamage(128);
-		setNoRepair();
 	}
 
 	@Override

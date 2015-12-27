@@ -2,6 +2,7 @@ package us.mcsw.minerad.init;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
+import net.minecraftforge.oredict.OreDictionary;
 import us.mcsw.minerad.items.ItemEmptyCore;
 import us.mcsw.minerad.items.ItemDiamondGrinder;
 import us.mcsw.minerad.items.ItemFissionCore;
@@ -30,6 +31,7 @@ import us.mcsw.minerad.items.ItemDensePouch;
 import us.mcsw.minerad.items.ItemUraniumChunk;
 import us.mcsw.minerad.items.ItemUraniumNugget;
 import us.mcsw.minerad.items.ItemUraniumOre;
+import us.mcsw.minerad.items.ItemXray;
 import us.mcsw.minerad.ref.CapacitorTier;
 
 public class ModItems {
@@ -56,12 +58,6 @@ public class ModItems {
 	public static final ItemCrafting denseCore = new ItemCrafting("denseCore");
 	public static final ItemCrafting microwaveModule = new ItemCrafting("microwaveModule");
 
-	public static final ItemCapacitor capacitorBasic = new ItemCapacitor(CapacitorTier.BASIC);
-	public static final ItemCapacitor capacitorIron = new ItemCapacitor(CapacitorTier.IRON);
-	public static final ItemCapacitor capacitorGold = new ItemCapacitor(CapacitorTier.GOLD);
-	public static final ItemCapacitor capacitorDiamond = new ItemCapacitor(CapacitorTier.DIAMOND);
-	public static final ItemCapacitor capacitorQuartz = new ItemCapacitor(CapacitorTier.QUARTZ);
-
 	public static final ItemRadArmour radHelm = new ItemRadArmour(0);
 	public static final ItemRadArmour radChest = new ItemRadArmour(1);
 	public static final ItemRadArmour radLegs = new ItemRadArmour(2);
@@ -86,6 +82,7 @@ public class ModItems {
 	public static final ItemMagnet magnetItem = new ItemMagnet();
 
 	public static final ItemArcThrower arcThrower = new ItemArcThrower();
+	public static final ItemXray xray = new ItemXray();
 
 	public static final ItemDensePouch densePouch = new ItemDensePouch();
 
@@ -102,6 +99,7 @@ public class ModItems {
 
 		GameRegistry.registerItem(radResistantPlating, radResistantPlating.getBasicName());
 		GameRegistry.registerItem(dustUranium, dustUranium.getBasicName());
+		OreDictionary.registerOre("dustUranium", dustUranium);
 		GameRegistry.registerItem(acidSolution, acidSolution.getBasicName());
 		GameRegistry.registerItem(yellowCake, yellowCake.getBasicName());
 		GameRegistry.registerItem(diamondGrinder, diamondGrinder.getBasicName());
@@ -111,11 +109,9 @@ public class ModItems {
 		GameRegistry.registerItem(denseCore, denseCore.getBasicName());
 		GameRegistry.registerItem(microwaveModule, microwaveModule.getBasicName());
 
-		GameRegistry.registerItem(capacitorBasic, capacitorBasic.getBasicName());
-		GameRegistry.registerItem(capacitorIron, capacitorIron.getBasicName());
-		GameRegistry.registerItem(capacitorGold, capacitorGold.getBasicName());
-		GameRegistry.registerItem(capacitorDiamond, capacitorDiamond.getBasicName());
-		GameRegistry.registerItem(capacitorQuartz, capacitorQuartz.getBasicName());
+		for (CapacitorTier tier : CapacitorTier.tiers) {
+			GameRegistry.registerItem(tier.getCapacitor(), tier.getCapacitor().getBasicName());
+		}
 
 		GameRegistry.registerItem(radHelm, radHelm.getBasicName());
 		GameRegistry.registerItem(radChest, radChest.getBasicName());
@@ -141,7 +137,8 @@ public class ModItems {
 		GameRegistry.registerItem(magnetItem, magnetItem.getBasicName());
 
 		GameRegistry.registerItem(arcThrower, arcThrower.getBasicName());
-		
+		GameRegistry.registerItem(xray, xray.getBasicName());
+
 		GameRegistry.registerItem(densePouch, densePouch.getBasicName());
 	}
 

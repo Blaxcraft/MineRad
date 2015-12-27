@@ -4,6 +4,11 @@
 
 package us.mcsw.minerad.render;
 
+import java.awt.Color;
+
+import org.lwjgl.opengl.GL11;
+
+import javafx.scene.transform.Shear;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -68,22 +73,41 @@ public class ModelPipe extends ModelBase {
 		setRotation(ShapeNorth, -1.570796F, 0F, 0F);
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, TilePipe pipe) {
+	int colourSideInput = 0x6677bb, colourSideOutput = 0x885533;
+
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, TilePipe tp) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+
+		Color in = new Color(colourSideInput);
+		Color out = new Color(colourSideOutput);
+
+		byte[] ci = { (byte) in.getRed(), (byte) in.getGreen(), (byte) in.getBlue() };
+		byte[] co = { (byte) out.getRed(), (byte) out.getGreen(), (byte) out.getBlue() };
+
+		byte[] cs = { 1, 1, 1 };
+		if (tp.getTier() != null) {
+			Color tc = new Color(tp.getTier().getColour());
+			GL11.glColor3ub(cs[0] = (byte) tc.getRed(), cs[1] = (byte) tc.getGreen(), cs[2] = (byte) tc.getBlue());
+		}
 		ShapeCenter.render(f5);
-		if (pipe.isConnected(ForgeDirection.UP))
-			ShapeTop.render(f5);
-		if (pipe.isConnected(ForgeDirection.DOWN))
-			ShapeBottom.render(f5);
-		if (pipe.isConnected(ForgeDirection.WEST))
-			ShapeWest.render(f5);
-		if (pipe.isConnected(ForgeDirection.EAST))
-			ShapeEast.render(f5);
-		if (pipe.isConnected(ForgeDirection.SOUTH))
-			ShapeSouth.render(f5);
-		if (pipe.isConnected(ForgeDirection.NORTH))
-			ShapeNorth.render(f5);
+
+		ModelRenderer[] parts = { ShapeTop, ShapeBottom, ShapeWest, ShapeEast, ShapeSouth, ShapeNorth };
+		ForgeDirection[] sides = { ForgeDirection.UP, ForgeDirection.DOWN, ForgeDirection.WEST, ForgeDirection.EAST,
+				ForgeDirection.SOUTH, ForgeDirection.NORTH };
+		for (int i = 0; i < 6; i++) {
+			ForgeDirection side = sides[i];
+
+			parts[i].isHidden = !tp.isConnected(side);
+			if (tp.isConnectedToProvider(side)) {
+				GL11.glColor3ub(ci[0], ci[1], ci[2]);
+			} else if (tp.isConnectedToReceiver(side)) {
+				GL11.glColor3ub(co[0], co[1], co[2]);
+			} else {
+				GL11.glColor3ub(cs[0], cs[1], cs[2]);
+			}
+			parts[i].render(f5);
+		}
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {

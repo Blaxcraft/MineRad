@@ -1,6 +1,5 @@
 package us.mcsw.minerad.blocks;
 
-import cofh.api.energy.IEnergyHandler;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;

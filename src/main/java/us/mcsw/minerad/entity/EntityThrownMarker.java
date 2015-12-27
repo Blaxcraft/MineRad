@@ -9,6 +9,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import us.mcsw.core.util.ChatUtil;
+import us.mcsw.minerad.ConfigMR;
 
 public class EntityThrownMarker extends EntityThrowable {
 
@@ -41,14 +42,12 @@ public class EntityThrownMarker extends EntityThrowable {
 			this.setDead();
 		}
 	}
-	
-	public static final int MAX_NOTIFY_RADIUS = 50;
-	
+
 	public void notifyNearbyPlayers() {
 		for (Object o : worldObj.playerEntities) {
 			if (o instanceof EntityPlayer) {
 				EntityPlayer pl = (EntityPlayer) o;
-				if (pl.getDistanceSqToEntity(this) < MAX_NOTIFY_RADIUS * MAX_NOTIFY_RADIUS) {
+				if (pl.getDistanceSqToEntity(this) < ConfigMR.NUKE_PURGE_RADIUS * ConfigMR.NUKE_PURGE_RADIUS) {
 					ChatUtil.sendTranslatedTo(pl, "message.nukeMarker.warning.nearby");
 				}
 			}

@@ -1,22 +1,21 @@
 package us.mcsw.minerad.tiles;
 
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import us.mcsw.core.TileMultiblock;
-import us.mcsw.core.util.LogUtil;
+import us.mcsw.core.util.ItemUtil;
 import us.mcsw.minerad.MineRad;
-import us.mcsw.minerad.init.FissionRecipes;
 import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.items.ItemCoolantCore;
+import us.mcsw.minerad.items.ItemEmptyCore;
 import us.mcsw.minerad.items.ItemFissionCore;
+import us.mcsw.minerad.recipes.FissionRecipes;
 import us.mcsw.minerad.util.RadUtil;
 
 public class TileFissionReactor extends TileMultiblock {
 
-	public int coreDamageCount = 0, oreProgressCount = 0, coolantDamageCount = 0, passiveCoolCount = 0;
+	public int coreDamageCount = 0, coolantDamageCount = 0, passiveCoolCount = 0;
 
 	public int heat = 0;
 
@@ -28,14 +27,11 @@ public class TileFissionReactor extends TileMultiblock {
 	public void onUpdate() {
 		if (hasCore() && !isCoreDepleted() && hasSource()) {
 			RadUtil.setPowerAndReach(worldObj, xCoord, yCoord + 1, zCoord, 15, 0);
-			if (++coreDamageCount > 5) {
+			if (++coreDamageCount > 7) {
 				damageCore(1);
 				coreDamageCount = 0;
 			}
-			if (++oreProgressCount > 2) {
-				incrProgress(1);
-				oreProgressCount = 0;
-			}
+			incrProgress(1);
 		} else {
 			RadUtil.setPowerAndReach(worldObj, xCoord, yCoord + 1, zCoord, 0, 0);
 			if (++passiveCoolCount > 5) {
@@ -52,7 +48,9 @@ public class TileFissionReactor extends TileMultiblock {
 				}
 			}
 			if (heat > 0) {
-				heat -= 5;
+				heat -= 8;
+				if (heat < 0)
+					heat = 0;
 				damageCoolant(1);
 			}
 		} else if (hasCore() && !isCoreDepleted()) {
@@ -65,6 +63,7 @@ public class TileFissionReactor extends TileMultiblock {
 				}
 			}
 		}
+		markDirty();
 	}
 
 	@Override
@@ -107,7 +106,7 @@ public class TileFissionReactor extends TileMultiblock {
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
 		if (slot <= 3) {
-			return FissionRecipes.hasRecipe(stack.getItem());
+			return FissionRecipes.hasRecipe(stack);
 		} else if (slot == 4) {
 			return stack.getItem() instanceof ItemFissionCore;
 		} else if (slot == 5) {
@@ -147,6 +146,8 @@ public class TileFissionReactor extends TileMultiblock {
 						TileFissionReactor tf = (TileFissionReactor) tile;
 						tf.setMasterCoords(xCoord, yCoord, zCoord);
 						tf.setIsMaster(master);
+						tf.setHasMaster(true);
+						tf.markDirty();
 					}
 				}
 	}
@@ -164,7 +165,8 @@ public class TileFissionReactor extends TileMultiblock {
 	}
 
 	public boolean hasCore() {
-		return getStackInSlot(4) != null && getStackInSlot(4).stackSize > 0;
+		return getStackInSlot(4) != null && getStackInSlot(4).stackSize > 0
+				&& !(getStackInSlot(4).getItem() instanceof ItemEmptyCore);
 	}
 
 	public boolean hasSource() {
@@ -178,7 +180,7 @@ public class TileFissionReactor extends TileMultiblock {
 
 	public boolean hasSource(int slot) {
 		return getStackInSlot(slot) != null && getStackInSlot(slot).stackSize > 0
-				&& FissionRecipes.hasRecipe(getStackInSlot(slot).getItem());
+				&& FissionRecipes.hasRecipe(getStackInSlot(slot));
 	}
 
 	public boolean hasCoolant() {
@@ -196,7 +198,8 @@ public class TileFissionReactor extends TileMultiblock {
 		if (!hasSource(slot)) {
 			return false;
 		}
-		return getStackInSlot(slot).getItemDamage() >= getStackInSlot(slot).getMaxDamage();
+		return ItemUtil.getInteger("FissionProgress", getStackInSlot(slot)) > ItemUtil.getInteger("FissionMaximum",
+				getStackInSlot(slot));
 	}
 
 	public boolean isCoolantDepleted() {
@@ -217,11 +220,16 @@ public class TileFissionReactor extends TileMultiblock {
 
 	public void incrProgress(int amount) {
 		for (int i = 0; i <= 3; i++) {
-			if (hasSource(i) && !isSourceCompleted(i)) {
-				getStackInSlot(i).setItemDamage(getStackInSlot(i).getItemDamage() + amount);
+			if (hasSource(i)) {
+				ItemUtil.setInteger("FissionMaximum", getStackInSlot(i),
+						FissionRecipes.getRecipeFor(getStackInSlot(i)).getTicks());
+				if (!isSourceCompleted(i)) {
+					ItemUtil.setInteger("FissionProgress", getStackInSlot(i),
+							ItemUtil.getInteger("FissionProgress", getStackInSlot(i)) + amount);
+				}
 			}
 			if (isSourceCompleted(i)) {
-				ItemStack result = new ItemStack(FissionRecipes.getResultFrom(getStackInSlot(i).getItem()));
+				ItemStack result = FissionRecipes.getRecipeFor(getStackInSlot(i)).getResult();
 				setInventorySlotContents(i, result.copy());
 			}
 		}

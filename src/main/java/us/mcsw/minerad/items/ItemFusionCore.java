@@ -8,34 +8,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import us.mcsw.core.ItemMR;
 import us.mcsw.core.util.NumbersUtil;
+import us.mcsw.minerad.ConfigMR;
 import us.mcsw.minerad.init.ModItems;
 
 public class ItemFusionCore extends ItemMR {
 
-	static final int MAX_DMG = 800;
-
 	public ItemFusionCore() {
 		super("fusionCore");
 
-		setMaxDamage(MAX_DMG);
+		setMaxDamage(ConfigMR.FUSION_CORE_DURABILITY);
 		setMaxStackSize(1);
 		setNoRepair();
-	}
-
-	// TODO temp
-	@Override
-	public ItemStack onItemRightClick(ItemStack it, World w, EntityPlayer pl) {
-		return damage(it, pl.isSneaking() ? 100 : 5);
-	}
-
-	public ItemStack damage(ItemStack it, int am) {
-		if (it.getItemDamage() >= MAX_DMG - am) {
-			ItemStack ret = new ItemStack(ModItems.emptyCore);
-			return ret;
-		} else {
-			it.setItemDamage(it.getItemDamage() + am);
-		}
-		return it;
 	}
 
 	@Override
@@ -47,8 +30,8 @@ public class ItemFusionCore extends ItemMR {
 	public void addInformation(ItemStack it, EntityPlayer p, List list, boolean n) {
 		super.addInformation(it, p, list, n);
 		list.add("Basic power source for fusion reactors");
-		list.add("Capacity: " + NumbersUtil.roundDouble((((double) MAX_DMG - it.getItemDamage()) / (MAX_DMG / 100)), 1)
-				+ "%");
+		list.add("Capacity: " + NumbersUtil.roundDouble((((double) ConfigMR.FUSION_CORE_DURABILITY - it.getItemDamage())
+				/ (ConfigMR.FUSION_CORE_DURABILITY / 100)), 1) + "%");
 	}
 
 }

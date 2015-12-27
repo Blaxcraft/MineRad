@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import us.mcsw.core.util.ChatUtil;
+import us.mcsw.minerad.ConfigMR;
 import us.mcsw.minerad.init.AchievementsInit;
 import us.mcsw.minerad.init.ModBlocks;
 import us.mcsw.minerad.ref.PlayerProperties;
@@ -20,14 +21,14 @@ public class EntityStationaryMarker extends Entity {
 
 	public EntityStationaryMarker(World w) {
 		super(w);
-		this.explodeTime = w.getTotalWorldTime() + (int) (SECONDS_UNTIL_DETONATION * 20);
+		this.explodeTime = (int) (SECONDS_UNTIL_DETONATION * 20);
 	}
 
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
 		if (!worldObj.isRemote) {
-			if (worldObj.getTotalWorldTime() >= explodeTime) {
+			if (--explodeTime < 0) {
 				if (canCallInStrike()) {
 					if (thrower != null && PlayerProperties.get(thrower) != null) {
 						PlayerProperties props = PlayerProperties.get(thrower);
@@ -36,18 +37,20 @@ public class EntityStationaryMarker extends Entity {
 							for (Object o : worldObj.loadedEntityList.toArray()) {
 								if (o instanceof EntityLivingBase) {
 									EntityLivingBase el = (EntityLivingBase) o;
-									if (el.getDistanceSq(posX, posY, posZ) < 50 * 50) {
+									if (el.getDistanceSq(posX, posY, posZ) < ConfigMR.NUKE_PURGE_RADIUS
+											* ConfigMR.NUKE_PURGE_RADIUS) {
 										el.attackEntityFrom(RadUtil.nukeDamage, el.getMaxHealth() * 10);
 									}
 								}
 							}
-							worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 25.0f, true);
-							int rad = 20;
+							worldObj.createExplosion(this, this.posX, this.posY, this.posZ,
+									25.0f * ConfigMR.NUKE_EXPLOSION_POWER_MULT, true);
+							int rad = (int) (20f + ConfigMR.NUKE_EXPLOSION_POWER_MULT);
 							for (int i = 0; i < 6; i++) {
 								double x = this.posX + rand.nextInt(rad * 2) - rad;
 								double z = this.posZ + rand.nextInt(rad * 2) - rad;
-								worldObj.createExplosion(this, x, worldObj.getHeightValue((int) x, (int) z), z, 10.0f,
-										true);
+								worldObj.createExplosion(this, x, worldObj.getHeightValue((int) x, (int) z), z,
+										10.0f * ConfigMR.NUKE_EXPLOSION_POWER_MULT, true);
 							}
 							int rad2 = 1;
 							for (int x = (int) this.posX - rad2; x <= (int) this.posX + rad2; x++) {
@@ -76,7 +79,6 @@ public class EntityStationaryMarker extends Entity {
 	}
 
 	double tick = 0;
-	int soundCount = 0;
 
 	@Override
 	public void onEntityUpdate() {
@@ -88,10 +90,8 @@ public class EntityStationaryMarker extends Entity {
 			worldObj.spawnParticle("flame", posX, posY, posZ, cr * 0.1 * Math.cos(tick), 0.01,
 					cr * 0.1 * Math.sin(tick));
 		} else {
-			if (--soundCount < 0) {
+			if (explodeTime % 20 == 0)
 				worldObj.playSoundAtEntity(this, "note.pling", 5.0f, 0.5f);
-				soundCount = 20;
-			}
 		}
 	}
 

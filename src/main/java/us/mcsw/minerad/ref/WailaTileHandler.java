@@ -13,11 +13,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import us.mcsw.minerad.MineRad;
+import us.mcsw.minerad.blocks.BlockEnergyStorage;
 import us.mcsw.minerad.blocks.BlockFissionReactor;
 import us.mcsw.minerad.blocks.BlockFusionReactor;
 import us.mcsw.minerad.blocks.BlockPipe;
 import us.mcsw.minerad.init.ModBlocks;
 import us.mcsw.minerad.init.ModItems;
+import us.mcsw.minerad.tiles.TileEnergyStorage;
 import us.mcsw.minerad.tiles.TileFissionReactor;
 import us.mcsw.minerad.tiles.TileFusionReactor;
 import us.mcsw.minerad.tiles.TilePipe;
@@ -51,9 +53,20 @@ public class WailaTileHandler implements IWailaDataProvider {
 		if (acc.getBlock().equals(ModBlocks.pipeBlock)) {
 			if (acc.getTileEntity() != null && acc.getTileEntity() instanceof TilePipe) {
 				TilePipe tp = (TilePipe) acc.getTileEntity();
-				
+
 				ItemStack ret = new ItemStack(acc.getBlock());
-				CapacitorTier.setInItemStack(ret, tp.getTier());
+				if (tp.getTier() != null)
+					CapacitorTier.setInItemStack(ret, tp.getTier());
+				return ret;
+			}
+		}
+		if (acc.getBlock().equals(ModBlocks.energyStorage)) {
+			if (acc.getTileEntity() != null && acc.getTileEntity() instanceof TileEnergyStorage) {
+				TileEnergyStorage ts = (TileEnergyStorage) acc.getTileEntity();
+
+				ItemStack ret = new ItemStack(acc.getBlock());
+				if (ts.getTier() != null)
+					CapacitorTier.setInItemStack(ret, ts.getTier());
 				return ret;
 			}
 		}
@@ -77,6 +90,9 @@ public class WailaTileHandler implements IWailaDataProvider {
 
 		reg.registerNBTProvider(ins, BlockPipe.class);
 		reg.registerStackProvider(ins, BlockPipe.class);
+
+		reg.registerNBTProvider(ins, BlockEnergyStorage.class);
+		reg.registerStackProvider(ins, BlockEnergyStorage.class);
 	}
 
 }

@@ -8,8 +8,8 @@ import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import us.mcsw.minerad.init.AchievementsInit;
-import us.mcsw.minerad.init.FissionRecipes;
 import us.mcsw.minerad.init.ModItems;
+import us.mcsw.minerad.recipes.FissionRecipes;
 
 public class SlotFission extends Slot {
 
@@ -19,9 +19,9 @@ public class SlotFission extends Slot {
 
 	@Override
 	public boolean isItemValid(ItemStack it) {
-		return FissionRecipes.hasRecipe(it.getItem());
+		return FissionRecipes.hasRecipe(it);
 	}
-	
+
 	@Override
 	public int getSlotStackLimit() {
 		return 1;

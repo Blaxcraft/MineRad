@@ -3,6 +3,7 @@ package us.mcsw.core.util;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -84,6 +85,21 @@ public class ItemUtil {
 		return s1.getItem().equals(s2.getItem()) && s1.getItemDamage() == s2.getItemDamage()
 				&& (s1.stackTagCompound == null && s2.stackTagCompound == null
 						|| s1.stackTagCompound.equals(s2.stackTagCompound));
+	}
+	
+	public static void setInteger(String key, ItemStack it, int val) {
+		if (!it.hasTagCompound()) {
+			it.stackTagCompound = new NBTTagCompound();
+		}
+		it.stackTagCompound.setInteger(key, val);
+	}
+	
+	public static int getInteger(String key, ItemStack it) {
+		if (!it.hasTagCompound()) {
+			setInteger(key, it, 0);
+			return getInteger(key, it);
+		}
+		return it.stackTagCompound.getInteger(key);
 	}
 
 }

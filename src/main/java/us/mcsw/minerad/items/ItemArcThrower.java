@@ -14,25 +14,24 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import us.mcsw.core.ItemMR;
+import us.mcsw.core.ItemMREnergy;
 import us.mcsw.minerad.entity.EntityArcThrowerProjectile;
 import us.mcsw.minerad.ref.CapacitorTier;
 import us.mcsw.minerad.ref.TextureReference;
 
-public class ItemArcThrower extends ItemMR implements IEnergyContainerItem {
+public class ItemArcThrower extends ItemMREnergy {
 
 	IIcon useable = null;
 
-	public int maxTransfer = CapacitorTier.GOLD.getMaxTransferMachine();
-	public int capacity = CapacitorTier.GOLD.getMachineCapacity();
-
 	public ItemArcThrower() {
-		super("arcThrower");
+		super("arcThrower", CapacitorTier.DIAMOND.getMaxTransferMachine(),
+				CapacitorTier.DIAMOND.getMachineCapacity() * 2);
 
 		setMaxStackSize(1);
 		setNoRepair();
 	}
 
-	public static final int ENERGY_USAGE = CapacitorTier.GOLD.getMachineCapacity() / 10, USE_TICKS = 40;
+	public static final int ENERGY_USAGE = CapacitorTier.DIAMOND.getMachineCapacity() / 5, USE_TICKS = 40;
 
 	public void use(ItemStack it, World w, EntityPlayer pl) {
 		double vel = 1.35;
@@ -51,14 +50,12 @@ public class ItemArcThrower extends ItemMR implements IEnergyContainerItem {
 
 	@Override
 	public int getDamage(ItemStack stack) {
-		EnergyStorage storage = getFromItemstack(stack);
-		return (storage.getMaxEnergyStored() - storage.getEnergyStored()) * getMaxDamage(stack)
-				/ storage.getMaxEnergyStored();
+		return super.getDamageFromEnergy(stack);
 	}
 
 	@Override
 	public int getMaxDamage() {
-		return capacity / 500;
+		return 1000;
 	}
 
 	@Override
@@ -96,57 +93,6 @@ public class ItemArcThrower extends ItemMR implements IEnergyContainerItem {
 	}
 
 	@Override
-	public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate) {
-		EnergyStorage storage = getFromItemstack(container);
-		int ret = storage.receiveEnergy(maxReceive, simulate);
-		if (!simulate) {
-			setEnergyInItemStack(container, storage.getEnergyStored());
-		}
-		return ret;
-	}
-
-	@Override
-	public int extractEnergy(ItemStack container, int maxExtract, boolean simulate) {
-		EnergyStorage storage = getFromItemstack(container);
-		int ret = storage.extractEnergy(maxExtract, simulate);
-		if (!simulate) {
-			setEnergyInItemStack(container, storage.getEnergyStored());
-		}
-		return ret;
-	}
-
-	@Override
-	public int getEnergyStored(ItemStack container) {
-		return getFromItemstack(container).getEnergyStored();
-	}
-
-	@Override
-	public int getMaxEnergyStored(ItemStack container) {
-		return capacity;
-	}
-
-	public EnergyStorage getFromItemstack(ItemStack it) {
-		if (!it.hasTagCompound()) {
-			it.setTagCompound(new NBTTagCompound());
-		}
-		NBTTagCompound data = it.getTagCompound();
-		if (!data.hasKey("energy")) {
-			data.setInteger("energy", 0);
-		}
-		EnergyStorage ret = new EnergyStorage(capacity, maxTransfer);
-		ret.setEnergyStored(data.getInteger("energy"));
-		return ret;
-	}
-
-	public void setEnergyInItemStack(ItemStack it, int energy) {
-		EnergyStorage current = getFromItemstack(it);
-		current.setEnergyStored(energy);
-
-		it.getTagCompound().setInteger("energy", current.getEnergyStored());
-		it.setItemDamage(getDamage(it));
-	}
-
-	@Override
 	public void registerIcons(IIconRegister reg) {
 		super.registerIcons(reg);
 		useable = reg.registerIcon(TextureReference.RESOURCE_PREFIX + "arcThrowerUseable");
@@ -164,18 +110,8 @@ public class ItemArcThrower extends ItemMR implements IEnergyContainerItem {
 
 	@Override
 	public void addInformation(ItemStack it, EntityPlayer pl, List list, boolean n) {
-		list.add(getFromItemstack(it).getEnergyStored() + " / " + capacity + " RF");
 		list.add("Zap Zap");
-	}
-
-	@Override
-	public void getSubItems(Item i, CreativeTabs tab, List list) {
-		ItemStack empty = new ItemStack(i);
-		setEnergyInItemStack(empty, 0);
-		ItemStack full = new ItemStack(i);
-		setEnergyInItemStack(full, capacity);
-		list.add(empty);
-		list.add(full);
+		super.addInformation(it, pl, list, n);
 	}
 
 }

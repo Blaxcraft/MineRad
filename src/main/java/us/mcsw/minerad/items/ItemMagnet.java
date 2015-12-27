@@ -2,8 +2,6 @@ package us.mcsw.minerad.items;
 
 import java.util.List;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.XPath.Axis;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,9 +10,6 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatComponentStyle;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -107,7 +102,7 @@ public class ItemMagnet extends ItemMR {
 			list.add(EnumChatFormatting.RED + "Off");
 		}
 		list.add("Hold right click to use");
-		list.add("Shift-right click to toggle");
+		list.add("Sneak + right-click to toggle");
 	}
 
 	public boolean isEnabled(ItemStack it) {

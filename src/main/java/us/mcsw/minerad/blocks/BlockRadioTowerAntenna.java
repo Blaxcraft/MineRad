@@ -12,10 +12,10 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import us.mcsw.core.BlockMR;
-import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.init.ModBlocks;
 import us.mcsw.minerad.ref.TextureReference;
-import us.mcsw.minerad.tiles.TileRadioTowerAntenna;
+import us.mcsw.minerad.render.RendererRadioAntenna;
+import us.mcsw.minerad.tiles.TileRadioAntenna;
 
 public class BlockRadioTowerAntenna extends BlockMR implements ITileEntityProvider {
 
@@ -24,6 +24,7 @@ public class BlockRadioTowerAntenna extends BlockMR implements ITileEntityProvid
 
 		setHardness(3.0f);
 		setBlockBounds(0.25f, 0.0f, 0.25f, 0.75f, 1.0f, 0.75f);
+
 		isBlockContainer = true;
 	}
 
@@ -71,13 +72,8 @@ public class BlockRadioTowerAntenna extends BlockMR implements ITileEntityProvid
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World w, int m) {
-		return new TileRadioTowerAntenna();
-	}
-
-	@Override
 	public int getRenderType() {
-		return -1;
+		return RendererRadioAntenna.getStaticRenderId();
 	}
 
 	@Override
@@ -91,8 +87,13 @@ public class BlockRadioTowerAntenna extends BlockMR implements ITileEntityProvid
 	}
 
 	@Override
+	public TileEntity createNewTileEntity(World w, int m) {
+		return new TileRadioAntenna();
+	}
+
+	@Override
 	public void registerBlockIcons(IIconRegister reg) {
-		this.blockIcon = reg.registerIcon(TextureReference.RESOURCE_PREFIX + "radioTowerAntennaIcon");
+		this.blockIcon = reg.registerIcon(TextureReference.RESOURCE_PREFIX + "pipeBlockParticles");
 	}
 
 }

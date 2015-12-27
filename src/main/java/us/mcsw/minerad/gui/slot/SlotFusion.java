@@ -8,9 +8,9 @@ import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import us.mcsw.minerad.init.AchievementsInit;
-import us.mcsw.minerad.init.FissionRecipes;
-import us.mcsw.minerad.init.FusionRecipes;
 import us.mcsw.minerad.init.ModItems;
+import us.mcsw.minerad.recipes.FissionRecipes;
+import us.mcsw.minerad.recipes.FusionRecipes;
 
 public class SlotFusion extends Slot {
 

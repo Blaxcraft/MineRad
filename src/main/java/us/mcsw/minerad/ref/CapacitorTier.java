@@ -1,26 +1,44 @@
 package us.mcsw.minerad.ref;
 
+import java.util.ArrayList;
+
 import org.apache.commons.lang3.text.WordUtils;
 
 import cofh.api.energy.EnergyStorage;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.config.Configuration;
-import us.mcsw.core.util.LogUtil;
-import us.mcsw.minerad.ConfigMR;
-import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.items.ItemCapacitor;
 
-public enum CapacitorTier {
+public class CapacitorTier {
 
-	BASIC(0x883333, 10000, 100000, 150, 250), IRON(0xababab, 25000, 250000, 500, 1000), GOLD(0xbfbf60, 50000, 750000,
-			1250,
-			2500), DIAMOND(0x4dbfbf, 100000, 2500000, 2500, 5000), QUARTZ(0xdfdfdf, 250000, 10000000, 7500, 10000);
+	public static ArrayList<CapacitorTier> tiers = new ArrayList<CapacitorTier>();
 
+	public static CapacitorTier BASIC = registerTier("basic", 0x883333, 10000, 100000, 150, 250),
+			IRON = registerTier("iron", 0x909090, 25000, 250000, 500, 1000),
+			GOLD = registerTier("gold", 0xbfbf60, 50000, 750000, 1250, 2500),
+			DIAMOND = registerTier("diamond", 0x4dbfbf, 100000, 2500000, 2500, 5000),
+			QUARTZ = registerTier("quartz", 0xffffff, 250000, 10000000, 7500, 10000);
+
+	public static CapacitorTier registerTier(String name, int colour, int capMachine, int capStorage,
+			int maxTransferMachine, int maxTransferPipe) {
+		CapacitorTier ret = new CapacitorTier(name, colour, capMachine, capStorage, maxTransferMachine,
+				maxTransferPipe);
+		tiers.add(ret);
+		ret.id = tiers.indexOf(ret);
+		return ret;
+	}
+
+	String name;
+	ItemCapacitor capacitor = null;
 	final int colour, capMachineDefault, capStorageDefault, maxTransferMachineDefault, maxTransferPipeDefault;
 	int capMachine, capStorage, maxTransferMachine, maxTransferPipe;
 
-	private CapacitorTier(int colour, int capMachine, int capStorage, int maxTransferMachine, int maxTransferPipe) {
+	int id;
+
+	private CapacitorTier(String name, int colour, int capMachine, int capStorage, int maxTransferMachine,
+			int maxTransferPipe) {
+		this.name = name;
 		this.colour = colour;
 		capMachineDefault = this.capMachine = capMachine;
 		capStorageDefault = this.capStorage = capStorage;
@@ -41,12 +59,16 @@ public enum CapacitorTier {
 				Integer.MAX_VALUE, "Max transfer (RF/t) for " + getCapitalizedName() + " pipes");
 	}
 
+	public int getId() {
+		return id;
+	}
+
 	public String getCapitalizedName() {
-		return WordUtils.capitalizeFully(name());
+		return WordUtils.capitalizeFully(name);
 	}
 
 	public String getLowercaseName() {
-		return name().toLowerCase();
+		return name.toLowerCase();
 	}
 
 	public int getColour() {
@@ -68,6 +90,11 @@ public enum CapacitorTier {
 	public int getMaxTransferPipe() {
 		return maxTransferPipe;
 	}
+	
+	@Override
+	public String toString() {
+		return getLowercaseName();
+	}
 
 	public EnergyStorage createStorage(boolean machine) {
 		EnergyStorage ret = new EnergyStorage(machine ? capMachine : capStorage,
@@ -75,21 +102,15 @@ public enum CapacitorTier {
 		return ret;
 	}
 
-	public static ItemCapacitor getCapacitor(CapacitorTier tier) {
-		switch (tier) {
-		case BASIC:
-			return ModItems.capacitorBasic;
-		case IRON:
-			return ModItems.capacitorIron;
-		case GOLD:
-			return ModItems.capacitorGold;
-		case DIAMOND:
-			return ModItems.capacitorDiamond;
-		case QUARTZ:
-			return ModItems.capacitorQuartz;
-		default:
-			return null;
+	public ItemCapacitor getCapacitor() {
+		if (capacitor == null) {
+			capacitor = new ItemCapacitor(this);
 		}
+		return capacitor;
+	}
+
+	public static CapacitorTier getFromId(int id) {
+		return tiers.get(id);
 	}
 
 	public static final String NBT_KEY = "capacitorTier";
@@ -98,14 +119,14 @@ public enum CapacitorTier {
 		if (data == null || !data.hasKey(NBT_KEY)) {
 			return BASIC;
 		}
-		return values()[data.getInteger(NBT_KEY)];
+		return getFromId(data.getInteger(NBT_KEY));
 	}
 
 	public static void writeToNBT(NBTTagCompound data, CapacitorTier tier) {
 		if (data == null || tier == null) {
 			return;
 		}
-		data.setInteger(NBT_KEY, tier.ordinal());
+		data.setInteger(NBT_KEY, tier.getId());
 	}
 
 	public static CapacitorTier getFromItemStack(ItemStack it) {

@@ -2,11 +2,8 @@ package us.mcsw.core;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ICrafting;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 
 public abstract class ContainerMRMachine extends ContainerMRTile {
 
@@ -18,7 +15,7 @@ public abstract class ContainerMRMachine extends ContainerMRTile {
 
 		addPlayerInventory(ip);
 	}
-	
+
 	int lastStored = 0;
 
 	@Override

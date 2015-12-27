@@ -1,20 +1,17 @@
 package us.mcsw.minerad.nei;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map.Entry;
 
 import codechicken.nei.PositionedStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import scala.actors.threadpool.Arrays;
-import us.mcsw.minerad.init.FissionRecipes;
-import us.mcsw.minerad.init.FusionRecipes;
-import us.mcsw.minerad.init.FusionRecipes.FusionRecipe;
 import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.items.ItemCoolantCore;
 import us.mcsw.minerad.items.ItemFissionCore;
-import us.mcsw.minerad.items.ItemFusionCore;
-import us.mcsw.minerad.nei.RecipeHandlerFusion.RecipeFusion;
+import us.mcsw.minerad.recipes.FissionRecipes;
+import us.mcsw.minerad.recipes.FissionRecipes.FissionRecipe;
 import us.mcsw.minerad.ref.MachineReference;
 
 public class RecipeHandlerFission extends RecipeHandlerMR {
@@ -30,19 +27,19 @@ public class RecipeHandlerFission extends RecipeHandlerMR {
 
 	@Override
 	public void loadCraftingRecipes(ItemStack result) {
-		for (Entry<Item, Item> fr : FissionRecipes.recipes.entrySet()) {
-			if (fr.getValue().equals(result.getItem())) {
-				this.arecipes.add(new RecipeFission(fr.getKey()));
+		for (FissionRecipe fr : FissionRecipes.recipes) {
+			if (fr.getResult().getItem().equals(result.getItem())) {
+				this.arecipes.add(new RecipeFission(fr.getSource()));
 			}
 		}
 	}
 
 	@Override
 	public void loadUsageRecipes(ItemStack ingredient) {
-		for (Entry<Item, Item> fr : FissionRecipes.recipes.entrySet()) {
-			if (ingredient.getItem().equals(fr.getKey()) || ingredient.getItem() instanceof ItemCoolantCore
+		for (FissionRecipe fr : FissionRecipes.recipes) {
+			if (ingredient.getItem().equals(fr.getSource()) || ingredient.getItem() instanceof ItemCoolantCore
 					|| ingredient.getItem() instanceof ItemFissionCore) {
-				this.arecipes.add(new RecipeFission(fr.getKey()));
+				this.arecipes.add(new RecipeFission(fr.getSource()));
 			}
 		}
 	}
@@ -57,7 +54,7 @@ public class RecipeHandlerFission extends RecipeHandlerMR {
 
 		@Override
 		public PositionedStack getResult() {
-			return makeStack(new ItemStack(FissionRecipes.getResultFrom(rec)), 111, 31);
+			return makeStack(FissionRecipes.getRecipeFor(new ItemStack(rec)).getResult(), 111, 31);
 		}
 
 		@Override

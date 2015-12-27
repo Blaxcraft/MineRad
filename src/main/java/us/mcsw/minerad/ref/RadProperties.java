@@ -1,5 +1,6 @@
 package us.mcsw.minerad.ref;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -56,9 +57,16 @@ public class RadProperties implements IExtendedEntityProperties {
 		if (e instanceof EntityPlayer) {
 			EntityPlayer p = (EntityPlayer) e;
 			for (ItemStack it : p.inventory.armorInventory) {
-				if (it != null && it.getItem() instanceof ItemRadArmour) {
-					ItemRadArmour ira = (ItemRadArmour) it.getItem();
-					ret += ira.damageReduceAmount * ConfigMR.RAD_ARMOUR_PROTECTION_MULTIPLIER;
+				if (it != null) {
+					if (it.getItem() instanceof ItemRadArmour) {
+						ItemRadArmour ira = (ItemRadArmour) it.getItem();
+						ret += ira.damageReduceAmount * ConfigMR.RAD_ARMOUR_PROTECTION_MULTIPLIER;
+					}
+
+					int lvl = EnchantmentHelper.getEnchantmentLevel(MineRad.enchRadResist.effectId, it);
+					if (lvl > 0) {
+						ret += lvl * 3 - 1;
+					}
 				}
 			}
 			if (p.capabilities.isCreativeMode) {

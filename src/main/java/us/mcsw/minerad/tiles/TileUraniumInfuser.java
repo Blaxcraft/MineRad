@@ -7,8 +7,8 @@ import us.mcsw.core.TileMRMachine;
 import us.mcsw.core.util.ItemUtil;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.init.ModItems;
-import us.mcsw.minerad.init.UraniumInfuserRecipes;
-import us.mcsw.minerad.init.UraniumInfuserRecipes.InfuserRecipe;
+import us.mcsw.minerad.recipes.UraniumInfuserRecipes;
+import us.mcsw.minerad.recipes.UraniumInfuserRecipes.InfuserRecipe;
 import us.mcsw.minerad.ref.CapacitorTier;
 
 public class TileUraniumInfuser extends TileMRMachine {
@@ -42,14 +42,13 @@ public class TileUraniumInfuser extends TileMRMachine {
 					decrStackSize(1, getCurrentRecipe().getSource().stackSize);
 				}
 				changed = true;
-
-				// worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			} else {
 				progress = 0;
 			}
 		}
 		if (changed) {
 			markDirty();
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		}
 	}
 

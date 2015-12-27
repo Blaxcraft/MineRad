@@ -80,6 +80,34 @@ public class TilePipe extends TileEntity implements IEnergyConnection {
 		return false;
 	}
 
+	public boolean isConnectedToReceiver(ForgeDirection side) {
+		int cx = xCoord + side.offsetX;
+		int cy = yCoord + side.offsetY;
+		int cz = zCoord + side.offsetZ;
+		TileEntity te = worldObj.getTileEntity(cx, cy, cz);
+		if (te != null) {
+			if (te instanceof IEnergyReceiver) {
+				IEnergyReceiver tr = (IEnergyReceiver) te;
+				return tr.receiveEnergy(side.getOpposite(), tier.getMaxTransferPipe(), true) > 0;
+			}
+		}
+		return false;
+	}
+
+	public boolean isConnectedToProvider(ForgeDirection side) {
+		int cx = xCoord + side.offsetX;
+		int cy = yCoord + side.offsetY;
+		int cz = zCoord + side.offsetZ;
+		TileEntity te = worldObj.getTileEntity(cx, cy, cz);
+		if (te != null) {
+			if (te instanceof IEnergyProvider) {
+				IEnergyProvider tr = (IEnergyProvider) te;
+				return tr.extractEnergy(side.getOpposite(), tier.getMaxTransferPipe(), true) > 0;
+			}
+		}
+		return false;
+	}
+
 	public boolean willConnect(ForgeDirection side, TilePipe connectTo) {
 		if (connectTo.tier != tier) {
 			return false;

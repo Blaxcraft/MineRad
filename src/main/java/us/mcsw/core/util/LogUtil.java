@@ -8,6 +8,7 @@ import us.mcsw.minerad.MineRad;
 public class LogUtil {
 
 	public static void log(Level lvl, Object obj) {
+		if (obj == null) obj = "null";
 		FMLLog.log(MineRad.MOD_NAME, lvl, obj.toString());
 	}
 	

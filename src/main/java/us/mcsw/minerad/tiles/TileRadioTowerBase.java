@@ -60,7 +60,10 @@ public class TileRadioTowerBase extends TileMRMachine {
 						}
 					}
 				}
-				storage.extractEnergy(energyToUse, false);
+				if (storage.extractEnergy(energyToUse, false) > 0) {
+					markDirty();
+					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+				}
 			}
 			if (items[1] != null) {
 				items[1] = ItemUtil.addItemToNearbyInventories(this, items[1], true, false, pushDirs);
@@ -181,12 +184,14 @@ public class TileRadioTowerBase extends TileMRMachine {
 	public Packet getDescriptionPacket() {
 		NBTTagCompound sync = new NBTTagCompound();
 		sync.setInteger("Frequency", freq);
+		storage.writeToNBT(sync);
 		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, sync);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		freq = pkt.func_148857_g().getInteger("Frequency");
+		storage.readFromNBT(pkt.func_148857_g());
 	}
 
 	@Override

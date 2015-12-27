@@ -1,18 +1,15 @@
 package us.mcsw.minerad.nei;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import codechicken.nei.PositionedStack;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
-import scala.actors.threadpool.Arrays;
-import us.mcsw.minerad.gui.gui.GuiFusionReactor;
-import us.mcsw.minerad.init.FusionRecipes;
 import us.mcsw.minerad.init.ModItems;
-import us.mcsw.minerad.init.FusionRecipes.FusionRecipe;
 import us.mcsw.minerad.items.ItemCoolantCore;
 import us.mcsw.minerad.items.ItemFusionCore;
+import us.mcsw.minerad.recipes.FusionRecipes;
+import us.mcsw.minerad.recipes.FusionRecipes.FusionRecipe;
 import us.mcsw.minerad.ref.MachineReference;
 
 public class RecipeHandlerFusion extends RecipeHandlerMR {

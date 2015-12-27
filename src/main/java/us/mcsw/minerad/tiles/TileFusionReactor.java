@@ -1,19 +1,17 @@
 package us.mcsw.minerad.tiles;
 
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.event.terraingen.BiomeEvent.GetWaterColor;
 import us.mcsw.core.TileMultiblock;
+import us.mcsw.core.util.ItemUtil;
 import us.mcsw.minerad.MineRad;
-import us.mcsw.minerad.init.FissionRecipes;
-import us.mcsw.minerad.init.FusionRecipes;
 import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.items.ItemCoolantCore;
-import us.mcsw.minerad.items.ItemFissionCore;
+import us.mcsw.minerad.items.ItemEmptyCore;
 import us.mcsw.minerad.items.ItemFusionCore;
+import us.mcsw.minerad.recipes.FusionRecipes;
 import us.mcsw.minerad.util.RadUtil;
 
 public class TileFusionReactor extends TileMultiblock {
@@ -33,14 +31,11 @@ public class TileFusionReactor extends TileMultiblock {
 	public void onUpdate() {
 		if (hasCore() && !isCoreDepleted() && hasSource()) {
 			RadUtil.setPowerAndReach(worldObj, xCoord, yCoord + 1, zCoord, 5, 1);
-			if (++coreDamageCount > 5) {
+			if (++coreDamageCount > 7) {
 				damageCore(1);
 				coreDamageCount = 0;
 			}
-			if (++oreProgressCount > 2) {
-				incrProgress(1);
-				oreProgressCount = 0;
-			}
+			incrProgress(1);
 		} else {
 			RadUtil.setPowerAndReach(worldObj, xCoord, yCoord + 1, zCoord, 0, 0);
 			if (++passiveCoolCount > 5) {
@@ -57,7 +52,9 @@ public class TileFusionReactor extends TileMultiblock {
 				}
 			}
 			if (heat > 0) {
-				heat--;
+				heat -= 5;
+				if (heat < 0)
+					heat = 0;
 				damageCoolant(1);
 			}
 		} else if (hasCore() && !isCoreDepleted()) {
@@ -152,6 +149,8 @@ public class TileFusionReactor extends TileMultiblock {
 						TileFusionReactor tf = (TileFusionReactor) tile;
 						tf.setMasterCoords(xCoord, yCoord, zCoord);
 						tf.setIsMaster(master);
+						tf.setHasMaster(true);
+						tf.markDirty();
 					}
 				}
 	}
@@ -169,7 +168,8 @@ public class TileFusionReactor extends TileMultiblock {
 	}
 
 	public boolean hasCore() {
-		return getStackInSlot(3) != null && getStackInSlot(3).stackSize > 0;
+		return getStackInSlot(3) != null && getStackInSlot(3).stackSize > 0
+				&& !(getStackInSlot(3).getItem() instanceof ItemEmptyCore);
 	}
 
 	public boolean hasSource() {
@@ -193,8 +193,10 @@ public class TileFusionReactor extends TileMultiblock {
 		if (!hasSource()) {
 			return false;
 		}
-		return getStackInSlot(0).getItemDamage() >= getStackInSlot(0).getMaxDamage()
-				&& getStackInSlot(1).getItemDamage() >= getStackInSlot(1).getMaxDamage();
+		return ItemUtil.getInteger("FusionProgress", getStackInSlot(0)) >= ItemUtil.getInteger("FusionMaximum",
+				getStackInSlot(0))
+				&& ItemUtil.getInteger("FusionProgress", getStackInSlot(1)) >= ItemUtil.getInteger("FusionMaximum",
+						getStackInSlot(1));
 	}
 
 	public boolean isCoolantDepleted() {
@@ -214,12 +216,21 @@ public class TileFusionReactor extends TileMultiblock {
 	}
 
 	public void incrProgress(int amount) {
-		if (hasSource() && !isSourceCompleted()) {
-			if (getStackInSlot(0).getItemDamage() < getStackInSlot(0).getMaxDamage()) {
-				getStackInSlot(0).setItemDamage(getStackInSlot(0).getItemDamage() + amount);
-			}
-			if (getStackInSlot(1).getItemDamage() < getStackInSlot(1).getMaxDamage()) {
-				getStackInSlot(1).setItemDamage(getStackInSlot(1).getItemDamage() + amount);
+		if (hasSource()) {
+			int ticks = FusionRecipes.getRecipeFor(getStackInSlot(0), getStackInSlot(1)).getTicks();
+			ItemUtil.setInteger("FusionMaximum", getStackInSlot(0), ticks);
+			ItemUtil.setInteger("FusionMaximum", getStackInSlot(1), ticks);
+			if (!isSourceCompleted()) {
+				if (ItemUtil.getInteger("FusionProgress", getStackInSlot(0)) < ItemUtil.getInteger("FusionMaximum",
+						getStackInSlot(0))) {
+					ItemUtil.setInteger("FusionProgress", getStackInSlot(0),
+							ItemUtil.getInteger("FusionProgress", getStackInSlot(0)) + amount);
+				}
+				if (ItemUtil.getInteger("FusionProgress", getStackInSlot(1)) < ItemUtil.getInteger("FusionMaximum",
+						getStackInSlot(1))) {
+					ItemUtil.setInteger("FusionProgress", getStackInSlot(1),
+							ItemUtil.getInteger("FusionProgress", getStackInSlot(1)) + amount);
+				}
 			}
 		}
 		if (isSourceCompleted() && getStackInSlot(2) == null) {

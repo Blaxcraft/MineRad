@@ -10,7 +10,7 @@ import us.mcsw.core.TileMRInventory;
 import us.mcsw.core.TileMRMachine;
 import us.mcsw.minerad.gui.slot.SlotCoreEmpty;
 import us.mcsw.minerad.gui.slot.SlotProduct;
-import us.mcsw.minerad.init.UraniumInfuserRecipes;
+import us.mcsw.minerad.recipes.UraniumInfuserRecipes;
 import us.mcsw.minerad.tiles.TileUraniumInfuser;
 
 public class ContainerUraniumInfuser extends ContainerMRMachine {

@@ -9,17 +9,19 @@ import us.mcsw.minerad.gui.container.ContainerDensePouch;
 import us.mcsw.minerad.gui.container.ContainerFissionReactor;
 import us.mcsw.minerad.gui.container.ContainerFusionReactor;
 import us.mcsw.minerad.gui.container.ContainerRadioTowerBase;
+import us.mcsw.minerad.gui.container.ContainerRadioactiveGenerator;
 import us.mcsw.minerad.gui.container.ContainerUraniumInfuser;
 import us.mcsw.minerad.gui.gui.GuiDensePouch;
 import us.mcsw.minerad.gui.gui.GuiFissionReactor;
 import us.mcsw.minerad.gui.gui.GuiFusionReactor;
 import us.mcsw.minerad.gui.gui.GuiRadioTowerBase;
+import us.mcsw.minerad.gui.gui.GuiRadioactiveGenerator;
 import us.mcsw.minerad.gui.gui.GuiUraniumInfuser;
-import us.mcsw.minerad.items.ItemDensePouch;
 import us.mcsw.minerad.ref.MachineReference;
 import us.mcsw.minerad.tiles.TileFissionReactor;
 import us.mcsw.minerad.tiles.TileFusionReactor;
 import us.mcsw.minerad.tiles.TileRadioTowerBase;
+import us.mcsw.minerad.tiles.TileRadioactiveGenerator;
 import us.mcsw.minerad.tiles.TileUraniumInfuser;
 
 public class MRGuiHandler implements IGuiHandler {
@@ -50,6 +52,9 @@ public class MRGuiHandler implements IGuiHandler {
 				return new ContainerFusionReactor(player.inventory, (TileFusionReactor) tfr.getMaster());
 			}
 		}
+		if (te instanceof TileRadioactiveGenerator) {
+			return new ContainerRadioactiveGenerator(player.inventory, (TileRadioactiveGenerator) te);
+		}
 		return null;
 	}
 
@@ -78,6 +83,9 @@ public class MRGuiHandler implements IGuiHandler {
 			if (tfr.hasMaster()) {
 				return new GuiFusionReactor(player.inventory, (TileFusionReactor) tfr.getMaster());
 			}
+		}
+		if (te instanceof TileRadioactiveGenerator) {
+			return new GuiRadioactiveGenerator(player.inventory, (TileRadioactiveGenerator) te);
 		}
 		return null;
 	}

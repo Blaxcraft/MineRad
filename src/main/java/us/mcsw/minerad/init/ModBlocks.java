@@ -2,6 +2,7 @@ package us.mcsw.minerad.init;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import us.mcsw.minerad.blocks.BlockCraftingMachine;
+import us.mcsw.minerad.blocks.BlockEnergyStorage;
 import us.mcsw.minerad.blocks.BlockFissionReactor;
 import us.mcsw.minerad.blocks.BlockFissionReactor.ItemBlockFissionReactor;
 import us.mcsw.minerad.blocks.BlockFusionReactor;
@@ -16,10 +17,12 @@ import us.mcsw.minerad.blocks.BlockPureNeptunium;
 import us.mcsw.minerad.blocks.BlockPureUranium;
 import us.mcsw.minerad.blocks.BlockRadioTowerAntenna;
 import us.mcsw.minerad.blocks.BlockRadioTowerBase;
+import us.mcsw.minerad.blocks.BlockRadioactiveGenerator;
 import us.mcsw.minerad.blocks.BlockUraniumInfuser;
 import us.mcsw.minerad.blocks.BlockUraniumLump;
 import us.mcsw.minerad.blocks.BlockUraniumOre;
 import us.mcsw.minerad.blocks.BlockUraniumTraces;
+import us.mcsw.minerad.items.ItemEnergyStorage;
 import us.mcsw.minerad.items.ItemPipe;
 
 public class ModBlocks {
@@ -47,8 +50,10 @@ public class ModBlocks {
 	public static final BlockUraniumInfuser uraniumInfuser = new BlockUraniumInfuser();
 	public static final BlockRadioTowerBase radioTowerBase = new BlockRadioTowerBase();
 	public static final BlockRadioTowerAntenna radioTowerAntenna = new BlockRadioTowerAntenna();
+	public static final BlockRadioactiveGenerator radioactiveGenerator = new BlockRadioactiveGenerator();
 
 	public static final BlockPipe pipeBlock = new BlockPipe();
+	public static final BlockEnergyStorage energyStorage = new BlockEnergyStorage();
 
 	public static void init() {
 		GameRegistry.registerBlock(uraniumTraces, uraniumTraces.getBasicName());
@@ -74,8 +79,10 @@ public class ModBlocks {
 		GameRegistry.registerBlock(uraniumInfuser, uraniumInfuser.getBasicName());
 		GameRegistry.registerBlock(radioTowerBase, radioTowerBase.getBasicName());
 		GameRegistry.registerBlock(radioTowerAntenna, radioTowerAntenna.getBasicName());
+		GameRegistry.registerBlock(radioactiveGenerator, radioactiveGenerator.getBasicName());
 
 		GameRegistry.registerBlock(pipeBlock, ItemPipe.class, pipeBlock.getBasicName());
+		GameRegistry.registerBlock(energyStorage, ItemEnergyStorage.class, energyStorage.getBasicName());
 	}
 
 }

@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import us.mcsw.minerad.ConfigMR;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.items.ItemRadArmour;
 
@@ -21,7 +22,7 @@ public class PlayerProperties implements IExtendedEntityProperties {
 	public PlayerProperties(EntityPlayer p) {
 		this.p = p;
 		this.nukes = 0;
-		this.maxNukes = 3;
+		this.maxNukes = ConfigMR.INITIAL_ARSENAL_CAPACITY;
 		this.hasArsenal = false;
 	}
 
