@@ -85,7 +85,7 @@ public class EventListener {
 		EntityPlayer pl = Minecraft.getMinecraft().thePlayer;
 		World w = Minecraft.getMinecraft().theWorld;
 		boolean canSeeEmitters = false;
-		
+
 		for (ItemStack it : pl.inventory.mainInventory) {
 			if (it != null && it.getItem() instanceof ItemXray) {
 				ItemXray item = (ItemXray) it.getItem();
@@ -94,7 +94,7 @@ public class EventListener {
 				}
 			}
 		}
-		
+
 		if (canSeeEmitters) {
 			int colour = nextColour();
 			for (RadEmitter rad : RadUtil.getEmitters(w)) {
@@ -191,5 +191,4 @@ public class EventListener {
 			}
 		}
 	}
-
 }
