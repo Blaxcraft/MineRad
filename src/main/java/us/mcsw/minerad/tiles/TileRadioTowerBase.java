@@ -181,17 +181,13 @@ public class TileRadioTowerBase extends TileMRMachine {
 	}
 
 	@Override
-	public Packet getDescriptionPacket() {
-		NBTTagCompound sync = new NBTTagCompound();
-		sync.setInteger("Frequency", freq);
-		storage.writeToNBT(sync);
-		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, sync);
+	public void writeSyncable(NBTTagCompound data) {
+		data.setInteger("Frequency", freq);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-		freq = pkt.func_148857_g().getInteger("Frequency");
-		storage.readFromNBT(pkt.func_148857_g());
+	public void readSyncable(NBTTagCompound data) {
+		freq = data.getInteger("Frequency");
 	}
 
 	@Override

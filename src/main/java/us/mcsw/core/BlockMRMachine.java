@@ -16,6 +16,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import us.mcsw.core.util.ItemUtil;
 import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.ref.TextureReference;
@@ -129,34 +130,7 @@ public abstract class BlockMRMachine extends BlockMR implements ITileEntityProvi
 	@Override
 	public void breakBlock(World w, int x, int y, int z, Block b, int m) {
 		TileEntity te = w.getTileEntity(x, y, z);
-		if (!(te instanceof IInventory)) {
-			return;
-		}
-		IInventory inv = (IInventory) te;
-
-		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack item = inv.getStackInSlot(i);
-
-			if (item != null && item.stackSize > 0) {
-				float rx = w.rand.nextFloat() * 0.8F + 0.1F;
-				float ry = w.rand.nextFloat() * 0.8F + 0.1F;
-				float rz = w.rand.nextFloat() * 0.8F + 0.1F;
-
-				EntityItem entityItem = new EntityItem(w, x + rx, y + ry, z + rz, item.copy());
-
-				if (item.hasTagCompound()) {
-					entityItem.getEntityItem().setTagCompound((NBTTagCompound) item.getTagCompound().copy());
-				}
-
-				float factor = 0.05F;
-				entityItem.motionX = w.rand.nextGaussian() * factor;
-				entityItem.motionY = w.rand.nextGaussian() * factor + 0.2F;
-				entityItem.motionZ = w.rand.nextGaussian() * factor;
-				w.spawnEntityInWorld(entityItem);
-				item.stackSize = 0;
-			}
-		}
-
+		ItemUtil.dropItemsFromInventory(te);
 		super.breakBlock(w, x, y, z, b, m);
 	}
 

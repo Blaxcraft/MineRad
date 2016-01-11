@@ -10,8 +10,8 @@ public class MachineReference {
 
 	public static IIcon CORE_BACKGROUND = null;
 
-	public static final int URANIUM_INFUSER_ID = 0;
-	public static final ResourceLocation URANIUM_INFUSER_GUI = new ResourceLocation(
+	public static final int INFUSER_ID = 0;
+	public static final ResourceLocation INFUSER_GUI = new ResourceLocation(
 			textureLocation + "uraniumInfuser.png");
 
 	public static final int RADIO_TOWER_ID = 1;
@@ -30,6 +30,16 @@ public class MachineReference {
 	public static final int RADIO_GENERATOR_ID = 4;
 	public static final ResourceLocation RADIO_GENERATOR_GUI = new ResourceLocation(
 			textureLocation + "radioGenerator.png");
+
+	public static final int SHIELD_GENERATOR_ID = 5;
+	public static final ResourceLocation SHIELD_GENERATOR_GUI = new ResourceLocation(
+			textureLocation + "shieldGenerator.png");
+
+	public static final int WATER_DISTILLER_ID = 6;
+	public static final ResourceLocation WATER_DISTILLER_GUI = new ResourceLocation(
+			textureLocation + "waterDistiller.png");
+
+	public static final int FILTER_ID = 7;
 
 	public static final ResourceLocation MICROWAVE_GUI_NEI = new ResourceLocation(
 			textureLocation + "nei/microwaveNEI.png");

@@ -16,8 +16,6 @@ public abstract class ContainerMRTile extends ContainerMR {
 	public ContainerMRTile(InventoryPlayer ip, TileMRInventory tile) {
 		super(ip, tile);
 		this.tile = tile;
-
-		addSlotsToContainer(tile);
 	}
 
 	@Override

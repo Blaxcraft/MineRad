@@ -42,13 +42,13 @@ public class TileFissionReactor extends TileMultiblock {
 		}
 		if (hasCoolant() && !isCoolantDepleted()) {
 			if (hasCore() && !isCoreDepleted() && hasSource()) {
-				if (++coolantDamageCount > 4) {
+				if (++coolantDamageCount > 9) {
 					damageCoolant(1);
 					coolantDamageCount = 0;
 				}
 			}
 			if (heat > 0) {
-				heat -= 8;
+				heat -= 5;
 				if (heat < 0)
 					heat = 0;
 				damageCoolant(1);

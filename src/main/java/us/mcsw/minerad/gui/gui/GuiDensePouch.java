@@ -2,6 +2,7 @@ package us.mcsw.minerad.gui.gui;
 
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -41,6 +42,7 @@ public class GuiDensePouch extends GuiMR {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		this.fontRendererObj.drawString(I18n.format(inv.getInventoryName()), 8, 6, 4210752);
+		this.fontRendererObj.drawString(I18n.format(ip.getInventoryName()), 8, this.ySize - 96 + 2, 4210752);
 	}
 
 	@Override

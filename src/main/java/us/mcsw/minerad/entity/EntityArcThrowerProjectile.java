@@ -34,13 +34,16 @@ public class EntityArcThrowerProjectile extends EntityThrowable {
 
 	@Override
 	public void onUpdate() {
-		this.motionY += this.getGravityVelocity();
-
 		if (this.ticksExisted >= 20) {
 			this.setDead();
 		}
 
 		super.onUpdate();
+	}
+	
+	@Override
+	protected float getGravityVelocity() {
+		return 0;
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.ref.TextureReference;
 
-public class BlockMR extends Block {
+public class BlockMR extends Block implements IRegisteredItemMR {
 
 	public BlockMR(Material mat, String unloc) {
 		super(mat);

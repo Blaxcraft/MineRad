@@ -8,24 +8,24 @@ import net.minecraft.item.ItemStack;
 import us.mcsw.core.util.ItemUtil;
 import us.mcsw.minerad.init.ModItems;
 import us.mcsw.minerad.items.ItemEmptyCore;
-import us.mcsw.minerad.recipes.UraniumInfuserRecipes;
-import us.mcsw.minerad.recipes.UraniumInfuserRecipes.InfuserRecipe;
+import us.mcsw.minerad.recipes.InfuserRecipes;
+import us.mcsw.minerad.recipes.InfuserRecipes.InfuserRecipe;
 import us.mcsw.minerad.ref.MachineReference;
 
 public class RecipeHandlerInfuser extends RecipeHandlerMR {
 
 	public RecipeHandlerInfuser() {
-		super("uraniumInfuserTile");
+		super("infuser");
 	}
 
 	@Override
 	public String getGuiTexture() {
-		return MachineReference.URANIUM_INFUSER_GUI.toString();
+		return MachineReference.INFUSER_GUI.toString();
 	}
 
 	@Override
 	public void loadCraftingRecipes(ItemStack result) {
-		for (InfuserRecipe rec : UraniumInfuserRecipes.recipes) {
+		for (InfuserRecipe rec : InfuserRecipes.recipes) {
 			if (ItemUtil.areItemStacksEqual(result, rec.getProduct())) {
 				arecipes.add(new RecipeInfuser(rec));
 			}
@@ -34,11 +34,11 @@ public class RecipeHandlerInfuser extends RecipeHandlerMR {
 
 	@Override
 	public void loadUsageRecipes(ItemStack ingredient) {
-		if (UraniumInfuserRecipes.getRecipeFor(ingredient, false) != null) {
-			arecipes.add(new RecipeInfuser(UraniumInfuserRecipes.getRecipeFor(ingredient, false)));
+		if (InfuserRecipes.getRecipeFor(ingredient, false) != null) {
+			arecipes.add(new RecipeInfuser(InfuserRecipes.getRecipeFor(ingredient, false)));
 		}
 		if (ingredient.getItem() instanceof ItemEmptyCore) {
-			for (InfuserRecipe rec : UraniumInfuserRecipes.recipes) {
+			for (InfuserRecipe rec : InfuserRecipes.recipes) {
 				if (ingredient.stackSize >= rec.getRequiredCores()) {
 					arecipes.add(new RecipeInfuser(rec));
 				}

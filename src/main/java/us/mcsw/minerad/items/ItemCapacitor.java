@@ -1,13 +1,9 @@
 package us.mcsw.minerad.items;
 
-import com.sun.prism.Texture;
-
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import us.mcsw.core.ItemMR;
-import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.ref.CapacitorTier;
 import us.mcsw.minerad.ref.TextureReference;
 

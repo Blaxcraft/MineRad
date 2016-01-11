@@ -96,7 +96,8 @@ public class EntityStationaryMarker extends Entity {
 	}
 
 	public boolean canCallInStrike() {
-		return worldObj.canBlockSeeTheSky((int) this.posX, (int) this.posY + 1, (int) this.posZ);
+		return worldObj.canBlockSeeTheSky((int) Math.floor(this.posX), (int) Math.floor(this.posY) + 1,
+				(int) Math.floor(this.posZ));
 	}
 
 	@Override

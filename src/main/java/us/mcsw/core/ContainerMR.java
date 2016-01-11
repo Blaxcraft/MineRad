@@ -6,8 +6,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import us.mcsw.core.util.LogUtil;
+import us.mcsw.core.util.ItemUtil;
 
 public abstract class ContainerMR extends Container {
 
@@ -80,29 +79,28 @@ public abstract class ContainerMR extends Container {
 		}
 
 		Slot slot;
-		ItemStack itemstack1;
+		ItemStack current;
 
 		if (it.isStackable()) {
 			while (it.stackSize > 0 && (!backwards && k < max || backwards && k >= min)) {
 				slot = (Slot) this.inventorySlots.get(k);
-				itemstack1 = slot.getStack();
+				current = slot.getStack();
 
-				if (itemstack1 != null && itemstack1.getItem() == it.getItem()
-						&& (!it.getHasSubtypes() || it.getItemDamage() == itemstack1.getItemDamage())
-						&& ItemStack.areItemStackTagsEqual(it, itemstack1)) {
-					int l = itemstack1.stackSize + it.stackSize;
+				// changed to ItemUtil.areItemStacksEqual
+				if (current != null && ItemUtil.areItemStacksEqual(it, current)) {
+					int l = current.stackSize + it.stackSize;
 					// added max stack size check for slot and inventory
-					int maxStackSize = Math.min(it.getMaxStackSize(),
-							Math.min(slot.getSlotStackLimit(), backwards ? 64 : inv.getInventoryStackLimit()));
+					int maxStackSize = Math.min(it.getMaxStackSize(), Math.min(slot.getSlotStackLimit(),
+							backwards ? ip.getInventoryStackLimit() : inv.getInventoryStackLimit()));
 
 					if (l <= maxStackSize) {
 						it.stackSize = 0;
-						itemstack1.stackSize = l;
+						current.stackSize = l;
 						slot.onSlotChanged();
 						flag1 = true;
-					} else if (itemstack1.stackSize < maxStackSize) {
-						it.stackSize -= maxStackSize - itemstack1.stackSize;
-						itemstack1.stackSize = maxStackSize;
+					} else if (current.stackSize < maxStackSize) {
+						it.stackSize -= maxStackSize - current.stackSize;
+						current.stackSize = maxStackSize;
 						slot.onSlotChanged();
 						flag1 = true;
 					}
@@ -125,25 +123,20 @@ public abstract class ContainerMR extends Container {
 
 			while (!backwards && k < max || backwards && k >= min) {
 				slot = (Slot) this.inventorySlots.get(k);
-				itemstack1 = slot.getStack();
+				current = slot.getStack();
 
-				// added check to see if item can actually go into the slot +
-				// max stack check
-				int maxStackSize = Math.min(it.getMaxStackSize(),
-						Math.min(slot.getSlotStackLimit(), backwards ? 64 : inv.getInventoryStackLimit()));
-				if (itemstack1 == null && slot.isItemValid(it)) {
-					if (it.stackSize <= maxStackSize) {
+				// added check to see if item can actually go into the slot
+				int maxStack = Math.min(slot.getSlotStackLimit(), inv.getInventoryStackLimit());
+				if (current == null && slot.isItemValid(it)) {
+					if (it.stackSize <= maxStack) {
 						slot.putStack(it.copy());
 						slot.onSlotChanged();
 						it.stackSize = 0;
 						flag1 = true;
 						break;
 					} else {
-						ItemStack put = it.copy();
-						put.stackSize = maxStackSize;
-						slot.putStack(put);
+						slot.putStack(it.splitStack(maxStack));
 						slot.onSlotChanged();
-						it.stackSize -= maxStackSize;
 						flag1 = true;
 					}
 				}

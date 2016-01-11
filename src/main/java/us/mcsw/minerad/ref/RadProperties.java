@@ -72,6 +72,10 @@ public class RadProperties implements IExtendedEntityProperties {
 			if (p.capabilities.isCreativeMode) {
 				return Double.MAX_VALUE;
 			}
+			PlayerProperties pprops = PlayerProperties.get(p);
+			if (pprops != null && pprops.isGhoul()) {
+				return Double.MAX_VALUE;
+			}
 		}
 		if (e instanceof EntityLivingBase) {
 			EntityLivingBase elb = (EntityLivingBase) e;
@@ -93,6 +97,16 @@ public class RadProperties implements IExtendedEntityProperties {
 
 	public void addRadiation(double amt, boolean ignoreResist) {
 		double add;
+		if (e instanceof EntityPlayer) {
+			EntityPlayer p = (EntityPlayer) e;
+			PlayerProperties pprops = PlayerProperties.get(p);
+			if (pprops != null) {
+				if (pprops.isGhoul()) {
+					p.heal((float) (amt / (pprops.isGlowingGhoul() ? 10.0 : 25.0)));
+					return;
+				}
+			}
+		}
 		if (!ignoreResist) {
 			if (amt < 0) {
 				add = amt * getRadResistance() / 20;

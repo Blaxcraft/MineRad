@@ -28,6 +28,7 @@ public class TileMagnet extends TileEntity {
 					cy + radius, cz + radius);
 			for (Object o : worldObj.getEntitiesWithinAABB(EntityItem.class, range)) {
 				EntityItem i = (EntityItem) o;
+				if (i == null || i.isDead || i.getEntityItem() == null) continue;
 				ItemStack it = ItemUtil.addItemToNearbyInventories(this, i.getEntityItem(), true, true, pushDirs);
 				if (it != null) {
 					if (it.stackSize < i.getEntityItem().stackSize) {

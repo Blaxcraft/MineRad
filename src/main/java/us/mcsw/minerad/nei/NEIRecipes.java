@@ -10,6 +10,7 @@ public class NEIRecipes {
 	@Optional.Method(modid = "NotEnoughItems")
 	public static void init() {
 		API.hideItem(new ItemStack(ModBlocks.groundZero));
+		API.hideItem(new ItemStack(ModBlocks.ghoulLight));
 
 		API.registerRecipeHandler(new RecipeHandlerFusion());
 		API.registerUsageHandler(new RecipeHandlerFusion());
@@ -19,9 +20,12 @@ public class NEIRecipes {
 
 		API.registerRecipeHandler(new RecipeHandlerInfuser());
 		API.registerUsageHandler(new RecipeHandlerInfuser());
-		
+
 		API.registerRecipeHandler(new RecipeHandlerMicrowave());
 		API.registerUsageHandler(new RecipeHandlerMicrowave());
+
+		API.registerRecipeHandler(new RecipeHandlerRadiation());
+		API.registerUsageHandler(new RecipeHandlerRadiation());
 	}
 
 }

@@ -13,11 +13,12 @@ import us.mcsw.minerad.init.ModBlocks;
 public class BiomeWasteland extends BiomeGenBase {
 
 	public BiomeWasteland() {
-		super(ConfigMR.WASTELAND_ID, false);
+		super(ConfigMR.WASTELAND_ID, true);
 
 		setBiomeName("Irradiated Wasteland");
 		setColor(0xdd9944);
 		spawnableCreatureList.clear();
+		spawnableMonsterList.clear();
 		this.topBlock = Blocks.dirt;
 		this.field_150604_aj = 1;
 		this.fillerBlock = Blocks.dirt;

@@ -1,18 +1,21 @@
 package us.mcsw.core;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.ref.TextureReference;
 
-public class ItemMR extends Item {
+public class ItemMR extends Item implements IRegisteredItemMR {
 	
 	public ItemMR(String unloc) {
 		super();
-		setUnlocalizedName(unloc);
-		setTextureName(TextureReference.RESOURCE_PREFIX + unloc);
-		setCreativeTab(MineRad.creativeTab);
+		constructItemMR(this, unloc);
+	}
+	
+	public static void constructItemMR(Item i, String unloc) {
+		i.setUnlocalizedName(unloc);
+		i.setTextureName(TextureReference.RESOURCE_PREFIX + unloc);
+		i.setCreativeTab(MineRad.creativeTab);
 	}
 
 	@Override

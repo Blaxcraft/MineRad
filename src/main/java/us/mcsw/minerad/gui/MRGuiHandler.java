@@ -6,23 +6,32 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import us.mcsw.minerad.ConfigMR;
 import us.mcsw.minerad.gui.container.ContainerDensePouch;
+import us.mcsw.minerad.gui.container.ContainerFilter;
 import us.mcsw.minerad.gui.container.ContainerFissionReactor;
 import us.mcsw.minerad.gui.container.ContainerFusionReactor;
 import us.mcsw.minerad.gui.container.ContainerRadioTowerBase;
 import us.mcsw.minerad.gui.container.ContainerRadioactiveGenerator;
-import us.mcsw.minerad.gui.container.ContainerUraniumInfuser;
+import us.mcsw.minerad.gui.container.ContainerShieldGenerator;
+import us.mcsw.minerad.gui.container.ContainerInfuser;
+import us.mcsw.minerad.gui.container.ContainerWaterDistiller;
 import us.mcsw.minerad.gui.gui.GuiDensePouch;
+import us.mcsw.minerad.gui.gui.GuiFilter;
 import us.mcsw.minerad.gui.gui.GuiFissionReactor;
 import us.mcsw.minerad.gui.gui.GuiFusionReactor;
 import us.mcsw.minerad.gui.gui.GuiRadioTowerBase;
 import us.mcsw.minerad.gui.gui.GuiRadioactiveGenerator;
-import us.mcsw.minerad.gui.gui.GuiUraniumInfuser;
+import us.mcsw.minerad.gui.gui.GuiShieldGenerator;
+import us.mcsw.minerad.gui.gui.GuiInfuser;
+import us.mcsw.minerad.gui.gui.GuiWaterDistiller;
 import us.mcsw.minerad.ref.MachineReference;
+import us.mcsw.minerad.tiles.TileFilter;
 import us.mcsw.minerad.tiles.TileFissionReactor;
 import us.mcsw.minerad.tiles.TileFusionReactor;
 import us.mcsw.minerad.tiles.TileRadioTowerBase;
 import us.mcsw.minerad.tiles.TileRadioactiveGenerator;
-import us.mcsw.minerad.tiles.TileUraniumInfuser;
+import us.mcsw.minerad.tiles.TileShieldGenerator;
+import us.mcsw.minerad.tiles.TileInfuser;
+import us.mcsw.minerad.tiles.TileWaterDistiller;
 
 public class MRGuiHandler implements IGuiHandler {
 
@@ -34,8 +43,8 @@ public class MRGuiHandler implements IGuiHandler {
 		}
 
 		TileEntity te = world.getTileEntity(x, y, z);
-		if (te instanceof TileUraniumInfuser) {
-			return new ContainerUraniumInfuser(player.inventory, (TileUraniumInfuser) te);
+		if (te instanceof TileInfuser) {
+			return new ContainerInfuser(player.inventory, (TileInfuser) te);
 		}
 		if (te instanceof TileRadioTowerBase) {
 			return new ContainerRadioTowerBase(player.inventory, (TileRadioTowerBase) te);
@@ -55,6 +64,15 @@ public class MRGuiHandler implements IGuiHandler {
 		if (te instanceof TileRadioactiveGenerator) {
 			return new ContainerRadioactiveGenerator(player.inventory, (TileRadioactiveGenerator) te);
 		}
+		if (te instanceof TileShieldGenerator) {
+			return new ContainerShieldGenerator(player.inventory, (TileShieldGenerator) te);
+		}
+		if (te instanceof TileWaterDistiller) {
+			return new ContainerWaterDistiller(player.inventory, (TileWaterDistiller) te);
+		}
+		if (te instanceof TileFilter) {
+			return new ContainerFilter(player.inventory, (TileFilter) te);
+		}
 		return null;
 	}
 
@@ -66,8 +84,8 @@ public class MRGuiHandler implements IGuiHandler {
 		}
 
 		TileEntity te = world.getTileEntity(x, y, z);
-		if (te instanceof TileUraniumInfuser) {
-			return new GuiUraniumInfuser(player.inventory, (TileUraniumInfuser) te);
+		if (te instanceof TileInfuser) {
+			return new GuiInfuser(player.inventory, (TileInfuser) te);
 		}
 		if (te instanceof TileRadioTowerBase) {
 			return new GuiRadioTowerBase(player.inventory, (TileRadioTowerBase) te);
@@ -86,6 +104,15 @@ public class MRGuiHandler implements IGuiHandler {
 		}
 		if (te instanceof TileRadioactiveGenerator) {
 			return new GuiRadioactiveGenerator(player.inventory, (TileRadioactiveGenerator) te);
+		}
+		if (te instanceof TileShieldGenerator) {
+			return new GuiShieldGenerator(player.inventory, (TileShieldGenerator) te);
+		}
+		if (te instanceof TileWaterDistiller) {
+			return new GuiWaterDistiller(player.inventory, (TileWaterDistiller) te);
+		}
+		if (te instanceof TileFilter) {
+			return new GuiFilter(player.inventory, (TileFilter) te);
 		}
 		return null;
 	}

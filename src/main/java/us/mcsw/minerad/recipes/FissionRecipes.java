@@ -14,7 +14,8 @@ public class FissionRecipes {
 
 	public static void init() {
 		addRecipe(ModItems.purifiedUranium, new ItemStack(ModItems.purifiedNeptunium), 600);
-		addRecipe(ModItems.purifiedNeptunium, new ItemStack(ModItems.plutonium), 5400);
+		addRecipe(ModItems.purifiedNeptunium, new ItemStack(ModItems.plutonium), 2400);
+		addRecipe(ModItems.deuteriumCore, new ItemStack(ModItems.tritiumCore), 1200);
 	}
 
 	public static void addRecipe(Item source, ItemStack result, int ticks) {

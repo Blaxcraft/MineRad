@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.init.ModItems;
-import us.mcsw.minerad.recipes.UraniumInfuserRecipes.InfuserRecipe;
+import us.mcsw.minerad.recipes.InfuserRecipes.InfuserRecipe;
 
 public class FusionRecipes {
 

@@ -14,11 +14,11 @@ public class CapacitorTier {
 
 	public static ArrayList<CapacitorTier> tiers = new ArrayList<CapacitorTier>();
 
-	public static CapacitorTier BASIC = registerTier("basic", 0x883333, 10000, 100000, 150, 250),
-			IRON = registerTier("iron", 0x909090, 25000, 250000, 500, 1000),
-			GOLD = registerTier("gold", 0xbfbf60, 50000, 750000, 1250, 2500),
-			DIAMOND = registerTier("diamond", 0x4dbfbf, 100000, 2500000, 2500, 5000),
-			QUARTZ = registerTier("quartz", 0xffffff, 250000, 10000000, 7500, 10000);
+	public static CapacitorTier BASIC = registerTier("basic", 0x883333, 10000, 125000, 150, 250),
+			IRON = registerTier("iron", 0x909090, 25000, 300000, 500, 1000),
+			GOLD = registerTier("gold", 0xbfbf60, 60000, 750000, 1250, 2500),
+			DIAMOND = registerTier("diamond", 0x4dbfbf, 250000, 2000000, 2500, 5000),
+			QUARTZ = registerTier("quartz", 0xffffff, 500000, 10000000, 7500, 10000);
 
 	public static CapacitorTier registerTier(String name, int colour, int capMachine, int capStorage,
 			int maxTransferMachine, int maxTransferPipe) {

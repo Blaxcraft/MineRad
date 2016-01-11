@@ -8,22 +8,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import us.mcsw.core.ItemMR;
+import us.mcsw.core.ItemMRFood;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.potion.PotionRadX;
 import us.mcsw.minerad.ref.RadProperties;
 
-public class ItemRadX extends ItemMR {
+public class ItemRadX extends ItemMRFood {
 
 	public ItemRadX() {
-		super("radX");
-	}
-
-	@Override
-	public ItemStack onItemRightClick(ItemStack it, World w, EntityPlayer pl) {
-		if (pl.canEat(true) || pl.capabilities.isCreativeMode) {
-			pl.setItemInUse(it, getMaxItemUseDuration(it));
-		}
-		return it;
+		super("radX", 0, 0);
+		setAlwaysEdible();
 	}
 
 	@Override
@@ -31,20 +25,11 @@ public class ItemRadX extends ItemMR {
 		return 20;
 	}
 
-	@Override
-	public EnumAction getItemUseAction(ItemStack it) {
-		return EnumAction.eat;
-	}
-
 	static final int SECONDS_DURATION = 120;
 
 	@Override
-	public ItemStack onEaten(ItemStack it, World w, EntityPlayer pl) {
-		if (!w.isRemote) {
-			it.stackSize--;
-			pl.addPotionEffect(new PotionEffect(MineRad.potionRadX.id, SECONDS_DURATION * 20, 0));
-		}
-		return it;
+	public void onFoodEaten(ItemStack it, World w, EntityPlayer pl) {
+		pl.addPotionEffect(new PotionEffect(MineRad.potionRadX.id, SECONDS_DURATION * 20, 0));
 	}
 
 	@Override

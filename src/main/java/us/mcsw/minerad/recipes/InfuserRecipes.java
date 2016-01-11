@@ -3,17 +3,20 @@ package us.mcsw.minerad.recipes;
 import java.util.ArrayList;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import us.mcsw.minerad.init.ModItems;
 
-public class UraniumInfuserRecipes {
+public class InfuserRecipes {
 
-	public static ArrayList<InfuserRecipe> recipes = new ArrayList<UraniumInfuserRecipes.InfuserRecipe>();
+	public static ArrayList<InfuserRecipe> recipes = new ArrayList<InfuserRecipes.InfuserRecipe>();
 
 	public static void init() {
-		addRecipe(ModItems.uraniumOreItem, new ItemStack(ModItems.fusionCore), 1, 24000);
+		// addRecipe(ModItems.uraniumOreItem, new
+		// ItemStack(ModItems.fusionCore), 1, 24000);
 		addRecipe(new ItemStack(ModItems.uraniumChunk, 24), new ItemStack(ModItems.fissionCore), 1, 8000);
+		addRecipe(new ItemStack(Blocks.snow, 2), new ItemStack(ModItems.coolantCore), 1, 4000);
 	}
 
 	public static void addRecipe(Item source, ItemStack product, int cores, int power) {

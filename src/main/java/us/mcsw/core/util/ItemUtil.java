@@ -1,5 +1,6 @@
 package us.mcsw.core.util;
 
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -21,6 +22,10 @@ public class ItemUtil {
 					&& (excludePairs ? !te.getClass().equals(source.getClass()) : true)) {
 				IInventory inv = (IInventory) te;
 				add = addItemToInventory(inv, dir.getOpposite(), add, sim);
+				if (!sim) {
+					te.markDirty();
+					te.getWorldObj().markBlockForUpdate(te.xCoord, te.yCoord, te.zCoord);
+				}
 			}
 		}
 		return add;
@@ -84,22 +89,54 @@ public class ItemUtil {
 
 		return s1.getItem().equals(s2.getItem()) && s1.getItemDamage() == s2.getItemDamage()
 				&& (s1.stackTagCompound == null && s2.stackTagCompound == null
-						|| s1.stackTagCompound.equals(s2.stackTagCompound));
+ || s1.stackTagCompound != null
+						&& s2.stackTagCompound != null && s1.stackTagCompound.equals(s2.stackTagCompound));
 	}
-	
+
 	public static void setInteger(String key, ItemStack it, int val) {
 		if (!it.hasTagCompound()) {
 			it.stackTagCompound = new NBTTagCompound();
 		}
 		it.stackTagCompound.setInteger(key, val);
 	}
-	
+
 	public static int getInteger(String key, ItemStack it) {
 		if (!it.hasTagCompound()) {
 			setInteger(key, it, 0);
 			return getInteger(key, it);
 		}
 		return it.stackTagCompound.getInteger(key);
+	}
+
+	public static void dropItemsFromInventory(TileEntity te) {
+		if (!(te instanceof IInventory)) {
+			return;
+		}
+		IInventory inv = (IInventory) te;
+
+		for (int i = 0; i < inv.getSizeInventory(); i++) {
+			ItemStack item = inv.getStackInSlot(i);
+
+			if (item != null && item.stackSize > 0) {
+				float rx = te.getWorldObj().rand.nextFloat() * 0.8F + 0.1F;
+				float ry = te.getWorldObj().rand.nextFloat() * 0.8F + 0.1F;
+				float rz = te.getWorldObj().rand.nextFloat() * 0.8F + 0.1F;
+
+				EntityItem entityItem = new EntityItem(te.getWorldObj(), te.xCoord + rx, te.yCoord + ry, te.zCoord + rz,
+						item.copy());
+
+				if (item.hasTagCompound()) {
+					entityItem.getEntityItem().setTagCompound((NBTTagCompound) item.getTagCompound().copy());
+				}
+
+				float factor = 0.05F;
+				entityItem.motionX = te.getWorldObj().rand.nextGaussian() * factor;
+				entityItem.motionY = te.getWorldObj().rand.nextGaussian() * factor + 0.2F;
+				entityItem.motionZ = te.getWorldObj().rand.nextGaussian() * factor;
+				te.getWorldObj().spawnEntityInWorld(entityItem);
+				item.stackSize = 0;
+			}
+		}
 	}
 
 }

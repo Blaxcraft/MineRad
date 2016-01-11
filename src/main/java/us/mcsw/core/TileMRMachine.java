@@ -47,30 +47,38 @@ public abstract class TileMRMachine extends TileMRInventory implements IEnergyRe
 	public boolean canInsertItem(int i, ItemStack it, int side) {
 		return isItemValidForSlot(i, it);
 	}
-	
+
 	@Override
 	public Packet getDescriptionPacket() {
 		NBTTagCompound data = new NBTTagCompound();
 		storage.writeToNBT(data);
+		writeSyncable(data);
 		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, data);
 	}
-	
+
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		storage.readFromNBT(pkt.func_148857_g());
+		readSyncable(pkt.func_148857_g());
 	}
-	
+
+	public void writeSyncable(NBTTagCompound data) {
+	}
+
+	public void readSyncable(NBTTagCompound data) {
+	}
+
 	@Override
 	public void readFromNBT(NBTTagCompound data) {
 		super.readFromNBT(data);
-		
+
 		storage.readFromNBT(data);
 	}
-	
+
 	@Override
 	public void writeToNBT(NBTTagCompound data) {
 		super.writeToNBT(data);
-		
+
 		storage.writeToNBT(data);
 	}
 }

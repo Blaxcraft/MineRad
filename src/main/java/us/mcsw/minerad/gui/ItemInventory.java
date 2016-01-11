@@ -122,6 +122,8 @@ public class ItemInventory implements IInventory {
 	}
 
 	public static ItemInventory createInItem(ItemStack it, int size) {
+		if (it == null)
+			return null;
 		if (!it.hasTagCompound()) {
 			it.stackTagCompound = new NBTTagCompound();
 		}
@@ -131,6 +133,8 @@ public class ItemInventory implements IInventory {
 	}
 
 	public static ItemInventory getFromItem(ItemStack it, int size) {
+		if (it == null)
+			return null;
 		if (!it.hasTagCompound()) {
 			createInItem(it, size);
 		}
@@ -140,7 +144,7 @@ public class ItemInventory implements IInventory {
 	}
 
 	public static void setInItem(ItemStack it, ItemInventory inv) {
-		if (!it.hasTagCompound()) {
+		if (it == null || !it.hasTagCompound()) {
 			return;
 		}
 		inv.writeToNBT(it.stackTagCompound);

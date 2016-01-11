@@ -6,7 +6,6 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.tileentity.TileEntity;
-import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.tiles.TileRadioTowerBase;
 
 public class MessageUpdateFrequency implements IMessage {
@@ -30,6 +29,7 @@ public class MessageUpdateFrequency implements IMessage {
 			TileEntity te = ctx.getServerHandler().playerEntity.worldObj.getTileEntity(message.x, message.y, message.z);
 			if (te instanceof TileRadioTowerBase) {
 				TileRadioTowerBase tile = (TileRadioTowerBase) te;
+				int bef = tile.freq;
 				tile.freq = message.freq;
 				tile.markDirty();
 			}
@@ -40,17 +40,17 @@ public class MessageUpdateFrequency implements IMessage {
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		x = ByteBufUtils.readVarShort(buf);
-		y = ByteBufUtils.readVarShort(buf);
-		z = ByteBufUtils.readVarShort(buf);
+		x = ByteBufUtils.readVarInt(buf, 5);
+		y = ByteBufUtils.readVarInt(buf, 5);
+		z = ByteBufUtils.readVarInt(buf, 5);
 		freq = ByteBufUtils.readVarShort(buf);
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		ByteBufUtils.writeVarShort(buf, x);
-		ByteBufUtils.writeVarShort(buf, y);
-		ByteBufUtils.writeVarShort(buf, z);
+		ByteBufUtils.writeVarInt(buf, x, 5);
+		ByteBufUtils.writeVarInt(buf, y, 5);
+		ByteBufUtils.writeVarInt(buf, z, 5);
 		ByteBufUtils.writeVarShort(buf, freq);
 	}
 

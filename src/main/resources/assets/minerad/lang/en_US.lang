@@ -3,18 +3,23 @@ item.minerad:uraniumChunk.name=Uranium Chunk
 item.minerad:uraniumOreItem.name=Uranium Ore
 item.minerad:purifiedUranium.name=Purified Uranium
 item.minerad:purifiedNeptunium.name=Purified Neptunium
+item.minerad:ingotLead.name=Lead Ingot
 item.minerad:plutonium.name=Plutonium
 item.minerad:unknownElement.name=???
 item.minerad:nuggetUnknown.name=??? [Nugget]
 item.minerad:nuggetUranium.name=Uranium Nugget
 item.minerad:nuggetNeptunium.name=Neptunium Nugget
 item.minerad:nuggetPlutonium.name=Plutonium Nugget
+item.minerad:nuggetLead.name=Lead Nugget
 item.minerad:fusionCore.name=Fusion Core
 item.minerad:fissionCore.name=Fission Core
 item.minerad:coolantCore.name=Coolant Core
+item.minerad:deuteriumCore.name=Deuterium Core
+item.minerad:tritiumCore.name=Tritium Core
 item.minerad:emptyCore.name=Empty Core
 item.minerad:radResistantPlating.name=Radiation Resistant Plating
 item.minerad:dustUranium.name=Uranium Dust
+item.minerad:dustLead.name=Lead Dust
 item.minerad:acidSolution.name=Acid Solution
 item.minerad:yellowCake.name=Yellowcake
 item.minerad:diamondGrinder.name=Diamond Grinder
@@ -23,11 +28,17 @@ item.minerad:radioReceiver.name=Radio Receiver
 item.minerad:radioEmitter.name=Radio Emitter
 item.minerad:denseCore.name=Dense Core
 item.minerad:microwaveModule.name=Microwave Module
+item.minerad:exitite.name=Exitite
+item.minerad:energyPulsar.name=Energy Pulsar
+item.minerad:shieldUpgrade.name=Shield Upgrade
 item.minerad:nukePackage.name=Nuke Package
 item.minerad:nuclearArsenalUpgrade.name=Nuclear Arsenal Upgrade
 item.minerad:nukeMarker.name=Nuclear Airstrike Marker
 item.minerad:radX.name=Rad-X
 item.minerad:radAway.name=RadAway
+item.minerad:irradiatedFlesh.name=Irradiated Flesh
+item.minerad:glowingFlesh.name=Glowing Flesh
+item.minerad:ghoulCure.name=Ghoul Cure
 item.minerad:magnetItem.name=Portable Black Hole
 item.minerad:arcThrower.name=Arc Thrower
 item.minerad:xray.name=Rad-Sensor
@@ -43,38 +54,52 @@ item.minerad:radSuit0.name=Radiation Suit Helmet
 item.minerad:radSuit1.name=Radiation Suit Chest
 item.minerad:radSuit2.name=Radiation Suit Legs
 item.minerad:radSuit3.name=Radiation Suit Boots
+item.minerad:hoverLegs2.name=Hover Legs
 
 block.minerad:uraniumTraces.name=Uranium Traces
 block.minerad:uraniumLump.name=Uranium Lump
 block.minerad:uraniumOre.name=Uranium Ore
+block.minerad:oreLead.name=Lead Ore
 block.minerad:fusionReactor.name=Fusion Reactor Casing
 block.minerad:fissionReactor.name=Fission Reactor Casing
 block.minerad:pureUranium.name=Pure Uranium Block
 block.minerad:pureNeptunium.name=Pure Neptunium Block
 block.minerad:blockPlutonium.name=Plutonium Block
+block.minerad:blockLead.name=Lead Block
 block.minerad:nuclearArsenal.name=Nuclear Arsenal
 block.minerad:groundZero.name=Ground Zero
 block.minerad:magnet.name=Black Hole Collector
 block.minerad:microwave.name=Microwave Emitter
+block.minerad:filter.name=Filter
+block.minerad:autoDropper.name=Auto Dropper
 block.minerad:radioTowerAntenna.name=Radio Tower Antenna
 block.minerad:energyStorage.name=Energy Crystal
 block.minerad:pipeBlock.name=Energy Pipe
 
 block.minerad:basicMachineBlock.name=Basic Machine Block
 block.minerad:advancedMachineBlock.name=Advanced Machine Block
-block.minerad:uraniumInfuser.name=Uranium Infuser
+block.minerad:infuser.name=Infuser
 block.minerad:radioTowerBase.name=Radio Tower Base
 block.minerad:radioactiveGenerator.name=Radioactive Generator
+block.minerad:shieldGenerator.name=Shield Generator
+block.minerad:waterDistiller.name=Water Distiller
 
 container.minerad:microwave=Microwave Emitter
-container.minerad:uraniumInfuserTile=Uranium Infuser
+container.minerad:infuser=Infuser
 container.minerad:radioTowerBase=Radio Tower
 container.minerad:fissionReactor=Fission Reactor
 container.minerad:fusionReactor=Fusion Reactor
 container.minerad:densePouch=Dense Pouch
 container.minerad:radioactiveGenerator=Radioactive Generator
+container.minerad:shieldGenerator=Shield Generator
+container.minerad:radiation=Radiation Crafting
+container.minerad:waterDistiller=Water Distiller
+container.minerad:filter=Filter
 
 enchantment.minerad:radResist=Radiation Resist
+
+entity.feralGhoul.name=Feral Ghoul
+entity.finalBoss.name=Praedo Vivus
 
 description.pipe.basic=Basic
 description.pipe.iron=Iron
@@ -104,12 +129,23 @@ message.radSickness.1.2=You choke back vomit as you weaken...
 
 info.geigerCounter.desc=Detects radiation at its position
 
-info.reactor.heat=Heat: 
+info.reactor.heat=Heat: %s
 info.reactor.heat.cool=Cool
 info.reactor.heat.warm=Warm
 info.reactor.heat.hot=Hot
 info.reactor.heat.extreme=Extreme
 info.reactor.heat.danger=DANGER
+
+info.ghoul.transform=You feel the radiation melt your skin, but it feels good...
+info.ghoul.glowing.transform=You start shining, feeling more powerful and radiactive than before...
+info.ghoul.glowing.progress=Glowing flesh consumed: %s / %s
+info.ghoul.transform.human=You feel the radioactivity hurt again, as it should be...
+
+info.generator.output=Producing %s RF/t
+
+info.machine.usage=Using %s RF/t
+
+info.shield.radius=Radius: %s
 
 death.attack.minerad:nuke=%1$s was blown up by a nuke
 death.attack.minerad:radiation=%1$s was overexposed to radiation

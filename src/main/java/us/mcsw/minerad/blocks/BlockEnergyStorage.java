@@ -33,6 +33,8 @@ public class BlockEnergyStorage extends BlockMR implements ITileEntityProvider {
 		setHardness(4.0f);
 
 		isBlockContainer = true;
+		
+		setBlockBounds(0.0625f, 0.0625f, 0.0625f, 0.9375f, 0.9375f, 0.9375f);
 	}
 
 	@Override

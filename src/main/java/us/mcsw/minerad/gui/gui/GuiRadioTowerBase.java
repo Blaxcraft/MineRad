@@ -4,6 +4,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import us.mcsw.core.GuiMR;
+import us.mcsw.core.util.LogUtil;
 import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.gui.container.ContainerRadioTowerBase;
 import us.mcsw.minerad.net.MessageUpdateFrequency;
@@ -50,8 +51,8 @@ public class GuiRadioTowerBase extends GuiMR {
 		if (tile.freq > 9999) {
 			tile.freq = 9999;
 		}
-		updateScreen();
 		MineRad.network.sendToServer(new MessageUpdateFrequency(tile.xCoord, tile.yCoord, tile.zCoord, tile.freq));
+		updateScreen();
 	}
 
 	@Override

@@ -7,21 +7,15 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import us.mcsw.core.ItemMR;
+import us.mcsw.core.ItemMRFood;
 import us.mcsw.minerad.ConfigMR;
 import us.mcsw.minerad.ref.RadProperties;
 
-public class ItemRadAway extends ItemMR {
+public class ItemRadAway extends ItemMRFood {
 
 	public ItemRadAway() {
-		super("radAway");
-	}
-
-	@Override
-	public ItemStack onItemRightClick(ItemStack it, World w, EntityPlayer pl) {
-		if (pl.canEat(true) || pl.capabilities.isCreativeMode) {
-			pl.setItemInUse(it, getMaxItemUseDuration(it));
-		}
-		return it;
+		super("radAway", 0, 0);
+		setAlwaysEdible();
 	}
 
 	@Override
@@ -35,13 +29,9 @@ public class ItemRadAway extends ItemMR {
 	}
 
 	@Override
-	public ItemStack onEaten(ItemStack it, World w, EntityPlayer pl) {
-		if (!w.isRemote) {
-			it.stackSize--;
-			RadProperties props = RadProperties.get(pl);
-			props.addRadiation(-ConfigMR.RAD_AWAY_AMOUNT, true);
-		}
-		return it;
+	public void onFoodEaten(ItemStack it, World w, EntityPlayer pl) {
+		RadProperties props = RadProperties.get(pl);
+		props.addRadiation(-ConfigMR.RAD_AWAY_AMOUNT, true);
 	}
 
 	@Override

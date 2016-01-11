@@ -54,8 +54,11 @@ public class TileRadioactiveGenerator extends TileMRMachine implements IEnergyPr
 					heat--;
 			}
 		}
+		for (ForgeDirection dir : new ForgeDirection[] { ForgeDirection.UP, ForgeDirection.DOWN, ForgeDirection.NORTH,
+				ForgeDirection.WEST, ForgeDirection.SOUTH, ForgeDirection.EAST })
+			EnergyUtil.pushEnergy(this, worldObj, xCoord, yCoord, zCoord, storage, dir);
 		if (hasCoolant()) {
-			if (canRun() && ++coolantDamageCount > (isFusion() ? 4 : 7)) {
+			if (canRun() && ++coolantDamageCount > (isFusion() ? 11 : 9)) {
 				damageCoolant(1);
 				coolantDamageCount = 0;
 			}
@@ -93,7 +96,7 @@ public class TileRadioactiveGenerator extends TileMRMachine implements IEnergyPr
 
 	public boolean canRun() {
 		return (hasCore() || hasFuel() || generationTicks > 0)
-				&& storage.getEnergyStored() < storage.getMaxEnergyStored();
+				&& storage.getEnergyStored() <= storage.getMaxEnergyStored() - getEnergyPerTick();
 	}
 
 	public boolean isFusion() {
@@ -103,9 +106,6 @@ public class TileRadioactiveGenerator extends TileMRMachine implements IEnergyPr
 	public void generateEnergy() {
 		if (!worldObj.isRemote) {
 			storage.receiveEnergy(getEnergyPerTick(), false);
-			for (ForgeDirection dir : new ForgeDirection[] { ForgeDirection.UP, ForgeDirection.DOWN,
-					ForgeDirection.NORTH, ForgeDirection.WEST, ForgeDirection.SOUTH, ForgeDirection.EAST })
-				EnergyUtil.pushEnergy(this, worldObj, xCoord, yCoord, zCoord, storage, dir);
 			markDirty();
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		}
@@ -116,7 +116,8 @@ public class TileRadioactiveGenerator extends TileMRMachine implements IEnergyPr
 	}
 
 	public boolean hasFuel() {
-		return getStackInSlot(0) != null && getStackInSlot(0).stackSize > 0 && !hasCore();
+		return getStackInSlot(0) != null && getStackInSlot(0).stackSize > 0
+				&& GeneratorFuels.isFuel(getStackInSlot(0).getItem());
 	}
 
 	public boolean hasCore() {

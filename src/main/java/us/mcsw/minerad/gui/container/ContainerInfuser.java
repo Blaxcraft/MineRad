@@ -10,14 +10,14 @@ import us.mcsw.core.TileMRInventory;
 import us.mcsw.core.TileMRMachine;
 import us.mcsw.minerad.gui.slot.SlotCoreEmpty;
 import us.mcsw.minerad.gui.slot.SlotProduct;
-import us.mcsw.minerad.recipes.UraniumInfuserRecipes;
-import us.mcsw.minerad.tiles.TileUraniumInfuser;
+import us.mcsw.minerad.recipes.InfuserRecipes;
+import us.mcsw.minerad.tiles.TileInfuser;
 
-public class ContainerUraniumInfuser extends ContainerMRMachine {
+public class ContainerInfuser extends ContainerMRMachine {
 
-	TileUraniumInfuser tile;
+	TileInfuser tile;
 
-	public ContainerUraniumInfuser(InventoryPlayer ip, TileUraniumInfuser tile) {
+	public ContainerInfuser(InventoryPlayer ip, TileInfuser tile) {
 		super(ip, tile);
 		this.tile = tile;
 	}
@@ -52,7 +52,7 @@ public class ContainerUraniumInfuser extends ContainerMRMachine {
 		addSlotToContainer(new SlotCoreEmpty(inv, 0, 34, 35));
 		addSlotToContainer(new Slot(inv, 1, 56, 35) {
 			public boolean isItemValid(ItemStack it) {
-				return UraniumInfuserRecipes.getRecipeFor(it, false) != null;
+				return InfuserRecipes.getRecipeFor(it, false) != null;
 			}
 		});
 		addSlotToContainer(new SlotProduct(inv, 2, 116, 35));

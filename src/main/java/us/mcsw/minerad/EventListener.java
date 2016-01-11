@@ -4,37 +4,51 @@ import java.awt.Color;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
+import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.world.ChunkPosition;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
+import net.minecraftforge.event.world.ExplosionEvent;
 import us.mcsw.core.util.ItemUtil;
 import us.mcsw.core.util.NumbersUtil;
 import us.mcsw.core.util.RenderUtil;
 import us.mcsw.minerad.init.AchievementsInit;
 import us.mcsw.minerad.init.ModBlocks;
 import us.mcsw.minerad.init.ModItems;
+import us.mcsw.minerad.items.ItemHoverLegs;
 import us.mcsw.minerad.items.ItemXray;
+import us.mcsw.minerad.net.MessageUpdateProperties;
 import us.mcsw.minerad.ref.PlayerProperties;
 import us.mcsw.minerad.ref.RadEffectsHandler;
 import us.mcsw.minerad.ref.RadProperties;
+import us.mcsw.minerad.tiles.TileGhoulLight;
+import us.mcsw.minerad.tiles.TileShieldGenerator;
 import us.mcsw.minerad.util.RadUtil;
 import us.mcsw.minerad.util.RadUtil.RadEmitter;
 
@@ -42,8 +56,8 @@ public class EventListener {
 
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing event) {
-		if ((event.entity instanceof EntityLiving || event.entity instanceof EntityPlayer)
-				&& RadProperties.get(event.entity) == null) {
+		if ((event.entity instanceof EntityLiving || event.entity instanceof EntityPlayer
+				|| event.entity instanceof EntityItem) && RadProperties.get(event.entity) == null) {
 			RadProperties.register(event.entity);
 		}
 		if (event.entity instanceof EntityPlayer) {
@@ -59,7 +73,7 @@ public class EventListener {
 		if (event.phase == Phase.END) {
 			if (++tick >= MAX_RAD_TICK) {
 				for (Object o : event.world.loadedEntityList.toArray()) {
-					if (o instanceof EntityVillager || o instanceof EntityPlayer) {
+					if (o instanceof EntityVillager || o instanceof EntityPlayer || o instanceof EntityItem) {
 						Entity e = (Entity) o;
 						if (RadProperties.get(e) != null) {
 							RadProperties props = RadProperties.get(e);
@@ -112,13 +126,40 @@ public class EventListener {
 		GL11.glPopMatrix();
 	}
 
-	float hueLast = 0f;
+	float satLast = 0.5f;
+	float satDelta = 1f;
 
 	public int nextColour() {
-		hueLast += 0.01f;
-		if (hueLast > 1)
-			hueLast = 0;
-		return Color.HSBtoRGB(hueLast, 0.5f, 0.5f);
+		satLast += 0.01f * satDelta;
+		if (satLast > 0.75 || satLast < 0.25)
+			satDelta *= -1;
+		return Color.HSBtoRGB(0.333f, satLast, 0.5f);
+	}
+
+	@SubscribeEvent
+	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
+		if (event.entity instanceof EntityPlayerMP && !event.world.isRemote) {
+			EntityPlayerMP pl = (EntityPlayerMP) event.entity;
+			PlayerProperties props = PlayerProperties.get(pl);
+			if (props != null) {
+				MineRad.network.sendTo(
+						new MessageUpdateProperties(props, PlayerProperties.PROPERTIES_NAME, pl.getEntityId()), pl);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onMobSpawn(LivingSpawnEvent.CheckSpawn event) {
+		if (event.entityLiving instanceof EntityMob) {
+			for (Object o : event.world.loadedTileEntityList.toArray()) {
+				if (o instanceof TileShieldGenerator) {
+					TileShieldGenerator tile = (TileShieldGenerator) o;
+					if (tile.isRunning() && tile.isInRange(event.x, event.y, event.z)) {
+						event.setResult(Result.DENY);
+					}
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -126,6 +167,35 @@ public class EventListener {
 		NBTTagCompound temp = new NBTTagCompound();
 		PlayerProperties.get(event.original).saveNBTData(temp);
 		PlayerProperties.get(event.entityPlayer).loadNBTData(temp);
+	}
+
+	@SubscribeEvent
+	public void onPlayerTick(PlayerTickEvent event) {
+		EntityPlayer pl = event.player;
+		PlayerProperties props = PlayerProperties.get(pl);
+		if (props != null) {
+			if (props.isGhoul()) {
+				int x = (int) Math.floor(pl.posX), y = (int) Math.floor(pl.posY - pl.getEyeHeight() - 1),
+						z = (int) Math.floor(pl.posZ);
+				if (pl.worldObj.isAirBlock(x, y, z) && pl.worldObj.getBlock(x, y, z) != ModBlocks.ghoulLight) {
+					pl.worldObj.setBlock(x, y, z, ModBlocks.ghoulLight, props.isGlowingGhoul() ? 15 : 7, 3);
+					TileGhoulLight tile = (TileGhoulLight) pl.worldObj.getTileEntity(x, y, z);
+					if (tile != null)
+						tile.setBound(pl);
+				}
+			}
+			if (props.wearingHoverLegs) {
+				if (pl.getCurrentArmor(1) == null || pl.getCurrentArmor(1) != null
+						&& !(pl.getCurrentArmor(1).getItem() instanceof ItemHoverLegs)) {
+					props.wearingHoverLegs = false;
+					if (pl.capabilities.allowFlying && !pl.capabilities.isCreativeMode) {
+						pl.capabilities.allowFlying = false;
+						if (pl.capabilities.isFlying)
+							pl.capabilities.isFlying = false;
+					}
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -188,6 +258,24 @@ public class EventListener {
 				double percentDone = (double) ItemUtil.getInteger("FusionProgress", it) * 100.0
 						/ (double) ItemUtil.getInteger("FusionMaximum", it);
 				event.toolTip.add("Fusion Progress: " + (NumbersUtil.roundDouble(percentDone, 1)) + "%");
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onExplode(ExplosionEvent.Detonate event) {
+		Explosion expl = event.explosion;
+		for (Object o : event.world.loadedTileEntityList) {
+			if (o instanceof TileShieldGenerator) {
+				TileShieldGenerator tile = (TileShieldGenerator) o;
+				if (tile.isRunning()) {
+					for (Object p : expl.affectedBlockPositions.toArray()) {
+						ChunkPosition pos = (ChunkPosition) p;
+						if (tile.isInRange(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ)) {
+							expl.affectedBlockPositions.remove(p);
+						}
+					}
+				}
 			}
 		}
 	}

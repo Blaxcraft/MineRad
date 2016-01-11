@@ -5,16 +5,16 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
 import us.mcsw.core.GuiMRMachine;
-import us.mcsw.minerad.gui.container.ContainerUraniumInfuser;
+import us.mcsw.minerad.gui.container.ContainerInfuser;
 import us.mcsw.minerad.ref.MachineReference;
-import us.mcsw.minerad.tiles.TileUraniumInfuser;
+import us.mcsw.minerad.tiles.TileInfuser;
 
-public class GuiUraniumInfuser extends GuiMRMachine {
+public class GuiInfuser extends GuiMRMachine {
 
-	private TileUraniumInfuser tile;
+	private TileInfuser tile;
 
-	public GuiUraniumInfuser(InventoryPlayer pl, TileUraniumInfuser tile) {
-		super(new ContainerUraniumInfuser(pl, tile), MachineReference.URANIUM_INFUSER_GUI);
+	public GuiInfuser(InventoryPlayer pl, TileInfuser tile) {
+		super(new ContainerInfuser(pl, tile), MachineReference.INFUSER_GUI);
 		this.tile = tile;
 	}
 

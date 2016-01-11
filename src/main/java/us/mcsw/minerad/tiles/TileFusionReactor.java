@@ -46,13 +46,13 @@ public class TileFusionReactor extends TileMultiblock {
 		}
 		if (hasCoolant() && !isCoolantDepleted()) {
 			if (hasCore() && !isCoreDepleted() && hasSource()) {
-				if (++coolantDamageCount > 7) {
+				if (++coolantDamageCount > 11) {
 					damageCoolant(1);
 					coolantDamageCount = 0;
 				}
 			}
 			if (heat > 0) {
-				heat -= 5;
+				heat -= 8;
 				if (heat < 0)
 					heat = 0;
 				damageCoolant(1);
@@ -193,9 +193,9 @@ public class TileFusionReactor extends TileMultiblock {
 		if (!hasSource()) {
 			return false;
 		}
-		return ItemUtil.getInteger("FusionProgress", getStackInSlot(0)) >= ItemUtil.getInteger("FusionMaximum",
+		return ItemUtil.getInteger("FusionProgress", getStackInSlot(0)) > ItemUtil.getInteger("FusionMaximum",
 				getStackInSlot(0))
-				&& ItemUtil.getInteger("FusionProgress", getStackInSlot(1)) >= ItemUtil.getInteger("FusionMaximum",
+				&& ItemUtil.getInteger("FusionProgress", getStackInSlot(1)) > ItemUtil.getInteger("FusionMaximum",
 						getStackInSlot(1));
 	}
 
