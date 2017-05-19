@@ -26,7 +26,6 @@ import us.mcsw.minerad.tiles.TileFissionReactor;
 
 public class BlockFissionReactor extends BlockMultiblock {
 
-	@SideOnly(Side.CLIENT)
 	IIcon active = null;
 
 	public BlockFissionReactor() {
@@ -56,14 +55,12 @@ public class BlockFissionReactor extends BlockMultiblock {
 		return false;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
 		super.registerBlockIcons(reg);
 		active = reg.registerIcon(TextureReference.RESOURCE_PREFIX + "fissionReactorComplete");
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(IBlockAccess ba, int x, int y, int z, int side) {
 		TileEntity tile = ba.getTileEntity(x, y, z);

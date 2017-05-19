@@ -1,15 +1,18 @@
 package us.mcsw.minerad.net;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.relauncher.Side;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
-import us.mcsw.minerad.tiles.TileRadioTowerBase;
+import net.minecraft.world.World;
+import us.mcsw.core.util.LogUtil;
+import us.mcsw.minerad.MineRad;
 import us.mcsw.minerad.util.RadUtil;
 
 public class MessageUpdateEmitters implements IMessage {
@@ -26,7 +29,8 @@ public class MessageUpdateEmitters implements IMessage {
 	public static class Handler implements IMessageHandler<MessageUpdateEmitters, IMessage> {
 		@Override
 		public IMessage onMessage(MessageUpdateEmitters message, MessageContext ctx) {
-			RadUtil.forWorld(Minecraft.getMinecraft().theWorld).setSourcesList(message.sources);
+			World world = MineRad.proxy.getWorldFromContext(ctx);
+			RadUtil.forWorld(world).setSourcesList(message.sources);
 			return null;
 		}
 	}

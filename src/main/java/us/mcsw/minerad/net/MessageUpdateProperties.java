@@ -10,6 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import us.mcsw.minerad.MineRad;
 
 public class MessageUpdateProperties implements IMessage {
 
@@ -31,7 +32,7 @@ public class MessageUpdateProperties implements IMessage {
 	public static class Handler implements IMessageHandler<MessageUpdateProperties, IMessage> {
 		@Override
 		public IMessage onMessage(MessageUpdateProperties message, MessageContext ctx) {
-			EntityPlayer pl = Minecraft.getMinecraft().thePlayer;
+			EntityPlayer pl = MineRad.proxy.getPlayerFromContext(ctx);
 			Entity e = pl.worldObj.getEntityByID(message.entId);
 			IExtendedEntityProperties props = e.getExtendedProperties(message.id);
 			props.loadNBTData(message.data);

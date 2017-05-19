@@ -3,15 +3,22 @@ package us.mcsw.minerad.proxy;
 import java.awt.Color;
 import java.util.Random;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderEntity;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import us.mcsw.minerad.EventListener;
+import us.mcsw.minerad.EventListenerClient;
 import us.mcsw.minerad.effects.EffectBossShield;
 import us.mcsw.minerad.effects.EffectShield;
 import us.mcsw.minerad.entity.EntityArcThrowerProjectile;
@@ -23,6 +30,7 @@ import us.mcsw.minerad.entity.EntityFinalBoss.BossState;
 import us.mcsw.minerad.entity.EntityStationaryMarker;
 import us.mcsw.minerad.entity.EntityThrownMarker;
 import us.mcsw.minerad.init.ModItems;
+import us.mcsw.minerad.nei.NEIRecipes;
 import us.mcsw.minerad.render.RenderFinalBoss;
 import us.mcsw.minerad.render.RenderGhoul;
 import us.mcsw.minerad.render.RendererEnergyStorage;
@@ -39,6 +47,12 @@ public class ClientProxy extends CommonProxy {
 		public void doRender(Entity w, double x, double y, double z, float f1, float f2) {
 		};
 	};
+	
+	public void preInit(cpw.mods.fml.common.event.FMLPreInitializationEvent event) {
+		EventListenerClient listener = new EventListenerClient();
+		MinecraftForge.EVENT_BUS.register(listener);
+		FMLCommonHandler.instance().bus().register(listener);
+	}
 
 	@Override
 	public void init(FMLInitializationEvent event) {
@@ -61,6 +75,10 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerBlockHandler(new RendererEnergyStorage());
 		RenderingRegistry.registerBlockHandler(new RendererRadioAntenna());
 		RenderingRegistry.registerBlockHandler(new RendererPipe());
+		
+		if (Loader.isModLoaded("NotEnoughItems")) {
+			NEIRecipes.init();
+		}
 	}
 
 	Random rand = new Random();
@@ -126,6 +144,16 @@ public class ClientProxy extends CommonProxy {
 		double px = pl.posX, py = pl.posY, pz = pl.posZ;
 		double distSq = (x - px) * (x - px) + (y - py) * (y - py) + (z - pz) * (z - pz);
 		return distSq;
+	}
+	
+	@Override
+	public World getWorldFromContext(MessageContext ctx) {
+		return Minecraft.getMinecraft().theWorld;
+	}
+	
+	@Override
+	public EntityPlayer getPlayerFromContext(MessageContext ctx) {
+		return Minecraft.getMinecraft().thePlayer;
 	}
 
 }

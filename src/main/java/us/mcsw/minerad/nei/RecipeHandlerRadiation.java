@@ -1,6 +1,5 @@
 package us.mcsw.minerad.nei;
 
-import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import net.minecraft.item.ItemStack;
 import us.mcsw.core.util.ItemUtil;
@@ -40,7 +39,7 @@ public class RecipeHandlerRadiation extends RecipeHandlerMR {
 	public void drawForeground(int recipe) {
 		super.drawForeground(recipe);
 		RecipeRadiation r = (RecipeRadiation) arecipes.get(recipe);
-		GuiDraw.drawStringC(r.rec.getRads() + " RADs", 80, 40, 4210752, false);
+//		GuiDraw.drawStringC(r.rec.getRads() + " RADs", 80, 40, 4210752, false);
 	}
 
 	public class RecipeRadiation extends CachedRecipe {

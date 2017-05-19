@@ -62,8 +62,9 @@
 	<classpathentry exported="true" kind="lib" path="C:/Users/brady/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl-platform/2.9.1/4c517eca808522457dd95ee8fc1fbcdbb602efbe/lwjgl-platform-2.9.1-natives-windows.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/brady/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl-platform/2.9.1/aa9aae879af8eb378e22cfc64db56ec2ca9a44d1/lwjgl-platform-2.9.1-natives-linux.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/brady/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl-platform/2.9.1/2d12c83fdfbc04ecabf02c7bc8cc54d034f0daac/lwjgl-platform-2.9.1-natives-osx.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/brady/git/MineRad/libs/CodeChickenCore-1.7.10-1.0.7.47-dev.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/brady/git/MineRad/libs/NotEnoughItems-1.7.10-1.0.5.118-dev.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/brady/git/MineRad/libs/Waila-1.5.10_1.7.10.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/brady/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.10-10.13.4.1558-1.7.10/start"/>
-	<classpathentry kind="lib" path="C:/Users/brady/forge/minerad/libs/Waila-1.5.10_1.7.10.jar"/>
-	<classpathentry kind="lib" path="C:/Users/brady/forge/minerad/libs/RedstoneFlux-API-master.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

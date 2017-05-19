@@ -10,8 +10,10 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
@@ -97,10 +99,6 @@ public class CommonProxy implements IProxy {
 		NetworkRegistry.INSTANCE.registerGuiHandler(MineRad.ins, new MRGuiHandler());
 
 		FMLInterModComms.sendMessage("Waila", "register", "us.mcsw.minerad.ref.WailaTileHandler.callbackRegister");
-
-		if (Loader.isModLoaded("NotEnoughItems")) {
-			NEIRecipes.init();
-		}
 	}
 
 	@Override
@@ -114,6 +112,16 @@ public class CommonProxy implements IProxy {
 
 	@Override
 	public void generateBossParticles(EntityFinalBoss boss) {
+	}
+
+	@Override
+	public World getWorldFromContext(MessageContext ctx) {
+		return ctx.getServerHandler().playerEntity.worldObj;
+	}
+	
+	@Override
+	public EntityPlayer getPlayerFromContext(MessageContext ctx) {
+		return ctx.getServerHandler().playerEntity;
 	}
 
 }

@@ -18,6 +18,8 @@ public class ItemCoolantCore extends ItemMRCapacity {
 	@Override
 	public void addInformation(ItemStack it, EntityPlayer p, List list, boolean n) {
 		list.add("Used to cool down reactors");
+		list.add("[WARNING] Do not right click this item unless you want to die");
+		list.add("It will spawn a very very very difficult boss (temp)");
 		super.addInformation(it, p, list, n);
 	}
 

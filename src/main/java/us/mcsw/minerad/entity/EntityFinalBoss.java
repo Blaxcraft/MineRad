@@ -45,7 +45,7 @@ public class EntityFinalBoss extends EntityMob implements IBossDisplayData {
 		experienceValue = 100;
 	}
 
-	static int CHARGE = 15, STATE = 14, CURATTACK = 16;;
+	static int CHARGE = 15, STATE = 14, CURATTACK = 16;
 
 	@Override
 	protected void entityInit() {

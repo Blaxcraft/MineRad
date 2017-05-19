@@ -12,6 +12,8 @@ import cpw.mods.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -85,55 +87,6 @@ public class EventListener {
 				tick = 0;
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public void onWorldRenderEnd(RenderWorldLastEvent event) {
-		GL11.glPushMatrix();
-		GL11.glPushAttrib(GL11.GL_LIGHTING);
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		GL11.glDisable(GL11.GL_LIGHTING);
-		GL11.glEnable(GL11.GL_BLEND);
-
-		EntityPlayer pl = Minecraft.getMinecraft().thePlayer;
-		World w = Minecraft.getMinecraft().theWorld;
-		boolean canSeeEmitters = false;
-
-		for (ItemStack it : pl.inventory.mainInventory) {
-			if (it != null && it.getItem() instanceof ItemXray) {
-				ItemXray item = (ItemXray) it.getItem();
-				if (item.isEnabled(it)) {
-					canSeeEmitters = true;
-				}
-			}
-		}
-
-		if (canSeeEmitters) {
-			int colour = nextColour();
-			for (RadEmitter rad : RadUtil.getEmitters(w)) {
-				ChunkCoordinates coords = new ChunkCoordinates(rad.x, rad.y, rad.z);
-				if (coords.getDistanceSquared((int) pl.posX, (int) pl.posY, (int) pl.posZ) < 100 * 100) {
-					RenderUtil.renderBlockFaces(coords, colour, 0.50f);
-				}
-			}
-		}
-
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		GL11.glDisable(GL11.GL_BLEND);
-		GL11.glPopAttrib();
-		GL11.glPopMatrix();
-	}
-
-	float satLast = 0.5f;
-	float satDelta = 1f;
-
-	public int nextColour() {
-		satLast += 0.01f * satDelta;
-		if (satLast > 0.75 || satLast < 0.25)
-			satDelta *= -1;
-		return Color.HSBtoRGB(0.333f, satLast, 0.5f);
 	}
 
 	@SubscribeEvent
